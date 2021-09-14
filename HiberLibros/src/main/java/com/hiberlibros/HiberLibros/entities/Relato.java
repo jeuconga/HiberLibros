@@ -1,4 +1,4 @@
-package entities;
+package com.hiberlibros.HiberLibros.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,9 +34,9 @@ private String fichero;
 @Column
 private String titulo;
 
-//@ManyToOne             
-//@JoinColumn(name = "id_genero")
-//private Genero genero;
+@ManyToOne             
+@JoinColumn(name = "id_genero")
+private Genero genero;
 
 @Column
 private Double valoracionUsuarios;
