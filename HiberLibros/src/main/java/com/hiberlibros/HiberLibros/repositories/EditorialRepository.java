@@ -5,7 +5,7 @@
  */
 package com.hiberlibros.HiberLibros.repositories;
 
-import com.hiberlibros.HiberLibros.entitis.Editorial;
+import com.hiberlibros.HiberLibros.entities.Editorial;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

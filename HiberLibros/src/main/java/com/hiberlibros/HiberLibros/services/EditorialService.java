@@ -5,7 +5,7 @@
  */
 package com.hiberlibros.HiberLibros.services;
 
-import com.hiberlibros.HiberLibros.entitis.Editorial;
+import com.hiberlibros.HiberLibros.entities.Editorial;
 import com.hiberlibros.HiberLibros.repositories.EditorialRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
