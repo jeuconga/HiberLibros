@@ -11,13 +11,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
+import lombok.Data;
 
 
 /**
  *
  * @author Usuario
  */
+@Data
 @Entity
 @Table(name="editoriales")
 @NoArgsConstructor
