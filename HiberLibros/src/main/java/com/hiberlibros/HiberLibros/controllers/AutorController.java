@@ -22,6 +22,6 @@ public class AutorController {
 	@GetMapping
 	public String lista(Model m){
 		m.addAttribute("autores", autorRepo.findAll());
-		return "";
+		return "/autores";
 	}
 }
