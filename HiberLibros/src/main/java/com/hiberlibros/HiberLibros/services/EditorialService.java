@@ -10,10 +10,8 @@ import com.hiberlibros.HiberLibros.repositories.EditorialRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- *
- * @author Usuario
- */
+
+
 public class EditorialService {
     @Autowired
     private EditorialRepository repoEditorial;
