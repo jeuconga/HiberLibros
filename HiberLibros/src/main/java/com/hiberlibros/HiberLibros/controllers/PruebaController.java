@@ -16,6 +16,6 @@ public class PruebaController {
     @GetMapping("/Hola")
     @ResponseBody
     public String prueba(){
-        return "Hoola2";
+        return "Hoola";
     }
 }
