@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form action="usuarios/guardarUsuario" method="post">
+            <label for="nombre">Nombre: </label>
+            <input type="text" name="nombre"/>
+            <label for="apellido">Apellido: </label>
+            <input type="text" name="apellido"/>
+            <label for="direccion">Dirección: </label>
+            <input type="text" name="direccion"/>
+            <label for="ciudad">Ciudad: </label>
+            <input type="text" name="ciudad"/>
+            <label for="mail">Correo electrónico: </label>
+            <input type="email" name="mail"/>
+            <label for="telef">Teléfono: </label>
+            <input type="text" name="telef"/>
+            <input type="submit" value="Guardar Usuario"/>
+            
+        </form>
+    </body>
+</html>

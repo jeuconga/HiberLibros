@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hiberlibros.HiberLibros.entities;
+package com.hiberlibros.HiberLibros.repositories;
 
+import com.hiberlibros.HiberLibros.entities.Usuarios;
 import com.hiberlibros.HiberLibros.entities.Usuarios;
 import org.springframework.data.jpa.repository.JpaRepository;
 
