@@ -3,33 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hiberlibros.HiberLibros.entities;
+package Entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import javax.persistence.Id;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
-/**
- *
- * @author Usuario
- */
-@Data
-@Entity
-@Table(name="editoriales")
+@Data  
 @NoArgsConstructor
 @AllArgsConstructor
-public class Editorial {
-    
+@Entity
+@Table(name="usuarios")
+public class Usuarios {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    private String nombreEditorial;
-
+    private String nombre;
+    private String apellido;
+    private String direccion;
+    private String ciudad;
+    private String mail;
+    private String telef;
+    private Double valoracionUsuario;
+    private Double longitud;
+    private Double latitud;
+    private String uriFoto;
+    
+    
 }
