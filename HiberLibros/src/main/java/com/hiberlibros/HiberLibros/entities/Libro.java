@@ -5,32 +5,41 @@
  */
 package com.hiberlibros.HiberLibros.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import javax.persistence.Id;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
-/**
- *
- * @author Usuario
- */
 @Data
-@Entity
-@Table(name="editoriales")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Editorial {
-    
+@Entity 
+@Table(name = "Libros")
+public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column
+    private String isbn;
+    @Column
+    private String titulo;
+    @Column
+    private String idioma;
+    @Column
+    private String editorial;
+    @Column
+    private String uriPortada;
+    @Column
+    private Double valoracionLibro;
     
-    private String nombreEditorial;
-
+//    @ManyToOne             
+//    @JoinColumn(name = "id_genero")
+//    private Genero  genero;
 }
