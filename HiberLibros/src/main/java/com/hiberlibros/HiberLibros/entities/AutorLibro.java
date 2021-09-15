@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "autorlibros") //Tabla intermedia de autor y libro
+@Table(name = "autor_libro") //Tabla intermedia de autor y libro
 public class AutorLibro {
 	  	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,7 @@ public class AutorLibro {
 	  	@ManyToOne
 	    @JoinColumn(name = "id_autor")
 	    private Autor autor;
-	    
+	  	@ManyToOne
+	    @JoinColumn(name = "id_libro")
 	    private Libro libro;
 }
