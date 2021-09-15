@@ -17,7 +17,7 @@ body {background-color:#163a63; color:#163a63; padding-top:15px;}
 </style>
 <body>
 	<h5 th:if="${autores.size() == 0}" class="offset-4">La tabla esta vacia</h5>
-	<a th:href="@{http://localhost:8091/autorForm}" class="btn btn-success offset-4"> Nuevo autor</a>
+	<a th:href="@{/autorForm}" class="btn btn-success offset-4"> Nuevo autor</a>
 	<div class="container">
   		<ul class="list-group">
    		 <li class="list-group-item clearfix" th:each="autor:${autores}">
@@ -26,8 +26,8 @@ body {background-color:#163a63; color:#163a63; padding-top:15px;}
         <br />
       </p>
       <div class="btn-toolbar pull-right" role="toolbar" aria-label="">
-        <a th:href="@{/autorForm/{id}(id=${autor.id})}" class="btn btn-warning">Editar</a>
-        <a th:href="@{/deleteAutor/{id}(id=${autor.id})}" class="btn btn-danger">Eliminar</a>
+        <a th:href="@{/autorForm/{id}(id=${autor.idAutor})}" class="btn btn-warning">Editar</a>
+        <a th:href="@{/deleteAutor/{id}(id=${autor.idAutor})}" class="btn btn-danger">Eliminar</a>
       </div>
     </li>
     </ul>

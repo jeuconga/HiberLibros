@@ -35,10 +35,11 @@ body{
 </style>
 <body>
 	<div class="container insert-form">
-            <form action="saveAutor" id="formulario" method="post" th:object="${autor}">
+            <form action="/saveAutor" id="formulario" method="post" th:object="${autor}">
                 <h3>Informacion del autor</h3>
                <div class="row">
                     <div class="col-md-6">
+                        <input class="form-control" th:field="*{idAutor}" hidden/>
                         <div class="form-group">
                             <input type="text" class="form-control" th:field="*{nombre}" placeholder="Nombre"/>
                         </div>

@@ -39,11 +39,11 @@ public class AutorController {
 	@PostMapping("/saveAutor")
 	public String insertarAutor(Model m,Autor autor){
 		autorRepo.save(autor);
-		return "redirect:autores/lista";
+		return "redirect:autorLista";
 	}
 	@GetMapping("/deleteAutor/{id}")
 	public String delete(Model m, @PathVariable Integer id){
 		autorRepo.deleteById(id);
-		return "redirect:autores/lista";
+		return "redirect:autorLista";
 	} 
 }
