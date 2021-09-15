@@ -25,12 +25,14 @@ public class Genero {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
+
     private String nombre;
     
-   /*@OneToMany(mappedBy = "relato")
+   @OneToMany(mappedBy = "id")
    private List<Relato> listaRelatos;
     
-   @OneToMany(mappedBy = "libro")
-    private List<Libro> listaLibros;*/
+   @OneToMany(mappedBy = "id")
+    private List<Libro> listaLibros;
+    
+    
 }

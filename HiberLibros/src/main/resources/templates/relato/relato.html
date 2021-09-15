@@ -13,27 +13,38 @@
                 <input type="text" name="titulo" required/> <br> <br>
 
                 <label>Fichero : </label>
-                <input type="file" name="ficherosubido"/><br> <br>
+                <input type="file" name="ficherosubido" required/><br> <br>
 
                 <label>Genero : </label>
-
                 <select name="genero">
                     <option th:each="gen:${generos}"
                             th:value="${gen.id}" 
-                            th:text="${gen.nombre}"
-                            th:selected="false"
-                            />
-                </select><br> <br>
-
+                            th:text="${gen.nombre}"/>
+                </select>
+                <br> <br>
                 <button type="submit" class="btn btn-primary">Subir fichero</button>
+            </form>                     
+            <span th:text="${error}" style="color:red;font-size: 20px"></span>
+            <span th:text="${correcto}" style="color:green;font-size: 20px"></span>
+            <hr>
+            <br> <br>
+            <!--  AÑADIR VALORACION   -->
+
+            <form action="/relato/addValoracion" method="post">
+                
+                <label>Valoracion :</label>
+                <input type="number" name="valoracion" min="0" max="10"/><br> <br>
+                <label>ID para probar :</label>
+                <input type="number" name="id"/><br> <br>
+                <button type="submit" class="btn btn-primary">Añadir valoracion</button>
+                
             </form>
-            
-            
-            
-<!--  PARA PROBAR SI FUNCIONA EL BORRAR , SI FUNCIONA          
-             <a class="btn btn-danger"  th:href="${'/relato/eliminarRelato?id='+2}" >Eliminar</a>
-    -->
-            
+
+
+            <!--  PARA PROBAR SI FUNCIONA EL BORRAR , SI FUNCIONA          
+                         <a class="btn btn-danger"  th:href="${'/relato/eliminarRelato?id='+2}" >Eliminar</a>
+            -->
+
 
         </div>
     </body>
