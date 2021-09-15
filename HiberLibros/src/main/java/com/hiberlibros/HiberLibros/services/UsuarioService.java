@@ -35,9 +35,6 @@ public class UsuarioService implements UsuarioServiceI{
             urService.save(u);
             resultado="Usuario registrado con éxito";
         }
-       
-        
-        
         return resultado;
 
     }

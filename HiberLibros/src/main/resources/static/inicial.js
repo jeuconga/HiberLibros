@@ -1,38 +1,38 @@
-function registrarUsuario(){
+function registrarUsuario() {
     bootbox.dialog({
         title: 'Registro Usuario',
         size: 'small',
         message: $("#nuevoUsuario").html()
     });
-    
+
 }
-function entrar(){
+function entrar() {
     bootbox.dialog({
-        title: 'Login',
+        title: 'Iniciar Sesión',
         size: 'small',
         message: $("#login").html()
-    }); 
+    });
 }
-function editarUsuario(){
+function editarUsuario() {
     bootbox.dialog({
         title: 'Editar',
         size: 'small',
         message: $("#editarUsuario").html()
-    }); 
-    
+    });
+
 }
-function eliminarU(pID){
-                
-                bootbox.confirm({ 
-                    size: "small",
-                    message: "¿Estás seguro?",
-                    callback: function(result){ 
-                        if(result){
-                            window.location.href="/usuarios/borrarUsuario?id="+pID;
-                        }
-                    }
-                });
+function eliminarU(pID) {
+
+    bootbox.confirm({
+        size: "small",
+        message: "¿Estás seguro?",
+        callback: function (result) {
+            if (result) {
+                window.location.href = "/usuarios/borrarUsuario?id=" + pID;
             }
+        }
+    });
+}
 
 
 

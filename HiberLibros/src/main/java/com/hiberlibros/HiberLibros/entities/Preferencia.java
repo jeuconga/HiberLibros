@@ -36,5 +36,5 @@ public class Preferencia {
     
     @ManyToOne 
     @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    private Usuario usuarioPreferencia;
 }
