@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name="usuarios")
-public class Usuarios {
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -34,6 +34,10 @@ public class Usuarios {
     private Double longitud;
     private Double latitud;
     private String uriFoto;
+    
+    
+    
+    
     
     
 }
