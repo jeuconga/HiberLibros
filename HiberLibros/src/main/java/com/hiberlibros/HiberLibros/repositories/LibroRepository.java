@@ -5,9 +5,13 @@
  */
 package com.hiberlibros.HiberLibros.repositories;
 
-import com.hiberlibros.HiberLibros.entities.Relato;
+import com.hiberlibros.HiberLibros.entities.Libro;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RelatoRepository extends JpaRepository<Relato, Integer> {
-
+/**
+ *
+ * @author Mohamad
+ */
+public interface LibroRepository extends JpaRepository<Libro, Integer>{
+    
 }
