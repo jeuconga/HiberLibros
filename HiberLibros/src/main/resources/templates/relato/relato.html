@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Subida de relatos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Nuevo relato</h1>
+            <form action="/relato/guardarRelato" method="post" enctype="multipart/form-data">
+                <label>Título : </label>
+                <input type="text" name="titulo" required/> <br> <br>
+                <!--                <label>Fichero : </label>
+                                <input type="file" name="fichero"/><br> <br>-->
+                <label>Género : </label>
+                <input type="text" name="genero" required/> <br> <br>
+
+
+                <input type="submit" value="Subir relato"/>
+            </form>
+    </body>
+</html>
