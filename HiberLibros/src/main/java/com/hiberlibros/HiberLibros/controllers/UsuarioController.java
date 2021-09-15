@@ -32,13 +32,24 @@ public class UsuarioController {
     @PostMapping("/guardarUsuario")
     public String usuarioRegistrar(Usuario u){
         String resultado=service.guardarUsuario(u);
-        return "redirect:/usuarios?registro="+resultado;
+        return "redirect:/hiberlibros/panelUsuario?mail="+u.getMail();
     }
+    
+    @PostMapping("/editarUsuario")
+    public String usuarioEditar(Usuario u){
+        return "redirect:/hiberlibros/panelUsuario?mail="+service.editarUsuario(u);
+    }
+    
     
     @GetMapping("/borrar")
     public String borrar(Integer id){
         service.borrarUsuario(id);
         return "redirect:/usuarios";
+    }
+    @GetMapping("/borrarUsuario")
+    public String borrarUsuario(Integer id){
+        service.borrarUsuario(id);
+        return "redirect:/hiberlibros";
     }
     
     

@@ -26,13 +26,16 @@ public class InicioController {
 
     @GetMapping
     public String inicio(Model m, String error) {
-        m.addAttribute("error", error);
+        if(error!=null){
+            m.addAttribute("error", error);
+        }
+        
         return "principal/inicio";
     }
 
     @GetMapping("/panelUsuario")
     public String panelUsuario(Model m, String mail) {
-        m.addAttribute("mail", mail);
+        m.addAttribute("usuario",usuService.usuarioRegistrado(mail));
         return "principal/usuarioPanel";
     }
 
@@ -47,5 +50,6 @@ public class InicioController {
 
         
     }
+   
 
 }

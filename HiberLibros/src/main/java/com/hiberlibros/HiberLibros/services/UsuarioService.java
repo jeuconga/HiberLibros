@@ -61,5 +61,16 @@ public class UsuarioService implements UsuarioServiceI{
             return true;
         }
     }
+
+    @Override
+    public Usuario usuarioRegistrado(String mail) {
+        return urService.findByMail(mail).get();
+    }
+
+    @Override
+    public String editarUsuario(Usuario usr) {
+        urService.save(usr);
+        return usr.getMail();
+    }
     
 }
