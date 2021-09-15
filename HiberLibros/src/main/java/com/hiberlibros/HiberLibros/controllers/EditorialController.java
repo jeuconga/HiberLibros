@@ -5,6 +5,7 @@
  */
 package com.hiberlibros.HiberLibros.controllers;
 
+import com.hiberlibros.HiberLibros.entities.Editorial;
 import com.hiberlibros.HiberLibros.services.EditorialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,11 @@ public class EditorialController {
     private EditorialService serviceEditorial;
     
     @GetMapping("/editoriales")
-    public String editoriales(Model m){
+    public String editoriales(Model m,Editorial editorial){
+        if (editorial == null){
+            editorial = new Editorial();
+        }
+        m.addAttribute("editorial", editorial);
         m.addAttribute("editoriales",serviceEditorial.consulta());
         return "/editoriales";
     }
