@@ -5,8 +5,13 @@
  */
 package com.hiberlibros.HiberLibros.controllers;
 
+import com.hiberlibros.HiberLibros.entities.Editorial;
+import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Libro;
+import com.hiberlibros.HiberLibros.repositories.EditorialRepository;
+import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.LibroRepository;
+import java.util.ArrayList;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,24 +19,36 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 //@RequestMapping("/libros")
 public class LibroController {
     @Autowired
     private LibroRepository librepo;
-    
+    @Autowired
+    private GeneroRepository genRepo;
+    @Autowired
+    private EditorialRepository editRepo;
+
+ 
     @GetMapping("/libros")
     public String mostrarFormulario(Model m){
         m.addAttribute("libros", librepo.findAll());
-        return "VistaLibro";
+        m.addAttribute("generos", genRepo.findAll());
+        m.addAttribute("editoriales", editRepo.findAll());
+        return "libros/VistaLibro";
     } 
     
     @PostMapping("/guardarLibro")
-    public String guardarLIbro(Model m,Libro libro){
+    public String guardarLIbro(Model m,Libro libro, Integer id_genero, Integer id_editorial){
+        libro.setGenero(genRepo.getById(id_genero));
+        libro.setEditorial(editRepo.getById(id_genero));
         librepo.save(libro);
         return "redirect:libros";
     }
+    
+  
     
     @GetMapping("/eliminar")
     public String eliminarLibro(Model m,Integer id){
@@ -39,12 +56,15 @@ public class LibroController {
         if(l.isPresent()){
             librepo.deleteById(id);           
         }
-        return "redirect:vistaLibro";
+        return "redirect:libros";
     }
     
     @GetMapping("/modificar")
     public String modificarLibro(Model m,Integer id){
+       
        m.addAttribute("libro", librepo.findById(id));
-       return "redirect:vistaLibro";
+       m.addAttribute("generos", genRepo.findAll());
+       m.addAttribute("editoriales", editRepo.findAll());
+       return "libros/modificar";
     }
 }

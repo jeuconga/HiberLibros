@@ -1,0 +1,61 @@
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Alta libros</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+
+            <table class="table table-striped mt-5">
+                <tr>
+                    <th>ISBN</th>
+                    <th>Titulo</th>
+                    <th>Idioma</th>
+                    <th>Editorial</th>
+                    <th>Genero</th>
+                    <th>Valoracion</th>
+                </tr>
+                <tr th:each="libro:${libros}">
+                    <td th:text="${libro.isbn}"></td>
+                    <td th:text="${libro.titulo}"></td>
+                    <td th:text="${libro.idioma}"></td>
+                    <td th:text="${libro.editorial.nombreEditorial}"></td>
+                    <td th:text="${libro.genero.nombre}"></td>
+                    <td th:text="${libro.valoracionLibro}"></td>
+                    <td>                   
+                        <a type="button" class="btn btn-dark btn-sm" th:href="${'/eliminar?id='+ libro.id}"><i class="far fa-trash-alt" ><span style="margin-left:5px">Borrar</span></i></a>
+                    </td>
+                    <td>
+                        <a type="button" class="btn btn-dark btn-sm" th:href="${'/modificar?id='+ libro.id}"><i class="far fa-trash-alt" ><span style="margin-left:5px">Modificar</span></i></a>
+                    </td>
+                </tr>
+
+            </table>
+            <div class=" m-2">
+                <div class="row" >             
+
+                    <form action="/guardarLibro" method="post"  >
+                        <input class="m-1" name="id" type="hidden" />
+                        <span class="m-1">ISBN</span><input class="m-1" name="isbn" placeholder="Descripcion" required /><br/>
+                        <span class="m-1">Titulo</span> <input  class="m-1"  name="titulo" /><br/>
+                        <span class="m-1">Idioma</span> <input  class="m-1"  name="idioma" /><br/>
+                        <span class="m-1">URL</span> <input  class="m-1" name="uriPortada" /><br/>
+                        <span class="m-1">Valoracion</span> <input  class="m-1" name="valoracionLibro" /><br/>
+                        
+                        <span class="m-1">Editorial</span> <select  class="m-1"  name="id_editorial">
+                            <option th:each="edit:${editoriales}" th:text="${edit.nombreEditorial}" th:value="${edit.id}"></option>
+                        </select>
+
+                        <span class="m-1">Genero</span> <select  class="m-1"  name="id_genero">
+                            <option th:each="gen:${generos}" th:text="${gen.nombre}" th:value="${gen.id}"></option>
+                        </select>
+                        <button type="submit" class="btn btn-dark" ><i class="fas fa-arrow-circle-up"><span style="margin-left: 5px">Guardar</span></i> </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
