@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "genero")
+@Table(name = "generos")
 public class Genero {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +28,11 @@ public class Genero {
     @Column
     private String nombre;
     
-   @OneToMany(mappedBy = "genero")
+   /*@OneToMany(mappedBy = "relato")
    private List<Relato> listaRelatos;
     
-   @OneToMany(mappedBy = "id")
-    private List<Libro> listaLibros;
+   @OneToMany(mappedBy = "libro")
+    private List<Libro> listaLibros;*/
     
     
 }

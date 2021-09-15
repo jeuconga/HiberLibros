@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,33 +19,32 @@ import lombok.NoArgsConstructor;
 @Table(name="relato")
 public class Relato {
 
-    
-@Id    
-@GeneratedValue(strategy = GenerationType.IDENTITY) 
-private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
+    @Column
+    private String fichero;
 
 @ManyToOne             
 @JoinColumn(name = "id_usuario")
 private Usuarios usuario;
 
-@Column
-private String fichero;
+    @Column
+    private String titulo;
 
-@Column
-private String titulo;
+    @Column
+    private Double valoracionUsuarios;
 
-@ManyToOne             
-@JoinColumn(name = "id_genero")
-private Genero genero;
+    @Column
+    private Integer numeroValoraciones;
 
-@Column
-private Double valoracionUsuarios;
+    @ManyToOne
+    @JoinColumn(name = "id_genero")
+    private Genero genero;
 
-@Column
-private Integer numeroValoraciones;
-
-
-
-    
+    /*
+    @ManyToOne             
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;*/
 }
