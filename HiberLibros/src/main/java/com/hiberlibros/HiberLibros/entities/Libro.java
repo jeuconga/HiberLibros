@@ -39,7 +39,7 @@ public class Libro {
     @Column
     private Double valoracionLibro;
     
-//    @ManyToOne             
-//    @JoinColumn(name = "id_genero")
-//    private Genero  genero;
+    @ManyToOne             
+    @JoinColumn(name = "id_genero")
+    private Genero  genero; 
 }
