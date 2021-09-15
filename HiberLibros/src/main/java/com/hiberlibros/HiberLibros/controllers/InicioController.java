@@ -16,4 +16,8 @@ public class InicioController {
 	public String login(){
 		return "principal/login";
 	}
+	@GetMapping("/registro")
+	public String registro(){
+		return "principal/registro";
+	}
 }
