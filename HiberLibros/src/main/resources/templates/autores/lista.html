@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Lista de autores</title>
+</head>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+<body>
+	<h5 th:if="${autores.size() == 0}" class="offset-4">La tabla esta vacia</h5>
+	<a th:href="@{http://localhost:8091/autorForm}" class="btn btn-success offset-4"> Nuevo autor</a>
+	<div class="container">
+	<table class="table table-striped table-secondary" th:if="${clientes.size() > 0}">
+			<thead class="thead-dark">
+				<tr>
+					<th>Nombre</th>
+					<th>Biografia</th>
+				</tr>
+			</thead>
+				<tr th:each="autor:${autores}">
+					<td th:text="${autor.nombre} + ' ' + ${autor.apellidos}"></td>
+					<td th:text="${autor.biografia}" />
+				</tr>
+		</table>
+	</div>
+</body>
+</html>
