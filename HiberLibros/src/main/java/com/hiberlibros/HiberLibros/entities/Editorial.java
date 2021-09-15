@@ -26,8 +26,4 @@ public class Editorial {
     
     private String nombreEditorial;
     
-    @OneToMany
-    @JoinColumn(name = "idEditorial")
-    private List<Libro> ListaLibros;
-
 }
