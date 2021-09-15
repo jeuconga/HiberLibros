@@ -66,19 +66,17 @@ public class PeticionController {
         return "redirect:/peticion/peticion";
     }
     
-    public String consultarTodasPeticionesPendientes(Model m, Peticion p, Usuarios u){
-         m.addAttribute("peticionesPendientes",servicePeticion.consultarPeticionesPendientes());
+    public String consultarTodasPeticionesPendientes(Model m, Usuarios u){
+         m.addAttribute("peticionesPendientes",servicePeticion.consultarPeticionesPendientes(u));
          return "redirect:/peticion/peticion";
     }
     
-    public String consultarTodasPeticionesAceptadas(Model m, Peticion p, Usuarios u){
-        List<Peticion> peticionesA = servicePeticion.consultarPeticionesAceptadas().stream().filter(x-> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());
-         m.addAttribute("peticionesPendientes",servicePeticion.consultarPeticionesAceptadas());
+    public String consultarTodasPeticionesAceptadas(Model m,  Usuarios u){
+         m.addAttribute("peticionesPendientes",servicePeticion.consultarPeticionesAceptadas(u));
          return "redirect:/peticion/peticion";
     }
-    public String consultarTodasPeticionesRechazadas(Model m, Peticion p, Usuarios u){
-         
-         m.addAttribute("peticionesPendientes",peticionesRechazadas);
+    public String consultarTodasPeticionesRechazadas(Model m, Usuarios u){
+         m.addAttribute("peticionesPendientes",servicePeticion.consultarPeticionesPendientes(u));
          return "redirect:/peticion/peticion";
     }
 }
