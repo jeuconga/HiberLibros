@@ -25,7 +25,6 @@ public class Editorial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column
     private String nombreEditorial;
     
 //    @OneToMany

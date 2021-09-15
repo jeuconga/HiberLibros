@@ -25,7 +25,7 @@ public class Genero {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
+
     private String nombre;
     
    @OneToMany(mappedBy = "id")

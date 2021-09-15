@@ -30,26 +30,14 @@ public class LibroController {
     private GeneroRepository genRepo;
     @Autowired
     private EditorialRepository editRepo;
-    
-    @GetMapping("/generarDatos")
-    public String insertarEjemplo(Model m){
-        Genero g=new Genero(null,"fantasia",null,null);
-        Editorial editorial=new Editorial(null,"Anaya");
-        editRepo.save(editorial);
-        genRepo.save(g);
-        Libro l=new Libro(null, "2496706464", "Todo tiene su precio", "Spanish","https://images-na.ssl-images-amazon.com/images/I/41qkoU0+hsS._SX331_BO1,204,203,200_.jpg",4.5,editorial,g);
 
-        librepo.save(l);
-
-        return "redirect:libros";    
-    }  
-    
-    
+ 
     @GetMapping("/libros")
     public String mostrarFormulario(Model m){
         m.addAttribute("libros", librepo.findAll());
         m.addAttribute("generos", genRepo.findAll());
-        return "VistaLibro";
+        m.addAttribute("editoriales", editRepo.findAll());
+        return "libros/VistaLibro";
     } 
     
     @PostMapping("/guardarLibro")
@@ -68,12 +56,15 @@ public class LibroController {
         if(l.isPresent()){
             librepo.deleteById(id);           
         }
-        return "redirect:vistaLibro";
+        return "redirect:libros";
     }
     
     @GetMapping("/modificar")
     public String modificarLibro(Model m,Integer id){
+       
        m.addAttribute("libro", librepo.findById(id));
-       return "redirect:vistaLibro";
+       m.addAttribute("generos", genRepo.findAll());
+       m.addAttribute("editoriales", editRepo.findAll());
+       return "libros/modificar";
     }
 }

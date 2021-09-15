@@ -5,7 +5,7 @@
  */
 package com.hiberlibros.HiberLibros.repositories;
 
-import com.hiberlibros.HiberLibros.entities.Usuarios;
+import com.hiberlibros.HiberLibros.entities.Usuario;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,8 +13,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Usuario
  */
-public interface UsuariosRepository extends JpaRepository<Usuarios, Integer>{
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     
-    public Optional<Usuarios> findByMailContainsIgnoreCase (String mail);
+    public Optional<Usuario> findByMailContainsIgnoreCase (String mail);
     
 }

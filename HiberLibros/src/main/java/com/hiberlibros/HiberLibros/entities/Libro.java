@@ -26,21 +26,18 @@ public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
+
     private String isbn;
-    @Column
     private String titulo;
-    @Column
     private String idioma;
-    @Column
     private String uriPortada;
-    @Column
     private Double valoracionLibro;
     
     @ManyToOne             
     @JoinColumn(name = "id_editorial")
     private Editorial  editorial;
       
+    
     @ManyToOne             
     @JoinColumn(name = "id_genero")
     private Genero  genero; 

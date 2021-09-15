@@ -15,15 +15,24 @@
                     <th>Titulo</th>
                     <th>Idioma</th>
                     <th>Editorial</th>
+                    <th>Genero</th>
                     <th>Valoracion</th>
                 </tr>
                 <tr th:each="libro:${libros}">
                     <td th:text="${libro.isbn}"></td>
                     <td th:text="${libro.titulo}"></td>
                     <td th:text="${libro.idioma}"></td>
-                    <td th:text="${libro.editorial}"></td>
+                    <td th:text="${libro.editorial.nombreEditorial}"></td>
+                    <td th:text="${libro.genero.nombre}"></td>
                     <td th:text="${libro.valoracionLibro}"></td>
+                    <td>                   
+                        <a type="button" class="btn btn-dark btn-sm" th:href="${'/eliminar?id='+ libro.id}"><i class="far fa-trash-alt" ><span style="margin-left:5px">Borrar</span></i></a>
+                    </td>
+                    <td>
+                        <a type="button" class="btn btn-dark btn-sm" th:href="${'/modificar?id='+ libro.id}"><i class="far fa-trash-alt" ><span style="margin-left:5px">Modificar</span></i></a>
+                    </td>
                 </tr>
+
             </table>
             <div class=" m-2">
                 <div class="row" >             
