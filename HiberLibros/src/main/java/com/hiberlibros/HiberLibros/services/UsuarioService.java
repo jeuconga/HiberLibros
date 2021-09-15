@@ -51,5 +51,15 @@ public class UsuarioService implements UsuarioServiceI{
     public List<Usuario> usuariosList() {
         return urService.findAll();
     }
+
+    @Override
+    public boolean registrado(String mail) {
+        if(urService.findByMail(mail).isEmpty()){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
     
 }

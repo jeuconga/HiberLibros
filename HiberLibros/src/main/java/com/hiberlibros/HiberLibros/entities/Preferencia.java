@@ -6,7 +6,6 @@
 package com.hiberlibros.HiberLibros.entities;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,27 +20,21 @@ import lombok.NoArgsConstructor;
  *
  * @author Usuario
  */
-@Data
+@Data  
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "usuario_libro")
-public class UsuarioLibro {
-
+@Table(name="preferencias")
+public class Preferencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    private String estadoConservacion;
-    private String estadoPrestamo;
-    private String quieroTengo;
-
+    
     @ManyToOne
+    @JoinColumn(name="id_genero")
+    private Genero genero;
+    
+    @ManyToOne 
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-
-    @ManyToOne
-    @JoinColumn(name = "id_libro")
-    private Libro libro;
-
 }

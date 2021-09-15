@@ -17,5 +17,6 @@ public interface UsuarioServiceI {
     public String guardarUsuario(Usuario u);
     public void borrarUsuario(Integer id);
     public List<Usuario> usuariosList();
+    public boolean registrado(String mail);
     
 }
