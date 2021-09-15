@@ -1,0 +1,19 @@
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Titulo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form  th:object="${generos}">
+            <input type="text" th:field="*{nombre}" />
+            <input type="submit" value="Enviar">
+        </form>
+        <table>
+            <tr>
+                <th>id </th>
+                <th>nombre Editorial</th>
+            </tr>
+        </table>
+    </body>
+</html>
