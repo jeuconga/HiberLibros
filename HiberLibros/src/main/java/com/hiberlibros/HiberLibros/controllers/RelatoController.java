@@ -2,11 +2,13 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Relato;
+import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,16 +26,19 @@ public class RelatoController {
     @Autowired
     private RelatoRepository repoRelato;
 
+    @Autowired
+    private GeneroRepository repoGenero;
+
     @GetMapping
     public String prueba(Model model) {
 
-//        ArrayList<Genero> generos = repositorio.findAll();
-//        model.addAttribute("generos",generos);
+        List<Genero> generos = repoGenero.findAll();
+        model.addAttribute("generos", generos);
         return "/relato/relato";
     }
 
     @PostMapping("/guardarRelato")
-    public String s(Relato relato,MultipartFile ficherosubido) {
+    public String s(Relato relato, MultipartFile ficherosubido) {
         String subir = "c:\\zzzzSubirFicheros\\" + ficherosubido.getOriginalFilename();
         File f = new File(subir);
         f.getParentFile().mkdirs();
