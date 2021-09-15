@@ -5,14 +5,13 @@
  */
 package com.hiberlibros.HiberLibros.repositories;
 
-import com.hiberlibros.HiberLibros.entities.Usuarios;
-import com.hiberlibros.HiberLibros.entities.Usuarios;
+import com.hiberlibros.HiberLibros.entities.Libro;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
- * @author Usuario
+ * @author Mohamad
  */
-public interface UsuariosRepository extends JpaRepository<Usuarios, Integer>{
+public interface LibroRepository extends JpaRepository<Libro, Integer>{
     
 }
