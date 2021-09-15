@@ -7,6 +7,12 @@
  * Author:  Usuario
  * Created: 14 sept 2021
  */
+
+insert into editoriales values (1,"alfaguara");
+insert into editoriales values (2,"anaya");
+insert into editoriales values (3,"barco de vapor");
+
+
 create table editoriales (
     id int auto_increment primary key,
     nombre_editorial Varchar(100)

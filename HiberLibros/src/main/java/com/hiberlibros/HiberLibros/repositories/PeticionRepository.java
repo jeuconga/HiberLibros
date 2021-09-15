@@ -5,14 +5,11 @@
  */
 package com.hiberlibros.HiberLibros.repositories;
 
-import com.hiberlibros.HiberLibros.entities.Libro;
+import com.hiberlibros.HiberLibros.entities.Peticion;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-/**
- *
- * @author Mohamad
- */
-public interface LibroRepository extends JpaRepository<Libro, Integer>{
-    public List<Libro> findByIsbnContainsOrTituloContains(String isbn, String titulo);
+public interface PeticionRepository extends JpaRepository<Peticion, Integer>{
+    public List<Peticion> findByPendienteTratar(Boolean b);
+    public List<Peticion> findByAceptacion(Boolean p);
 }
