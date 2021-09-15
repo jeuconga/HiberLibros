@@ -28,7 +28,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "intercambio")
+@Table(name = "intercambios")
 public class Intercambio {
 
     @Id
@@ -43,11 +43,11 @@ public class Intercambio {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaDevolucion;
     
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name="id_usuario_libro_prestador")
     private UsuarioLibro usuarioPrestador;
     
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name="id_usuario_libro_prestatario")
     private UsuarioLibro usuarioPrestatario;
     

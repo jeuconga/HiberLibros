@@ -1,0 +1,78 @@
+<html xmlns:th="https://www.thymeleaf.org" 
+      th:replace="principal/layoutUsuario::layout(~{::body})">
+
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class='col-7'>
+                    <h2>Tus libros</h2>
+                    <table class="table">
+                        <tr>
+                            <th>ISBN</th>
+                            <th>Titulo</th>
+                            <th>Idioma</th>
+                            <th>Editorial</th>
+                            <th>Genero</th>
+                            <th>Valoracion</th>
+                        </tr>
+                    </table>
+                    <a class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;añadir libro</a>
+                </div>
+
+                <div class='col-5'>
+                    <h2>Tus relatos</h2>
+                    <table class="table"  >
+                        <tr>
+                            <th>id</th>
+                            <th>titulo</th>
+                            <th>Género</th>
+                            <th>Valoraciones</th>
+                            <th>NºValoraciones</th>
+                        </tr>
+                    </table>
+                    <a class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;añadir relato</a>
+                </div>
+
+            </div>
+            
+            <div class="row">
+                <div class='col-3'>
+                    <h2>Nuevas Peticiones</h2>
+                    <table class="table">
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Libro</th>
+                            <th>Sus Libros</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class='col-3'>
+                    <h2>Tus peticiones</h2>
+                    <table class="table">
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Libro</th>
+
+                        </tr>
+                    </table>
+                </div>
+
+                <div class='col-6'>
+                    <h2>Intercambios</h2>
+                    <table class="table"  >
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Libro Prestado</th>
+                            <th>Libro Recibido</th>
+                            <th>Fecha de Inicio</th>
+                            <th>Fecha de devolución</th>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </body>
+
+</html>

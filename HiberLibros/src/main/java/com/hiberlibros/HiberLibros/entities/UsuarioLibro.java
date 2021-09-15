@@ -36,11 +36,11 @@ public class UsuarioLibro {
     private String estadoPrestamo;
     private String quieroTengo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_libro")
     private Libro libro;
 

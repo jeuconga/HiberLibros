@@ -5,10 +5,13 @@
  */
 package com.hiberlibros.HiberLibros.entities;
 
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,7 +38,14 @@ public class Usuario {
     private Double latitud;
     private String uriFoto;
     
+    /*@OneToMany(mappedBy = "usuarioLibro",fetch=FetchType.EAGER)
+    private List<UsuarioLibro> usuarioLibro;
     
+    @OneToMany(mappedBy = "usuario",fetch=FetchType.EAGER)
+    private List<Relato> relato;
+    
+    @OneToMany(mappedBy = "usuarioPreferencia",fetch=FetchType.EAGER)
+    private List<Preferencia> preferencia;*/
     
     
     

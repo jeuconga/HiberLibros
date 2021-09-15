@@ -18,30 +18,43 @@ import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 @Controller
 @RequestMapping("/usuarios")
 public class UsuarioController {
-    
+
     @Autowired
     private UsuarioServiceI service;
-    
+
     @GetMapping
-    public String usuarioFormulario(Model m, String registro){        
+    public String usuarioFormulario(Model m, String registro) {
         m.addAttribute("registro", registro);
         m.addAttribute("usuarios", service.usuariosList());
         return "/usuarios/usuariosFormulario";
     }
-    
+
     @PostMapping("/guardarUsuario")
-    public String usuarioRegistrar(Usuario u){
-        String resultado=service.guardarUsuario(u);
-        return "redirect:/usuarios?registro="+resultado;
+    public String usuarioRegistrar(Usuario u) {
+        String resultado = service.guardarUsuario(u);
+        if (resultado.contains("Error")) {
+            return "redirect:/hiberlibros?error=" + resultado;
+        } else {
+            return "redirect:/hiberlibros/panelUsuario?mail=" + u.getMail();
+        }
+
     }
-    
+
+    @PostMapping("/editarUsuario")
+    public String usuarioEditar(Usuario u) {
+        return "redirect:/hiberlibros/panelUsuario?mail=" + service.editarUsuario(u);
+    }
+
     @GetMapping("/borrar")
-    public String borrar(Integer id){
+    public String borrar(Integer id) {
         service.borrarUsuario(id);
         return "redirect:/usuarios";
     }
-    
-    
-    
-    
+
+    @GetMapping("/borrarUsuario")
+    public String borrarUsuario(Integer id) {
+        service.borrarUsuario(id);
+        return "redirect:/hiberlibros";
+    }
+
 }
