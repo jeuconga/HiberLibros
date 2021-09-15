@@ -9,7 +9,7 @@
 <body>
 	<div class="container">
 		<h3>Informacion del autor</h3>
-		<form action="save" id="formulario" method="post" th:object="${autor}" class="form-group">
+		<form action="saveAutor" id="formulario" method="post" th:object="${autor}" class="form-group">
 			<input type="text" class="form-control" th:field="*{id}" hidden>
 			<label>Nombre:</label> 
 				<input type="text" class="form-control"th:field="*{nombre}"> 
