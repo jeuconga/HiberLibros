@@ -64,17 +64,18 @@ public class PeticionController {
         return "redirect:/peticion/peticion";
     }
     
+    @PostMapping(value = "/peticionesPendientes")
     public String consultarTodasPeticionesPendientes(Model m, Usuario u){
          m.addAttribute("peticionesPendientes",servicePeticion.consultarPeticionesPendientes(u));
          return "redirect:/peticion/peticion";
     }
     
     public String consultarTodasPeticionesAceptadas(Model m,  Usuario u){
-         m.addAttribute("peticionesPendientes",servicePeticion.consultarPeticionesAceptadas(u));
+         m.addAttribute("peticionesAceptadas",servicePeticion.consultarPeticionesAceptadas(u));
          return "redirect:/peticion/peticion";
     }
     public String consultarTodasPeticionesRechazadas(Model m, Usuario u){
-         m.addAttribute("peticionesPendientes",servicePeticion.consultarPeticionesPendientes(u));
+         m.addAttribute("peticionesRechazadas",servicePeticion.consultarPeticionesPendientes(u));
          return "redirect:/peticion/peticion";
     }
 }
