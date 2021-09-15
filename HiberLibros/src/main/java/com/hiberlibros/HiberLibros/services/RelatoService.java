@@ -5,20 +5,10 @@
  */
 package com.hiberlibros.HiberLibros.services;
 
-import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
-import com.hiberlibros.HiberLibros.entities.Relato;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hiberlibros.HiberLibros.interfaces.RelatoServiceI1;
+import org.springframework.stereotype.Service;
 
-
-
-public class RelatoService {
-
-    @Autowired
-    private RelatoRepository repoRelato;
-
-    public List<Relato> consulta() {
-        return repoRelato.findAll();
-    }
+@Service
+public class RelatoService implements RelatoServiceI1 {
 
 }

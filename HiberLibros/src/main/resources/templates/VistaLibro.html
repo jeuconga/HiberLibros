@@ -35,9 +35,14 @@
                         <span class="m-1">Idioma</span> <input  class="m-1"  name="idioma" /><br/>
                         <span class="m-1">URL</span> <input  class="m-1" name="uriPortada" /><br/>
                         <span class="m-1">Valoracion</span> <input  class="m-1" name="valoracionLibro" /><br/>
-<!--                        <span class="m-1">Genero</span> <select  class="m-1"  >
-                                <option th:each=gen:"${generos}"></option>
-                        </select>-->
+                        
+                        <span class="m-1">Editorial</span> <select  class="m-1"  name="id_editorial">
+                            <option th:each="edit:${editoriales}" th:text="${edit.nombreEditorial}" th:value="${edit.id}"></option>
+                        </select>
+
+                        <span class="m-1">Genero</span> <select  class="m-1"  name="id_genero">
+                            <option th:each="gen:${generos}" th:text="${gen.nombre}" th:value="${gen.id}"></option>
+                        </select>
                         <button type="submit" class="btn btn-dark" ><i class="fas fa-arrow-circle-up"><span style="margin-left: 5px">Guardar</span></i> </button>
                     </form>
                 </div>

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "autorlibros") //Tabla intermedia de autor y libro
+@Table(name = "autor_libro") //Tabla intermedia de autor y libro
 public class AutorLibro {
 	  	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -48,11 +48,14 @@ public class LibroController {
     @GetMapping("/libros")
     public String mostrarFormulario(Model m){
         m.addAttribute("libros", librepo.findAll());
+        m.addAttribute("generos", genRepo.findAll());
         return "VistaLibro";
     } 
     
     @PostMapping("/guardarLibro")
-    public String guardarLIbro(Model m,Libro libro){
+    public String guardarLIbro(Model m,Libro libro, Integer id_genero, Integer id_editorial){
+        libro.setGenero(genRepo.getById(id_genero));
+        libro.setEditorial(editRepo.getById(id_genero));
         librepo.save(libro);
         return "redirect:libros";
     }
