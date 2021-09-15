@@ -31,7 +31,7 @@ public class Genero {
    @OneToMany(mappedBy = "genero")
    private List<Relato> listaRelatos;
     
-   @OneToMany(mappedBy = "libro")
+   @OneToMany(mappedBy = "id")
     private List<Libro> listaLibros;
     
     
