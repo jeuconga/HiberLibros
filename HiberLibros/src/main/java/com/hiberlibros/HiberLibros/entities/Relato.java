@@ -7,44 +7,40 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "relatos")
 public class Relato {
 
-    
-@Id    
-@GeneratedValue(strategy = GenerationType.IDENTITY) 
-private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-/*
-@ManyToOne             
-@JoinColumn(name = "id_usuario")
-private Usuario usuario;*/
+    @Column
+    private String fichero;
 
-@Column
-private String fichero;
+    @Column
+    private String titulo;
 
-@Column
-private String titulo;
+    @Column
+    private Double valoracionUsuarios;
 
-@ManyToOne             
-@JoinColumn(name = "id_genero")
-private Genero genero;
+    @Column
+    private Integer numeroValoraciones;
 
-@Column
-private Double valoracionUsuarios;
+    @ManyToOne
+    @JoinColumn(name = "id_genero")
+    private Genero genero;
 
-@Column
-private Integer numeroValoraciones;
-
-
-
-    
+    /*
+    @ManyToOne             
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;*/
 }
