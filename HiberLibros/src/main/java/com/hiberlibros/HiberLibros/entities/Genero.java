@@ -33,6 +33,4 @@ public class Genero {
     
    @OneToMany(mappedBy = "libro")
     private List<Libro> listaLibros;*/
-    
-    
 }
