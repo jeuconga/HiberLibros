@@ -33,13 +33,17 @@ public class Libro {
     @Column
     private String idioma;
     @Column
-    private String editorial;
-    @Column
     private String uriPortada;
     @Column
     private Double valoracionLibro;
     
     @ManyToOne             
+    @JoinColumn(name = "id_editorial")
+    private Editorial  editorial;
+      
+    @ManyToOne             
     @JoinColumn(name = "id_genero")
     private Genero  genero; 
+    
+  
 }

@@ -5,13 +5,13 @@
  */
 package com.hiberlibros.HiberLibros.repositories;
 
-import com.hiberlibros.HiberLibros.entities.Intercambio;
+import com.hiberlibros.HiberLibros.entities.Genero;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
- * @author Usuario
+ * @author Mohamad
  */
-public interface IntercambioRepository extends JpaRepository<Intercambio, Integer>{
+public interface GeneroRepository extends JpaRepository<Genero,Integer>{
     
 }

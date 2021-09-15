@@ -22,9 +22,11 @@ public class AutorLibro {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Integer id;
 	  	
-	  	@ManyToOne
+            @ManyToOne
 	    @JoinColumn(name = "id_autor")
 	    private Autor autor;
 	    
+            @ManyToOne
+	    @JoinColumn(name = "id_libro")
 	    private Libro libro;
 }
