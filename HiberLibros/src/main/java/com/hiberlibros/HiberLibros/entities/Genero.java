@@ -29,9 +29,9 @@ public class Genero {
     private String nombre;
     
    /*@OneToMany(mappedBy = "relato")
-   private List<Relato> listaRelatos;*/
+   private List<Relato> listaRelatos;
     
-   /*@OneToMany(mappedBy = "libro")
+   @OneToMany(mappedBy = "libro")
     private List<Libro> listaLibros;*/
     
     
