@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity 
-@Table(name = "Libros")
+@Table(name = "libros")
 public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +39,7 @@ public class Libro {
     @Column
     private Double valoracionLibro;
     
-//    @ManyToOne             
-//    @JoinColumn(name = "id_genero")
-//    private Genero  genero;
+    @ManyToOne             
+    @JoinColumn(name = "id_genero")
+    private Genero genero; 
 }
