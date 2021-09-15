@@ -28,7 +28,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "intercambio")
+@Table(name = "intercambios")
 public class Intercambio {
 
     @Id
