@@ -18,6 +18,7 @@
                 <label>Genero : </label>
 
                 <select name="genero">
+                    <option value="">Seleccione una opción</option>
                     <option th:each="gen:${generos}"
                             th:value="${gen.id}" 
                             th:text="${gen.nombre}"
