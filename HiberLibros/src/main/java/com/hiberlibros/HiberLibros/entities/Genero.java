@@ -28,11 +28,11 @@ public class Genero {
     @Column
     private String nombre;
     
-   @OneToMany(mappedBy = "relato")
-   private List<Relato> listaRelatos;
+   /*@OneToMany(mappedBy = "relato")
+   private List<Relato> listaRelatos;*/
     
-   @OneToMany(mappedBy = "libro")
-    private List<Libro> listaLibros;
+   /*@OneToMany(mappedBy = "libro")
+    private List<Libro> listaLibros;*/
     
     
 }
