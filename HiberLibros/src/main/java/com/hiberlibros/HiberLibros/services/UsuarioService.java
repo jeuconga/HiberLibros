@@ -1,24 +1,24 @@
 
 package com.hiberlibros.HiberLibros.services;
 
-import com.hiberlibros.HiberLibros.entities.Usuarios;
-import com.hiberlibros.HiberLibros.interfaces.UsuariosServiceI;
-import com.hiberlibros.HiberLibros.repositories.UsuariosRepository;
+import com.hiberlibros.HiberLibros.entities.Usuario;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.hiberlibros.HiberLibros.repositories.UsuarioRepository;
+import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 
 /**
  *
  * @author Usuario
  */
 @Service
-public class UsuariosService implements UsuariosServiceI{
+public class UsuarioService implements UsuarioServiceI{
     @Autowired
-    private UsuariosRepository urService;
+    private UsuarioRepository urService;
 
     @Override
-    public String guardarUsuario(Usuarios u) {
+    public String guardarUsuario(Usuario u) {
         String resultado="";
         int auxMail=u.getMail().indexOf("@");
         String mailSubstring=u.getMail().substring(auxMail);
@@ -48,7 +48,7 @@ public class UsuariosService implements UsuariosServiceI{
     }
 
     @Override
-    public List<Usuarios> usuariosList() {
+    public List<Usuario> usuariosList() {
         return urService.findAll();
     }
     

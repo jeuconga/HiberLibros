@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="relato")
+@Table(name="relatos")
 public class Relato {
 
     @Id
@@ -28,7 +28,7 @@ public class Relato {
 
 @ManyToOne             
 @JoinColumn(name = "id_usuario")
-private Usuarios usuario;
+private Usuario usuario;
 
     @Column
     private String titulo;

@@ -5,17 +5,17 @@
  */
 package com.hiberlibros.HiberLibros.interfaces;
 
-import com.hiberlibros.HiberLibros.entities.Usuarios;
+import com.hiberlibros.HiberLibros.entities.Usuario;
 import java.util.List;
 
 /**
  *
  * @author Usuario
  */
-public interface UsuariosServiceI {
+public interface UsuarioServiceI {
     
-    public String guardarUsuario(Usuarios u);
+    public String guardarUsuario(Usuario u);
     public void borrarUsuario(Integer id);
-    public List<Usuarios> usuariosList();
+    public List<Usuario> usuariosList();
     
 }

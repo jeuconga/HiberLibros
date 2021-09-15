@@ -32,7 +32,7 @@ public class Peticion {
     
     @OneToOne
     @JoinColumn(name = "id_usuario_solicitante")
-    private Usuarios idUsuarioSolicitante;
+    private Usuario idUsuarioSolicitante;
     private Boolean aceptacion;
     private Boolean pendienteTratar;
 }

@@ -6,10 +6,8 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Peticion;
-import com.hiberlibros.HiberLibros.entities.Usuarios;
+import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.services.PeticionService;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,27 +53,27 @@ public class PeticionController {
     }
     
     @PostMapping(value = "/aceptar")
-    public String aceptarPeticion(Model m, Peticion p, Usuarios u){
+    public String aceptarPeticion(Model m, Peticion p, Usuario u){
         servicePeticion.aceptarPeticion(p);
         return "redirect:/peticion/peticion";
     }
             
     @PostMapping(value = "/rechazar")
-    public String rechazarPeticion(Model m, Peticion p, Usuarios u){
+    public String rechazarPeticion(Model m, Peticion p, Usuario u){
         servicePeticion.rechazarPeticion(p);
         return "redirect:/peticion/peticion";
     }
     
-    public String consultarTodasPeticionesPendientes(Model m, Usuarios u){
+    public String consultarTodasPeticionesPendientes(Model m, Usuario u){
          m.addAttribute("peticionesPendientes",servicePeticion.consultarPeticionesPendientes(u));
          return "redirect:/peticion/peticion";
     }
     
-    public String consultarTodasPeticionesAceptadas(Model m,  Usuarios u){
+    public String consultarTodasPeticionesAceptadas(Model m,  Usuario u){
          m.addAttribute("peticionesPendientes",servicePeticion.consultarPeticionesAceptadas(u));
          return "redirect:/peticion/peticion";
     }
-    public String consultarTodasPeticionesRechazadas(Model m, Usuarios u){
+    public String consultarTodasPeticionesRechazadas(Model m, Usuario u){
          m.addAttribute("peticionesPendientes",servicePeticion.consultarPeticionesPendientes(u));
          return "redirect:/peticion/peticion";
     }

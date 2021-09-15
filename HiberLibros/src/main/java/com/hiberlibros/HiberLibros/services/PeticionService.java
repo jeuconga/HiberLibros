@@ -6,7 +6,7 @@
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Peticion;
-import com.hiberlibros.HiberLibros.entities.Usuarios;
+import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.repositories.PeticionRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,13 +42,13 @@ public class PeticionService {
         repoPeticion.save(p);
     }
     
-    public List<Peticion> consultarPeticionesPendientes(Usuarios u){
+    public List<Peticion> consultarPeticionesPendientes(Usuario u){
         return repoPeticion.findByPendienteTratar(Boolean.TRUE).stream().filter(x-> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());
     }
-    public List<Peticion> consultarPeticionesAceptadas(Usuarios u){
+    public List<Peticion> consultarPeticionesAceptadas(Usuario u){
         return repoPeticion.findByAceptacion(Boolean.TRUE).stream().filter(x-> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());                
     }
-    public List<Peticion> consultarPeticionesRechazadas(Usuarios u){
+    public List<Peticion> consultarPeticionesRechazadas(Usuario u){
         return repoPeticion.findByAceptacion(Boolean.FALSE).stream().filter(x-> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());                
     }
 }

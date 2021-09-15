@@ -5,15 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <form  th:object="${generos}">
-            <input type="text" th:field="*{nombre}" />
-            <input type="submit" value="Enviar">
-        </form>
-        <table>
-            <tr>
-                <th>id </th>
-                <th>nombre Editorial</th>
-            </tr>
-        </table>
+        <div class="container pt-5 px-5">
+            <h1>Listado de Géneros</h1>
+            <table class="table table-striped">
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                </tr>
+                <tr th:each='genero: ${generos}'>
+                    <td th:text='${genero.id}'></td>
+                    <td th:text='${genero.nombre}'></td>
+                </tr>
+            </table>
     </body>
 </html>
