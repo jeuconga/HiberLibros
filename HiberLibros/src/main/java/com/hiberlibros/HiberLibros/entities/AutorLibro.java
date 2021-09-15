@@ -1,13 +1,11 @@
 package com.hiberlibros.HiberLibros.entities;
 
-import java.util.List;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -18,17 +16,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "autores")
-public class Autor {
-	  @Id
+@Table(name = "autor_libro") //Tabla intermedia de autor y libro
+public class AutorLibro {
+	  	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Integer idAutor;
-	    @Column
-	    private String nombre;
-	    @Column
-	    private String apellidos;
-	    @Column
-	    private String biografia;
-	    @OneToMany(mappedBy = "autor")
-	     private List<AutorLibro> autorLibros;
+	    private Integer id;
+	  	
+	  	@ManyToOne
+	    @JoinColumn(name = "id_autor")
+	    private Autor autor;
+	  	@ManyToOne
+	    @JoinColumn(name = "id_libro")
+	    private Libro libro;
 }

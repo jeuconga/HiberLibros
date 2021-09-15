@@ -6,6 +6,7 @@
 package com.hiberlibros.HiberLibros.repositories;
 
 import com.hiberlibros.HiberLibros.entities.Usuarios;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Usuario
  */
 public interface UsuariosRepository extends JpaRepository<Usuarios, Integer>{
+    
+    public Optional<Usuarios> findByMailContainsIgnoreCase (String mail);
     
 }
