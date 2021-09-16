@@ -34,6 +34,9 @@ public class RelatoController {
         List<Genero> generos = repoGenero.findAll();
         model.addAttribute("generos", generos);
 
+        List<Relato> relatos = repoRelato.findAll();
+        model.addAttribute("relatos", relatos);
+
         return "/relato/relato";
     }
 
@@ -57,7 +60,7 @@ public class RelatoController {
             model.addAttribute("error", "Ha ocurrido un error al insertar");
 
         }
-        return "/relato/relato";
+        return "redirect:/relato";
     }
 
     @GetMapping("/eliminarRelato")
@@ -70,29 +73,31 @@ public class RelatoController {
     }
 
     @PostMapping("/addValoracion")
-    public String addValoracion(Model m,Double valoracion,Integer id) {
+    public String addValoracion(Model m, Double valoracion, Integer id) {
         Optional<Relato> rel = repoRelato.findById(id);
         if (rel.isPresent()) {
-            calcularValoracion(id,valoracion);          
-          
-        }
-        return "/relato/relato";
-    }
+            calcularValoracion(id, valoracion);
 
+        }
+       return "redirect:/relato";
+    } 
+
+    //metodo para calcular el numero de valoraciones y calcular la media entre ellas
     public void calcularValoracion(int id, Double valoracion) {
         Optional<Relato> relato = repoRelato.findById(id);
-
         if (relato.isPresent()) {
             relato.get().setNumeroValoraciones(relato.get().getNumeroValoraciones() + 1);
-
             Double val = (relato.get().getValoracionUsuarios() * (relato.get().getNumeroValoraciones() - 1) + valoracion)
                     / relato.get().getNumeroValoraciones();
-
             relato.get().setValoracionUsuarios(val);
             repoRelato.save(relato.get());
 
         }
-
     }
 
+    @PostMapping("modificar")
+    public String modificarRelato(Model m, Relato relato) {
+        Optional<Relato> rel = repoRelato.findById(relato.getId());
+        return "/relato/relato";
+    }
 }

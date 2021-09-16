@@ -28,22 +28,46 @@
             <span th:text="${correcto}" style="color:green;font-size: 20px"></span>
             <hr>
             <br> <br>
+
             <!--  AÑADIR VALORACION   -->
 
             <form action="/relato/addValoracion" method="post">
-                
+
                 <label>Valoracion :</label>
                 <input type="number" name="valoracion" min="0" max="10"/><br> <br>
                 <label>ID para probar :</label>
                 <input type="number" name="id"/><br> <br>
                 <button type="submit" class="btn btn-primary">Añadir valoracion</button>
-                
+
             </form>
 
+            <hr> <br> <br>
 
-            <!--  PARA PROBAR SI FUNCIONA EL BORRAR , SI FUNCIONA          
-                         <a class="btn btn-danger"  th:href="${'/relato/eliminarRelato?id='+2}" >Eliminar</a>
-            -->
+            <table>
+                <tr>
+                    <th>id</th>
+                    <th>titulo</th>
+                    <th>valoracion usuarios</th>
+                    <th>Genero</th>
+                    <th>numero valoraciones</th>
+                </tr>
+                <tr th:each="rel:${relatos}">
+                    <td th:text="${rel.id}"></td>            
+                    <td th:text="${rel.titulo}"></td>  
+                    <td th:text="${rel.valoracionUsuarios}"></td>  
+                    <td th:text="${rel.genero.nombre}"></td>  
+                    <td th:text="${rel.numeroValoraciones}"></td>  
+                    <td> <a class="btn btn-danger"  th:href="${'/relato/eliminarRelato?id='+rel.id}" >Eliminar</a></td>
+
+
+                    <!-- FALTA EL MODIFICAR -->
+                    <td> <a class="btn btn-danger"  th:href="${'/relato/modificar?id='+rel.id}" >Modificar</a></td>
+
+                </tr>
+
+            </table>
+            <hr> <br> <br>
+
 
 
         </div>

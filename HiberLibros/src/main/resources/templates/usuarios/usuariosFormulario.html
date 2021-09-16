@@ -6,14 +6,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"/>
-        <style>
-            .rojo{
-                color:red
-            }
-            .verde{
-                color:green
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="estilo.css" />
     </head>
 
     <body>
@@ -34,7 +27,7 @@
 
         </form>
         <div th:if='${registro!=null}'>
-            <p th:text="${registro}" th:class="${registro.contains('Error')?rojo:verde}"></p>
+            <p th:text="${registro}" th:class="${registro.contains('Error')?'rojo':'verde'}"></p>
         </div>
         <div>
             <table class="table">

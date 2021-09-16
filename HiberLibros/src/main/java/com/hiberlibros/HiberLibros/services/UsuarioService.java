@@ -35,9 +35,6 @@ public class UsuarioService implements UsuarioServiceI{
             urService.save(u);
             resultado="Usuario registrado con éxito";
         }
-       
-        
-        
         return resultado;
 
     }
@@ -50,6 +47,27 @@ public class UsuarioService implements UsuarioServiceI{
     @Override
     public List<Usuario> usuariosList() {
         return urService.findAll();
+    }
+
+    @Override
+    public boolean registrado(String mail) {
+        if(urService.findByMail(mail).isEmpty()){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    @Override
+    public Usuario usuarioRegistrado(String mail) {
+        return urService.findByMail(mail).get();
+    }
+
+    @Override
+    public String editarUsuario(Usuario usr) {
+        urService.save(usr);
+        return usr.getMail();
     }
     
 }

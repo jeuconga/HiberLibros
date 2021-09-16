@@ -1,0 +1,12 @@
+{
+    "elements": {
+        "th:block": {}
+    },
+    "attributes": {
+        "th:text": {},
+        "th:if": {},
+        "th:object": {},
+        "th:field": {},
+        "th:class": {}
+    }
+}

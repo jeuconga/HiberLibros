@@ -26,9 +26,9 @@ public class Relato {
     @Column
     private String fichero;
 
-@ManyToOne             
-@JoinColumn(name = "id_usuario")
-private Usuario usuario;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 
     @Column
     private String titulo;
