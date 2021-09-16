@@ -14,7 +14,7 @@ header{
 }
 
 
-body {
+.login {
     background: url(banner.jpg);
     width: 100%;
     background-position: center center;
