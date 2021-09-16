@@ -26,6 +26,9 @@ function eliminarU(pID) {
         }
     });
 }
+function consultarLibros() {
+
+}
 
 
 
