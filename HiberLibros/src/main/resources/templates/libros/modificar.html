@@ -19,6 +19,10 @@
                         <span class="m-1">URL</span> <input  class="m-1"  th:field="*{uriPortada}" /><br/>
                         <span class="m-1">Valoracion</span> <input  class="m-1"  th:field="*{valoracionLibro}" /><br/>
                         
+                        <span class="m-1">Autor</span> <select  class="m-1"  name="id_autor">
+                            <option th:each="autor:${autores}" th:text="${autor.nombre}" th:value="${autor.id}"></option>
+                        </select>
+   
                         <span class="m-1">Editorial</span> <select  class="m-1"  name="id_editorial">
                             <option th:each="edit:${editoriales}" th:text="${edit.nombreEditorial}" th:value="${edit.id}"></option>
                         </select>
