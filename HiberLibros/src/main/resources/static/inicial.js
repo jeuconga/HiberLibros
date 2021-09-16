@@ -6,13 +6,6 @@ function registrarUsuario() {
     });
 
 }
-function entrar() {
-    bootbox.dialog({
-        title: 'Iniciar Sesión',
-        size: 'small',
-        message: $("#login").html()
-    });
-}
 function editarUsuario() {
     bootbox.dialog({
         title: 'Editar',

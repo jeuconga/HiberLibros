@@ -1,24 +1,56 @@
+
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Iniciar sesion</title>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
-	<link rel="stylesheet"
-	href="css/login.css">
-</head>
-<body>
-<div class="register-photo">
-    <div class="form-container">
-        <div class="image-holder"></div>
-        <form method="post">
-            <h2 class="text-center">Iniciar sesion</h2>
-            <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email"></div>
-            <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Contrase�a"></div>
-            <div class="form-group"><button class="btn btn-success btn-block" type="submit">Iniciar sesion</button></div><a class="already" href="registro.html">�No tienes una cuenta? Registrate aqui.</a>
-        </form>
-    </div>
-</div>
-</body>
+
+<html xmlns:th="https://www.thymeleaf.org" lang='es'>
+    <head>
+        <title>HiberLibros</title>
+        <meta charset="UTF-8">
+        <link href="estilo.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/united/bootstrap.min.css"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/flatly/bootstrap.min.css" rel="stylesheet" media="all">
+    </head>
+
+    <body class="login">
+        <header class="bg-primary">
+            <h1 class="text-secondary">HiberLibros <i class="fas fa-book-open text-secondary"></i></h1>
+        </header> 
+        <p th:if="${error!=null}"><span th:text="${error}" class="text-secondary"></span></p>
+            <div class="register-photo">
+                <div class="form-container">
+
+                    <form action="/hiberlibros/entrar" method="post">
+                        <h2 class="text-center">Iniciar sesion</h2>
+                        <div class="form-group"><input class="form-control" type="email" name="mail" placeholder="Email"></div>
+                        <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password"></div>
+                        <div class="form-group"><button class="boton3 btn btn-block" type="submit" >Iniciar sesion</button></div>
+                        <a class="already btn" onclick="registrarUsuario()" >¿No tienes una cuenta? Registrate aqui.</a> 
+                    </form>
+                </div>
+            </div>
+            <div id="nuevoUsuario" style="display:none">
+                <form action="usuarios/guardarUsuario" method="post">
+                    <label for="nombre">Nombre: </label>
+                    <input type="text" name="nombre" required=""/>
+                    <label for="apellido">Apellido: </label>
+                    <input type="text" name="apellido" required=""/>
+                    <label for="direccion">Dirección: </label>
+                    <input type="text" name="direccion" required=""/>
+                    <label for="ciudad">Ciudad: </label>
+                    <input type="text" name="ciudad" required=""/>
+                    <label for="mail">Correo electrónico: </label>
+                    <input type="email" name="mail" required=""/>
+                    <label for="telef">Teléfono: </label>
+                    <input type="number" name="telef" required=""/>
+                    <input type="submit" value="Guardar Usuario"/>
+                </form>
+            </div>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>   
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-deserialize@2.0.0-rc1/src/jquery.deserialize.min.js"></script> 
+        <script src="inicial.js"></script>
+    </body>
 </html>
