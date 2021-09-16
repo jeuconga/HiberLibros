@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.Optional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequestMapping("/relato")
@@ -79,8 +80,8 @@ public class RelatoController {
             calcularValoracion(id, valoracion);
 
         }
-       return "redirect:/relato";
-    } 
+        return "redirect:/relato";
+    }
 
     //metodo para calcular el numero de valoraciones y calcular la media entre ellas
     public void calcularValoracion(int id, Double valoracion) {
@@ -95,9 +96,20 @@ public class RelatoController {
         }
     }
 
-    @PostMapping("modificar")
-    public String modificarRelato(Model m, Relato relato) {
-        Optional<Relato> rel = repoRelato.findById(relato.getId());
+    @GetMapping("/relato/{id}")
+    public String buscarPorID(Model m, @PathVariable Integer id) {
+        m.addAttribute("relato", repoRelato.findById(id));
+        return "/relato/relato";
+    }
+
+    @GetMapping("/modificar")
+    public String editarAlumno(Model model, Integer id) {
+        try {
+            model.addAttribute("relato", repoRelato.findById(id));
+            model.addAttribute("bienmodificado", "Se ha modificado correctamente");
+        } catch (Exception e) {
+            model.addAttribute("errormodificado", "Ha ocurrido un error al modificado ");
+        }
         return "/relato/relato";
     }
 }

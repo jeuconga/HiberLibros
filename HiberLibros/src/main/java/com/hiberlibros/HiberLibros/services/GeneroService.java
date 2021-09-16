@@ -3,10 +3,8 @@ package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.interfaces.IGeneroService;
-import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,7 +23,7 @@ public class GeneroService implements IGeneroService {
 
     @Override
     public void borrarGenero(Integer id) {
-        listaGeneros.removeIf(x -> x.getId() == id);
+
     }
 
     @Override

@@ -29,23 +29,22 @@ public class GeneroController {
     @GetMapping("/ver")
     public String verGeneros(Model model){
         model.addAttribute("generos", generoRepository.findAll());
+        model.addAttribute("generoForm", new Genero());
         return "genero";
-        
     }
     
     @PostMapping("/guardar")
-    public String formulario(Model model, Genero genero){
-        generoService.guardarGenero(genero);
- 
+    public String formulario(Genero genero){
+        generoRepository.save(genero);
         return "redirect:ver";
     }
     
     @GetMapping("/borrar/{id}")
     public String borrarGenero(@PathVariable Integer id){
-        generoService.borrarGenero(id);
+        System.out.println(id + "Eyyyyyyyyyyyyyyyyyyyyyyyy");
+        generoRepository.deleteById(id);
         
-        return "/genero";
+        
+        return "redirect:/genero/ver";
     }
-    
-    
 }
