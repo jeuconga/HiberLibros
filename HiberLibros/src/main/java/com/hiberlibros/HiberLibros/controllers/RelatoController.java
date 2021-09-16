@@ -96,20 +96,13 @@ public class RelatoController {
         }
     }
 
-    @GetMapping("/relato/{id}")
-    public String buscarPorID(Model m, @PathVariable Integer id) {
-        m.addAttribute("relato", repoRelato.findById(id));
-        return "/relato/relato";
-    }
+  
 
     @GetMapping("/modificar")
-    public String editarAlumno(Model model, Integer id) {
-        try {
-            model.addAttribute("relato", repoRelato.findById(id));
-            model.addAttribute("bienmodificado", "Se ha modificado correctamente");
-        } catch (Exception e) {
-            model.addAttribute("errormodificado", "Ha ocurrido un error al modificado ");
-        }
-        return "/relato/relato";
+    public String modificarRelato(Model m, Integer id) {
+        m.addAttribute("generos", repoGenero.findAll());
+        m.addAttribute("relato", repoRelato.findById(id));
+        return "relato/modificar";
     }
+
 }

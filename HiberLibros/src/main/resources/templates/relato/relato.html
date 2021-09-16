@@ -5,6 +5,8 @@
         <title>Subida de relatos</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
     </head>
     <body>
         <div class="container">
@@ -57,17 +59,23 @@
                     <td th:text="${rel.valoracionUsuarios}"></td>  
                     <td th:text="${rel.genero.nombre}"></td>  
                     <td th:text="${rel.numeroValoraciones}"></td>  
-                    <td> <a class="btn btn-danger"  th:href="${'/relato/eliminarRelato?id='+rel.id}" >Eliminar</a></td>
-                    
-                    
-                    <!-- FALTA EL MODIFICAR -->
-                    <td> <a class="btn btn-danger"  th:href="${'/relato/modificar?id='+rel.id}" >Modificar</a></td>
+                    <td>
+                        <a class="btn btn-danger"  th:href="${'/relato/eliminarRelato?id='+rel.id}" >Eliminar</a>
+
+                    </td>
+
+
+                    <td>
+                        <a  class="btn btn-dark" th:href="${'/modificar?id='+rel.id}">Modificar</a>
+
+                    </td>
+
 
                 </tr>
 
             </table>
             <hr> <br> <br>
-           
+
 
 
         </div>

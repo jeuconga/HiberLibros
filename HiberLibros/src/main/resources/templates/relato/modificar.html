@@ -1,0 +1,29 @@
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Titulo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <div class=" m-2">
+                <div class="row" >             
+
+                    <form action="/guardarRelato" method="post" th:object="${relato}" >
+                        <input class="m-1"  type="hidden" th:field="*{id.relato}"/>
+                        <span class="m-1">Titulo</span><input class="m-1"  th:field="*{titulo}" placeholder="Titulo" required /><br/>
+                        <span class="m-1">Valoracion</span> <input  class="m-1"  th:field="*{valoracionUsuarios}" /><br/>
+
+                        <span class="m-1">Genero</span> <select  class="m-1"  name="id_genero">
+                            <option th:each="gen:${generos}" th:text="${gen.nombre}" th:value="${gen.id}"></option>
+                        </select>
+
+                        <button type="submit" class="btn btn-dark" ><i class="fas fa-arrow-circle-up"><span style="margin-left: 5px">Guardar</span></i> </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
