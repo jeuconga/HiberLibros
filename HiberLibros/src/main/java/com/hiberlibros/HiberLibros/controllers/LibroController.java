@@ -8,9 +8,11 @@ package com.hiberlibros.HiberLibros.controllers;
 import com.hiberlibros.HiberLibros.entities.Editorial;
 import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Libro;
+import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.EditorialRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.LibroRepository;
+import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
 import java.util.ArrayList;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class LibroController {
     private GeneroRepository genRepo;
     @Autowired
     private EditorialRepository editRepo;
+    @Autowired
+    private AutorRepository AutRepo;
 
  
     @GetMapping("/libros")
@@ -37,13 +41,16 @@ public class LibroController {
         m.addAttribute("libros", librepo.findAll());
         m.addAttribute("generos", genRepo.findAll());
         m.addAttribute("editoriales", editRepo.findAll());
+        m.addAttribute("autores", AutRepo.findAll());
+        System.out.println("autor " + AutRepo.findAll() );
         return "libros/VistaLibro";
     } 
     
-    @PostMapping("/guardarLibro")
-    public String guardarLIbro(Model m,Libro libro, Integer id_genero, Integer id_editorial){
+    @PostMapping("/guardar")
+    public String guardarLIbro(Model m,Libro libro, Integer id_genero, Integer id_editorial,Integer id_autor){
         libro.setGenero(genRepo.getById(id_genero));
         libro.setEditorial(editRepo.getById(id_genero));
+        libro.setAutor(AutRepo.getById(id_autor));
         librepo.save(libro);
         return "redirect:libros";
     }
@@ -65,6 +72,7 @@ public class LibroController {
        m.addAttribute("libro", librepo.findById(id));
        m.addAttribute("generos", genRepo.findAll());
        m.addAttribute("editoriales", editRepo.findAll());
+       m.addAttribute("autores", AutRepo.findAll());
        return "libros/modificar";
     }
 }

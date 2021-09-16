@@ -14,17 +14,22 @@
                     <th>ISBN</th>
                     <th>Titulo</th>
                     <th>Idioma</th>
+                    <th>Autor</th>
                     <th>Editorial</th>
                     <th>Genero</th>
                     <th>Valoracion</th>
+                    
                 </tr>
                 <tr th:each="libro:${libros}">
                     <td th:text="${libro.isbn}"></td>
                     <td th:text="${libro.titulo}"></td>
                     <td th:text="${libro.idioma}"></td>
+                    <!--<td ><span th:if="${libro.autor!=null}" th:text="${libro.autor.nombre + ' ' + libro.autor.apellidos}"></span></td>-->
+                    <td th:text="${#objects.nullSafe(libro?.autor?.nombre,'') + ' ' + #objects.nullSafe(libro?.autor?.apellidos,'')}"></td>
                     <td th:text="${libro.editorial.nombreEditorial}"></td>
                     <td th:text="${libro.genero.nombre}"></td>
                     <td th:text="${libro.valoracionLibro}"></td>
+                    
                     <td>                   
                         <a type="button" class="btn btn-dark btn-sm" th:href="${'/eliminar?id='+ libro.id}"><i class="far fa-trash-alt" ><span style="margin-left:5px">Borrar</span></i></a>
                     </td>
@@ -37,13 +42,17 @@
             <div class=" m-2">
                 <div class="row" >             
 
-                    <form action="/guardarLibro" method="post"  >
+                    <form action="/guardar" method="post"  >
                         <input class="m-1" name="id" type="hidden" />
-                        <span class="m-1">ISBN</span><input class="m-1" name="isbn" placeholder="Descripcion" required /><br/>
-                        <span class="m-1">Titulo</span> <input  class="m-1"  name="titulo" /><br/>
-                        <span class="m-1">Idioma</span> <input  class="m-1"  name="idioma" /><br/>
-                        <span class="m-1">URL</span> <input  class="m-1" name="uriPortada" /><br/>
-                        <span class="m-1">Valoracion</span> <input  class="m-1" name="valoracionLibro" /><br/>
+                        <span class="m-1">ISBN</span><input class="m-1" name="isbn" placeholder="ISBN" required /><br/>
+                        <span class="m-1">Titulo</span> <input  class="m-1"  name="titulo"placeholder="Titulo" /><br/>
+                        <span class="m-1">Idioma</span> <input  class="m-1"  name="idioma" placeholder="Idioma"/><br/>
+                        <span class="m-1">URL</span> <input  class="m-1" name="uriPortada" placeholder="URL"/><br/>
+                        <span class="m-1">Valoracion</span> <input  class="m-1" name="valoracionLibro" placeholder="Valoracion"/><br/>
+                        
+                          <span class="m-1">Autor</span> <select  class="m-1"  name="id_autor">
+                            <option th:each="autor:${autores}" th:text="${autor.nombre + autor.apellidos}" th:value="${autor.idAutor}"></option>
+                        </select>
                         
                         <span class="m-1">Editorial</span> <select  class="m-1"  name="id_editorial">
                             <option th:each="edit:${editoriales}" th:text="${edit.nombreEditorial}" th:value="${edit.id}"></option>
