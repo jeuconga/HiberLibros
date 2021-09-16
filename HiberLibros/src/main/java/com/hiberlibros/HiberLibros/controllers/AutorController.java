@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
+import com.hiberlibros.HiberLibros.repositories.LibroRepository;
 
 import lombok.Setter;
 
@@ -20,6 +21,10 @@ public class AutorController {
 	@Setter
 	@Autowired(required = false)
 	private AutorRepository autorRepo;
+	
+	@Setter
+	@Autowired(required = false)
+	private LibroRepository libroRepo;;
 
 	@GetMapping("/autorLista")
 	public String lista(Model m){

@@ -30,7 +30,7 @@ public class InicioController {
             m.addAttribute("error", error);
         }
         
-        return "principal/inicio";
+        return "/principal/login";
     }
 
     @GetMapping("/panelUsuario")
