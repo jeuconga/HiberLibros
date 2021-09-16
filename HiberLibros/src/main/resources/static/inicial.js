@@ -26,6 +26,14 @@ function eliminarU(pID) {
         }
     });
 }
+function consultarLibros() {
+
+    bootbox.dialog({
+        title: 'Lista de libros',
+        size: 'small',
+        message: $("#listaLibros").html()
+    });
+}
 
 
 
