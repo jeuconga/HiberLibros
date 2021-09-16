@@ -42,6 +42,7 @@ public class LibroController {
         m.addAttribute("generos", genRepo.findAll());
         m.addAttribute("editoriales", editRepo.findAll());
         m.addAttribute("autores", AutRepo.findAll());
+        System.out.println("autor " + AutRepo.findAll() );
         return "libros/VistaLibro";
     } 
     

@@ -20,15 +20,23 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "autores")
 public class Autor {
-	  @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Integer idAutor;
-	    @Column
-	    private String nombre;
-	    @Column
-	    private String apellidos;
-	    @Column
-	    private String biografia;
-	    @OneToMany(mappedBy = "autor")
-	     private List<AutorLibro> autorLibros;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idAutor;
+    @Column
+    private String nombre;
+    @Column
+    private String apellidos;
+    @Column
+    private String biografia;
+    @OneToMany(mappedBy = "autor")
+    private List<AutorLibro> autorLibros;
+
+//    @Override
+//    public String toString() {
+//        return ""+nombre + " " + apellidos;
+//    }
+
 }
+
