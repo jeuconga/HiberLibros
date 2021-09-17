@@ -5,8 +5,10 @@
  */
 package com.hiberlibros.HiberLibros.entities;
 
+import com.mysql.cj.x.protobuf.MysqlxCursor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +18,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.agent.builder.AgentBuilder;
 
 @Data
 @NoArgsConstructor
@@ -33,7 +36,8 @@ public class Libro {
     private String uriPortada;
     private Double valoracionLibro;
     
-     @ManyToOne             
+     @ManyToOne(fetch = FetchType.EAGER) 
+    
     @JoinColumn(name = "id_autor")
     private Autor  autor;
      

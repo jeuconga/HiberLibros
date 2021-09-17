@@ -6,13 +6,6 @@ function registrarUsuario() {
     });
 
 }
-function entrar() {
-    bootbox.dialog({
-        title: 'Iniciar Sesión',
-        size: 'small',
-        message: $("#login").html()
-    });
-}
 function editarUsuario() {
     bootbox.dialog({
         title: 'Editar',
@@ -31,6 +24,14 @@ function eliminarU(pID) {
                 window.location.href = "/usuarios/borrarUsuario?id=" + pID;
             }
         }
+    });
+}
+function consultarLibros() {
+
+    bootbox.dialog({
+        title: 'Lista de libros',
+        size: 'small',
+        message: $("#listaLibros").html()
     });
 }
 

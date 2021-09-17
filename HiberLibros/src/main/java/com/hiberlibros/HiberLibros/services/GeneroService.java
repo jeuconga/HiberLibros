@@ -5,6 +5,7 @@ import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.interfaces.IGeneroService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,5 +30,13 @@ public class GeneroService implements IGeneroService {
     @Override
     public List<Genero> getGeneros() {
         return listaGeneros;
+    }
+
+    @Override
+    public Optional<Genero> getGenero(Integer id) {
+        Optional<Genero> genero = listaGeneros.stream()
+                .filter(x -> x.getId() == id)
+                .findFirst();
+        return genero;
     }
 }

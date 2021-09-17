@@ -6,7 +6,10 @@
         "th:text": {},
         "th:if": {},
         "th:object": {},
+        "th:replace": {},
         "th:field": {},
-        "th:class": {}
+        "th:href": {},
+        "th:class": {},
+        "th:value": {}
     }
 }
