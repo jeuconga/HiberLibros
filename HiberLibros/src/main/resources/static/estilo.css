@@ -22,6 +22,7 @@ header{
     background-attachment: fixed;
     background-size: cover;
     background-color: #505e6c;
+
 }
 
 .register-photo {  
@@ -102,4 +103,70 @@ header{
     color: #6f7a85;
     opacity: 0.9;
     text-decoration: none
+}
+
+#form {
+    width: 250px;
+    margin: 0 auto;
+    height: 50px;
+}
+
+#form p {
+    text-align: center;
+}
+
+#form label {
+    font-size: 20px;
+}
+
+input[type="radio"] {
+    display: none;
+
+}
+
+label {
+    color: grey;
+}
+
+.clasificacion {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+}
+
+label:hover,
+label:hover ~ label {
+    color: orange;
+}
+
+input[type="radio"]:checked ~ label {
+    color: orange;
+}
+.testbox {
+    margin: 20px auto;
+    padding-left: 20px;
+    width: auto; 
+    height:auto; 
+    -webkit-border-radius: 8px/7px; 
+    -moz-border-radius: 8px/7px; 
+    border-radius: 8px/7px; 
+    background-color: #ebebeb; 
+    -webkit-box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
+    -moz-box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
+    box-shadow: 1px 2px 5px rgba(0,0,0,.31); 
+    border: solid 1px #cbc9c9;
+
+}
+.addrelato{
+    font-size: 35px;
+    font-weight: 300;
+    color: #4c4c4c;
+    text-align: center;
+    padding-top: 10px;
+    margin-bottom: 10px;
+    font-family: monospace;
+}
+
+.thbuscarrelatos{
+    font-size: 20px;
+    text-align: center;
 }
