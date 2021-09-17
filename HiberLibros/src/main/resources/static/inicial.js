@@ -44,7 +44,22 @@ function consultarLibros(pID) {
 				})
 			$("#listaLibros").append("</table>");
     	}
-	})
+	});
+}
+function anyadirAutor(pID) {
+    $.post("/hiberlibros/formAutor", {
+        id_usuario: pID
+    }, function (pJson) {
+        bootbox.dialog({
+            title: 'Añadir autor',
+            size: 'large',
+            message: "<div id='autorForm'>" + $("#autor").html() + "</div>"
+        });
+        $("#autorForm form").deserialize(pJson);
+
+    });
+
+
 }
 
 
