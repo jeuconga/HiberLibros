@@ -23,11 +23,13 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,7 +59,7 @@ public class InicioController {
     @Autowired
     private RelatoRepository repoRelato;
     @Autowired
-    private UsuarioLibroServiceI ulService; 
+    private UsuarioLibroServiceI ulService;
     @Autowired
     private PeticionService petiService;
 
@@ -72,16 +74,28 @@ public class InicioController {
 
         return "/principal/login";
     }
-    
+
     @PostMapping("/loginentrar")
     public String inicio(Model m, String username, String password) {
         System.out.println("Pasa ---------------");
-        UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(username, password);
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
         System.out.println("Pasa2 ---------------");
-        Authentication auth=manager.authenticate(token);
+        Authentication auth = manager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
-        return "redirect:/hiberlibros/entrar";
-    }    
+
+        List<String> roles = auth.getAuthorities().stream().map(x -> x.getAuthority()).collect(Collectors.toList());
+        for (String rol : roles) {
+                if ("ROLE_Administrador".equals(rol)) {
+                    return "redirect:/hiberlibros/panelAdministrador?mail=" + username;
+                } else {
+                    if ("ROLE_Usuario".equals(rol)) {
+                        return "redirect:/hiberlibros/panelUsuario?mail=" + username;
+                    } 
+                }
+        }
+        String error = "Usuario no registrado";
+        return "redirect:/hiberlibros?error=" + error;
+    }
 
     @GetMapping("/panelUsuario")
     public String panelUsuario(Model m, String mail) {
@@ -89,22 +103,22 @@ public class InicioController {
         m.addAttribute("relatos", repoRelato.findByUsuario(u));
         m.addAttribute("usuario", u);
         m.addAttribute("libros", ulService.buscarUsuario(u));
-        m.addAttribute("misPeticiones",petiService.consutarPeticionesUsuarioPendientes(u));
+        m.addAttribute("misPeticiones", petiService.consutarPeticionesUsuarioPendientes(u));
         m.addAttribute("petiRecibidas", petiService.consultarPeticonesRecibidas(u));
         return "principal/usuarioPanel";
     }
 
-    @PostMapping("/entrar")
-    public String entrar(String username, String password) {
-        
-        if (usuService.registrado(username)) {
-            return "redirect:/hiberlibros/panelUsuario?mail=" + username;
-        } else {
-            String error = "Usuario no registrado";
-            return "redirect:/hiberlibros?error=" + error;
-        }
-    }
-
+    // @PostMapping("/entrar")
+//    @GetMapping("/entrar")
+//    public String entrar(String username, String password) {
+//        
+//        if (usuService.registrado(username)) {
+//            return "redirect:/hiberlibros/panelUsuario?mail=" + username;
+//        } else {
+//            String error = "Usuario no registrado";
+//            return "redirect:/hiberlibros?error=" + error;
+//        }
+//    }
     @GetMapping("/guardarLibro")
     public String formularioLibro(Model m, Integer id, String buscador) {
         List<Libro> libros = new ArrayList<>();
@@ -164,13 +178,12 @@ public class InicioController {
     @GetMapping("/buscarLibro")
     public String buscarLibro(Model m, Integer id, String buscador) {
         m.addAttribute("usuario", usuService.usuarioId(id));
-        if(buscador==null){
-            m.addAttribute("libros", ulService.todos()); 
-        }else{
+        if (buscador == null) {
+            m.addAttribute("libros", ulService.todos());
+        } else {
             m.addAttribute("libros", ulService.buscarContiene(buscador));
         }
-        
-        
+
         return "principal/buscarLibro";
     }
 
@@ -202,10 +215,11 @@ public class InicioController {
         model.addAttribute("usuario", usuService.usuarioId(id));
         return "principal/relato";
     }
+
     @GetMapping("/borrarUL")
-    public String borrarUsuLibro(Integer id, String mail){
+    public String borrarUsuLibro(Integer id, String mail) {
         ulService.borrar(id);
-        return "redirect:/hiberlibros/panelUsuario?mail=" +mail;
+        return "redirect:/hiberlibros/panelUsuario?mail=" + mail;
     }
 
 }
