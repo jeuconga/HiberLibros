@@ -104,6 +104,7 @@ public class InicioController {
             relato.setFichero(subir);
             relato.setValoracionUsuarios(new Double(0));
             relato.setNumeroValoraciones(0);
+           relato.setUsuario(usuService.usuarioId(id));
             repoRelato.save(relato);
             m.addAttribute("usuario", usuService.usuarioId(id));
         } catch (Exception e) {
@@ -111,16 +112,16 @@ public class InicioController {
 
         }
 
-        return "principal/relato";
+         return "redirect:/hiberlibros/panelUsuario?mail=" + usuService.usuarioId(id).getMail();
     }
 
     @GetMapping("/relato")
-    public String prueba(Model model) {
+    public String prueba(Model model, Integer id) {
 
         model.addAttribute("generos", generoRepo.findAll());
         model.addAttribute("relatos", repoRelato.findAll());
-
-        return "principal/relato";
+        model.addAttribute("usuario", usuService.usuarioId(id));
+        return "principal/relato"; 
     }
 
 }
