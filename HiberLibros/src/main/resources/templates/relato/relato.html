@@ -4,9 +4,47 @@
     <head>
         <title>Subida de relatos</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <link rel="stylesheet" href=" https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css">
+        <style>
+            #form {
+                width: 250px;
+                margin: 0 auto;
+                height: 50px;
+            }
+
+            #form p {
+                text-align: center;
+            }
+
+            #form label {
+                font-size: 20px;
+            }
+
+            input[type="radio"] {
+                display: none;
+               
+            }
+
+            label {
+                color: grey;
+            }
+
+            .clasificacion {
+                direction: rtl;
+                unicode-bidi: bidi-override;
+            }
+
+            label:hover,
+            label:hover ~ label {
+                color: orange;
+            }
+
+            input[type="radio"]:checked ~ label {
+                color: orange;
+            }
+        </style>
+
     </head>
     <body>
         <div class="container">
@@ -23,8 +61,8 @@
                             th:value="${gen.id}" 
                             th:text="${gen.nombre}"/>
                 </select>
-                <br> <br>
-                <button type="submit" class="btn btn-primary">Subir fichero</button>
+
+                <input type="submit" class="btn btn-primary" value="Subir fichero">
             </form>                     
             <span th:text="${error}" style="color:red;font-size: 20px"></span>
             <span th:text="${correcto}" style="color:green;font-size: 20px"></span>
@@ -35,10 +73,40 @@
 
             <form action="/relato/addValoracion" method="post">
 
-                <label>Valoracion :</label>
-                <input type="number" name="valoracion" min="0" max="10"/><br> <br>
+                <!--                <label>Valoracion :</label>
+                                <input type="number" name="valoracion" min="0" max="10"/><br> <br>-->
                 <label>ID para probar :</label>
                 <input type="number" name="id"/><br> <br>
+
+
+                <p class="clasificacion">
+                    
+                    
+<!--                    <input id="radio10" type="radio" name="valoracion" value="10">
+                    <label for="radio10">★</label>
+                    <input id="radio9" type="radio" name="valoracion" value="9">
+                    <label for="radio9">★</label>
+                    <input id="radio8" type="radio" name="valoracion" value="8">
+                    <label for="radio8">★</label>
+                    <input id="radio7" type="radio" name="valoracion" value="7">
+                    <label for="radio7">★</label>
+                    <input id="radio6" type="radio" name="valoracion" value="6">
+                    <label for="radio6">★</label>-->
+                    
+                    
+                    
+                    <input id="radio1" type="radio" name="valoracion" value="5">
+                    <label for="radio1">★</label>
+                    <input id="radio2" type="radio" name="valoracion" value="4">
+                    <label for="radio2">★</label>
+                    <input id="radio3" type="radio" name="valoracion" value="3">
+                    <label for="radio3">★</label>
+                    <input id="radio4" type="radio" name="valoracion" value="2">
+                    <label for="radio4">★</label>
+                    <input id="radio5" type="radio" name="valoracion" value="1">
+                    <label for="radio5">★</label>
+
+                </p>
                 <button type="submit" class="btn btn-primary">Añadir valoracion</button>
 
             </form>
@@ -59,17 +127,11 @@
                     <td th:text="${rel.valoracionUsuarios}"></td>  
                     <td th:text="${rel.genero.nombre}"></td>  
                     <td th:text="${rel.numeroValoraciones}"></td>  
-                    <td>
-                        <a class="btn btn-danger"  th:href="${'/relato/eliminarRelato?id='+rel.id}" >Eliminar</a>
-
-                    </td>
+                    <td> <a class="btn btn-danger"  th:href="${'/relato/eliminarRelato?id='+rel.id}" >Eliminar</a></td>
 
 
-                    <td>
-                        <a  class="btn btn-dark" th:href="${'/modificar?id='+rel.id}">Modificar</a>
-
-                    </td>
-
+                   
+                    <td> <a class="btn btn-secondary"  th:href="${'/relato/modificar?id='+rel.id}" >Modificar</a></td>
 
                 </tr>
 

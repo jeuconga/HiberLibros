@@ -32,17 +32,15 @@ public class RelatoController {
 
     @GetMapping
     public String prueba(Model model) {
-        List<Genero> generos = repoGenero.findAll();
-        model.addAttribute("generos", generos);
 
-        List<Relato> relatos = repoRelato.findAll();
-        model.addAttribute("relatos", relatos);
+        model.addAttribute("generos", repoGenero.findAll());
+        model.addAttribute("relatos", repoRelato.findAll());
 
         return "/relato/relato";
     }
 
     @PostMapping("/guardarRelato")
-    public String s(Relato relato, MultipartFile ficherosubido, Model model) {
+    public String guardarRelato(Relato relato, MultipartFile ficherosubido) {
         String subir = "c:\\zzzzSubirFicheros\\" + ficherosubido.getOriginalFilename();
         File f = new File(subir);
         f.getParentFile().mkdirs();
@@ -54,14 +52,12 @@ public class RelatoController {
             relato.setValoracionUsuarios(new Double(0));
             relato.setNumeroValoraciones(0);
             repoRelato.save(relato);
-            model.addAttribute("correcto", "Se ha añadido correctamente");
 
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("error", "Ha ocurrido un error al insertar");
 
         }
-        return "redirect:/relato";
+          return "redirect:/relato";
     }
 
     @GetMapping("/eliminarRelato")
@@ -96,13 +92,26 @@ public class RelatoController {
         }
     }
 
-  
+    @GetMapping("/relato/{id}")
+    public String buscarPorID(Model m, @PathVariable Integer id) {
+        m.addAttribute("relato", repoRelato.findById(id));
+        return "/relato/relato";
+    }
 
     @GetMapping("/modificar")
     public String modificarRelato(Model m, Integer id) {
-        m.addAttribute("generos", repoGenero.findAll());
+
         m.addAttribute("relato", repoRelato.findById(id));
-        return "relato/modificar";
+        m.addAttribute("generos", repoGenero.findAll());
+        return "relato/modificarRelato";
+    }
+
+    @PostMapping("/modificarRelato")
+    public String modificarRelato(Relato relato) {
+
+        repoRelato.save(relato);
+
+        return "redirect:/relato";
     }
 
 }
