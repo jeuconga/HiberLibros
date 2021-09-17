@@ -7,14 +7,30 @@
                 <div class='col-7'>
                     <h2>Tus libros</h2>
                     <table class="table">
-                        <tr>
-                            <th>ISBN</th>
-                            <th>Titulo</th>
-                            <th>Idioma</th>
-                            <th>Editorial</th>
-                            <th>Genero</th>
-                            <th>Valoracion</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>ISBN</th>
+                                <th>Titulo</th>
+                                <th>Idioma</th>
+                                <th>Editorial</th>
+                                <th>Genero</th>
+                                <th>Valoracion</th>
+                                <th>Estado</th>
+                                <th>Quiero/Tengo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each='l:${libros}'>
+                                <td th:text="${l.libro.isbn}"></td>
+                                <td th:text="${l.libro.titulo}"></td>
+                                <td th:text="${l.libro.idioma}"></td>
+                                <td th:text="${l.libro.editorial.nombreEditorial}"></td>
+                                <td th:text="${l.libro.genero.nombre}"></td>
+                                <td th:text="${l.libro.valoracionLibro}"></td>
+                                <td th:text="${l.estadoConservacion}"></td>
+                                <td th:text="${l.quieroTengo}"></td>
+                            </tr>
+                        </tbody>
                     </table>
                     <a th:href="@{/hiberlibros/guardarLibro(id=${usuario.id})}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;añadir libro</a>
                 </div>
