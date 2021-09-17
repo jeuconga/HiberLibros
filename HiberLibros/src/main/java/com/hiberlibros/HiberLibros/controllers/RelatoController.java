@@ -36,7 +36,7 @@ public class RelatoController {
         model.addAttribute("generos", repoGenero.findAll());
         model.addAttribute("relatos", repoRelato.findAll());
 
-        return "/relato/relato";
+          return "/principal/relato";
     }
 
     @PostMapping("/guardarRelato")
