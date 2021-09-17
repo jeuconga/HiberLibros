@@ -20,8 +20,6 @@ public interface IGeneroService {
     //Listar géneros
     public List<Genero> getGeneros();
     
-    //Buscar información por id
-    public Optional<Genero> getGenero(Integer id);
      
     
     

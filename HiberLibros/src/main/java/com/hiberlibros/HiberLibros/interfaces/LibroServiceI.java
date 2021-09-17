@@ -15,5 +15,7 @@ import java.util.List;
 public interface LibroServiceI {
     
     public List<Libro> buscarLibro(String libro);
+    public Libro libroId(Integer id);
+    public void guardarLibro(Libro l);
     
 }

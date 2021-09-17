@@ -16,9 +16,11 @@
                 margin: 15px;
             }
             h1{
-                text-align: center;
             }
             .btn-outline-primary{
+                margin-left: 20px;
+            }
+            .btn-outline-danger{
                 margin-left: 20px;
             }
         </style>
@@ -33,10 +35,11 @@
             </form>
         </div>
         <hr>
-        <div class="contenedorlista">
+        <div class="contenedorlista row col-3">
             <h1>Listado de Géneros</h1>
-            <table class="table table-bordered">
+            <table class="table table-bordered col-2 ">
                 <tr>
+                    <th>Id</th>
                     <th>Nombre</th>
                 </tr>
                 <tr th:each='genero: ${generos}'>
