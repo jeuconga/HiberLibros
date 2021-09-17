@@ -67,6 +67,10 @@ public class InicioController {
         Usuario u=usuService.usuarioRegistrado(mail);
         m.addAttribute("usuario", u);
         m.addAttribute("libros",ulRepo.findByUsuario(u));
+        m.addAttribute("usuario", usuService.usuarioRegistrado(mail));
+        
+        //mostrar relatos por ID logeado
+        m.addAttribute("relatos", repoRelato.findByUsuario(u));
         return "principal/usuarioPanel";
     }
 
