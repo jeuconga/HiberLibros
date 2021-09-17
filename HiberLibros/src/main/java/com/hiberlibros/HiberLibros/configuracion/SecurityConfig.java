@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//               .antMatchers("/**").permitAll() 
+//             .antMatchers("/**").permitAll() 
 //             .antMatchers("/info").permitAll()
                .antMatchers("/admin/url1").hasAnyRole("Administrador", "Usuario")
 //             .antMatchers("/login").permitAll()
@@ -37,8 +37,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //             .antMatchers("/traducir/**").hasAnyRole("Administrador", "Usuario")
 //             .antMatchers("/url3").hasRole("Administrador")
                 ;
-        http.formLogin();   //  /login. Spring
+        http.formLogin()
+                //.loginPage("/hiberlibros")
+                ;   //  /login. Spring
         http.csrf().disable();
+        http.logout().logoutUrl("/milogout");
         //http.formLogin();   //  /login. Spring
     }
 

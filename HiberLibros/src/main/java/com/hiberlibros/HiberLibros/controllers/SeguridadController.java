@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/admin")
-public class SeguridadControlador {
+public class SeguridadController {
 
     @Autowired
     private UsuarioSeguridadRepository repoUsuSeg;

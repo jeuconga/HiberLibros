@@ -40,7 +40,7 @@ public class InicioController {
     }
 
     @PostMapping("/entrar")
-    public String entrar(String mail) {
+    public String entrar(String mail, String password) {
         if (usuService.registrado(mail)) {
             return "redirect:/hiberlibros/panelUsuario?mail="+mail;
         } else {
