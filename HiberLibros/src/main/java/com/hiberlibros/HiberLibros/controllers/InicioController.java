@@ -59,6 +59,9 @@ public class InicioController {
     @GetMapping("/panelUsuario")
     public String panelUsuario(Model m, String mail) {
         m.addAttribute("usuario", usuService.usuarioRegistrado(mail));
+        
+        //mostrar relatos por ID logeado
+        m.addAttribute("relatos", repoRelato.findByUsuario(usuService.usuarioRegistrado(mail)));
         return "principal/usuarioPanel";
     }
 
@@ -123,7 +126,5 @@ public class InicioController {
         model.addAttribute("usuario", usuService.usuarioId(id));
         return "principal/relato";
     }
-
-
 
 }
