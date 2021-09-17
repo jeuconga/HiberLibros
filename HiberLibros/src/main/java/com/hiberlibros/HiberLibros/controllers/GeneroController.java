@@ -22,20 +22,20 @@ public class GeneroController {
     
     @Autowired
     private GeneroRepository generoRepository;
-    @Autowired
-    private IGeneroService generoService;
     
     
     @GetMapping
     public String verGeneros(Model model){
         model.addAttribute("generos", generoRepository.findAll());
         model.addAttribute("generoForm", new Genero());
+        
         return "/generos/genero";
     }
     
     @PostMapping("/guardar")
     public String formulario(Genero genero){
         generoRepository.save(genero);
+        
         return "redirect:/genero";
     }
     
@@ -48,9 +48,9 @@ public class GeneroController {
     
     @GetMapping("/editar/{id}")
     public String editarGenero(Model model, @PathVariable Integer id){
-        Genero editGenero = generoService.getGenero(id).get();
+        Genero editGenero = generoRepository.getById(id);
         model.addAttribute("genero", editGenero);
         
-        return "/generos/editaGenero";
+        return "/generos/editar";
     }
 }
