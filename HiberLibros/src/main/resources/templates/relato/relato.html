@@ -41,6 +41,12 @@
             input[type="radio"]:checked ~ label {
                 color: orange;
             }
+            .container{
+                margin: 50px;
+            }
+            .btn{
+                align-items: center;
+            }
 
 
         </style>
@@ -86,26 +92,26 @@
                 <button type="submit" class="btn btn-primary">Añadir valoracion</button>
             </form>
             <hr> <br> <br>
-
-            <table>
-                <tr>
-                    <th>id</th>
-                    <th>titulo</th>
-                    <th>valoracion usuarios</th>
-                    <th>Genero</th>
-                    <th>numero valoraciones</th>
-                </tr>
-                <tr th:each="rel:${relatos}">
-                    <td th:text="${rel.id}"></td>            
-                    <td th:text="${rel.titulo}"></td>  
-                    <td th:text="${rel.valoracionUsuarios}"></td>  
-                    <td th:text="${rel.genero.nombre}"></td>  
-                    <td th:text="${rel.numeroValoraciones}"></td>  
-                    <td> <a class="btn btn-danger"  th:href="${'/relato/eliminarRelato?id='+rel.id}" >Eliminar</a></td>
-                    <td> <a class="btn btn-secondary"  th:href="${'/relato/modificar?id='+rel.id}" >Modificar</a></td>
-                </tr>
-            </table>
-            <hr> <br> <br>
-        </div>
+            <div class="contenedorlista row col-7">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Id</th>
+                        <th>Título</th>
+                        <th>Valoracion usuarios</th>
+                        <th>Género</th>
+                        <th>Número valoraciones</th>
+                    </tr>
+                    <tr th:each='rel:${relatos}'>
+                        <td th:text="${rel.id}"></td>            
+                        <td th:text="${rel.titulo}"></td>  
+                        <td th:text="${rel.valoracionUsuarios}"></td>  
+                        <td th:text="${rel.genero.nombre}"></td>  
+                        <td th:text="${rel.numeroValoraciones}"></td>  
+                        <td> <a class="btn btn-danger"  th:href="${'/relato/eliminarRelato?id='+rel.id}" >Eliminar</a></td>
+                        <td> <a class="btn btn-secondary"  th:href="${'/relato/modificar?id='+rel.id}" >Modificar</a></td>
+                    </tr>
+                </table>
+                <hr> <br> <br>
+            </div>
     </body>
 </html>
