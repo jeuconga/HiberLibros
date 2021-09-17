@@ -6,10 +6,13 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Libro;
+import com.hiberlibros.HiberLibros.interfaces.LibroServiceI;
 import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.services.EditorialService;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +36,8 @@ public class InicioController {
     private AutorRepository autorRepo;
     @Autowired
     private EditorialService editoService;
+    @Autowired
+    private LibroServiceI liService;
 
     @GetMapping
     public String inicio(Model m, String error) {
@@ -60,13 +65,23 @@ public class InicioController {
     }
 
     @GetMapping("/guardarLibro")
-    public String formularioLibro(Model m, Integer id, String mail) {
-        m.addAttribute("id_usuario", id);
+    public String formularioLibro(Model m, Integer id, String buscador) {
+        List<Libro> libros=new ArrayList<>();
+        String noLibros="";
         m.addAttribute("libro", new Libro());
-        m.addAttribute("usuario", usuService.usuarioRegistrado(mail));
+        m.addAttribute("usuario", usuService.usuarioId(id));
         m.addAttribute("autores", autorRepo.findAll());
         m.addAttribute("generos", generoRepo.findAll());
         m.addAttribute("editoriales", editoService.consultaTodas());
+        if(buscador!=null){
+            libros=liService.buscarLibro(buscador);
+            if(libros==null){
+                noLibros="Ningun libro encontrado";
+            }else{
+                m.addAttribute("libros", libros);
+            }
+        }
+        m.addAttribute("noLibros", noLibros);
 
         return "principal/guardarLibro";
     }

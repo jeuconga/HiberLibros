@@ -5,23 +5,18 @@
  */
 package com.hiberlibros.HiberLibros.controllers;
 
-import com.hiberlibros.HiberLibros.entities.Editorial;
-import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Libro;
+import com.hiberlibros.HiberLibros.interfaces.LibroServiceI;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.EditorialRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.LibroRepository;
-import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
-import java.util.ArrayList;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 //@RequestMapping("/libros")
@@ -34,6 +29,8 @@ public class LibroController {
     private EditorialRepository editRepo;
     @Autowired
     private AutorRepository AutRepo;
+    @Autowired
+    private LibroServiceI libroService;
 
  
     @GetMapping("/libros")
@@ -68,11 +65,12 @@ public class LibroController {
     
     @GetMapping("/modificar")
     public String modificarLibro(Model m,Integer id){
-       
        m.addAttribute("libro", librepo.findById(id));
        m.addAttribute("generos", genRepo.findAll());
        m.addAttribute("editoriales", editRepo.findAll());
        m.addAttribute("autores", AutRepo.findAll());
        return "libros/modificar";
     }
+    
+ 
 }

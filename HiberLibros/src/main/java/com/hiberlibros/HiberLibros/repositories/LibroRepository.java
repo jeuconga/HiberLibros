@@ -14,5 +14,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Mohamad
  */
 public interface LibroRepository extends JpaRepository<Libro, Integer>{
-    public List<Libro> findByIsbnContainsOrTituloContains(String isbn, String titulo);
+    public List<Libro> findByIsbnContainsOrTituloContainsIgnoreCase(String isbn, String titulo);
 }
