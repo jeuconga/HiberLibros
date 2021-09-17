@@ -31,12 +31,4 @@ public class GeneroService implements IGeneroService {
     public List<Genero> getGeneros() {
         return listaGeneros;
     }
-
-    @Override
-    public Optional<Genero> getGenero(Integer id) {
-        Optional<Genero> genero = listaGeneros.stream()
-                .filter(x -> x.getId() == id)
-                .findFirst();
-        return genero;
-    }
 }
