@@ -26,13 +26,40 @@ function eliminarU(pID) {
         }
     });
 }
-function consultarLibros() {
+function consultarLibros(pID) {
+	$.ajax({
+		url: '/getLibrosAutor',
+		data : {
+			id: pID
+			},
+		datatype: 'json',
+		success: function(json){
+			$("#listaLibros").html("");
+			$("#listaLibros").append("<table>");
+		    $.each(json, function(key,value){
+					var fila = $("<tr>");
+					$("<td>").html(value.titulo + "</td>" ).appendTo(fila);
+					fila.append("</tr>");
+					fila.appendTo("#listaLibros");
+				})
+			$("#listaLibros").append("</table>");
+    	}
+	});
+}
+function anyadirAutor(pID) {
+    $.post("/hiberlibros/formAutor", {
+        id_usuario: pID
+    }, function (pJson) {
+        bootbox.dialog({
+            title: 'Añadir autor',
+            size: 'large',
+            message: "<div id='autorForm'>" + $("#autor").html() + "</div>"
+        });
+        $("#autorForm form").deserialize(pJson);
 
-    bootbox.dialog({
-        title: 'Lista de libros',
-        size: 'small',
-        message: $("#listaLibros").html()
     });
+
+
 }
 
 

@@ -2,6 +2,7 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Relato;
+import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
 import java.io.File;
@@ -29,6 +30,8 @@ public class RelatoController {
 
     @Autowired
     private GeneroRepository repoGenero;
+    @Autowired
+    private UsuarioServiceI usuService;
 
     @GetMapping
     public String prueba(Model model) {
@@ -36,11 +39,21 @@ public class RelatoController {
         model.addAttribute("generos", repoGenero.findAll());
         model.addAttribute("relatos", repoRelato.findAll());
 
-        return "/relato/relato";
+        return "/principal/relato";
+    }
+
+    @GetMapping("/listaRelatos")
+    public String mostrarRelatos(Model model, Integer id) {
+
+        model.addAttribute("generos", repoGenero.findAll());
+        model.addAttribute("relatos", repoRelato.findAll());
+        model.addAttribute("usuario", usuService.usuarioId(id));
+        return "/principal/buscarRelatos";
     }
 
     @PostMapping("/guardarRelato")
-    public String guardarRelato(Relato relato, MultipartFile ficherosubido) {
+    public String guardarRelato(Relato relato, MultipartFile ficherosubido
+    ) {
         String subir = "c:\\zzzzSubirFicheros\\" + ficherosubido.getOriginalFilename();
         File f = new File(subir);
         f.getParentFile().mkdirs();
@@ -57,11 +70,12 @@ public class RelatoController {
             e.printStackTrace();
 
         }
-          return "redirect:/relato";
+        return "redirect:/relato";
     }
 
     @GetMapping("/eliminarRelato")
-    public String eliminarRelato(Model m, Integer id) {
+    public String eliminarRelato(Model m, Integer id
+    ) {
         Optional<Relato> rel = repoRelato.findById(id);
         if (rel.isPresent()) {
             repoRelato.deleteById(id);
@@ -74,12 +88,11 @@ public class RelatoController {
         Optional<Relato> rel = repoRelato.findById(id);
         if (rel.isPresent()) {
             calcularValoracion(id, valoracion);
-
         }
         return "redirect:/relato";
     }
-
     //metodo para calcular el numero de valoraciones y calcular la media entre ellas
+
     public void calcularValoracion(int id, Double valoracion) {
         Optional<Relato> relato = repoRelato.findById(id);
         if (relato.isPresent()) {

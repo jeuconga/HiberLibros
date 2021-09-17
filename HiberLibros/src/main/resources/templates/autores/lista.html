@@ -8,37 +8,40 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/united/bootstrap.min.css"/>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/minty/bootstrap.css" rel="stylesheet" />
-<style>
-body {background-color:#163a63; color:#163a63; padding-top:15px;}
+        <link href="autores.css" rel="stylesheet"/>
 
-.list-group {box-shadow: 0px 11px 23px 5px rgba(0,0,0,0.34);}
+<body class="lista">
+        <nav class="bg-primary">
+            <div class="row">
+                <div class="col-10">
+                    <ul class="nav">
+                        <li class="nav-item"></li>
+                        <li class="nav-item"><a href="/libros" class="btn btn-primary">Inicio</a></li>
+                    </ul>
+                </div> 
+                <div class="col-2 text-right">
+                    <a href="/hiberlibros" class="btn btn-primary">Salir</a>   
+                </div>
+            </div>
 
-.list-group-item {background-color: rgba(255,255,255,0.7); border:0;}
-
-.btn-toolbar {margin-top:10px;}
-</style>
-<body>
-	<h5 th:if="${autores.size() == 0}" class="offset-4">La tabla esta vacia</h5>
-	<a th:href="@{/autorForm}" class="btn btn-success offset-4"> Nuevo autor</a>
+        </nav>
+	<a th:href="@{/autorForm}" class="btn btn-success offset-5"> Nuevo autor</a>
 	<div class="container">
   		<ul class="list-group">
-   		 <li class="list-group-item clearfix" th:each="autor:${autores}">
-      		<h3 class="list-group-item-heading" th:text="${autor.nombre} + ' ' + ${autor.apellidos}"></h3>
-      		<p class="list-group-item-text lead" th:text="${autor.biografia}"></p>
-      		<a onclick="consultarLibros()">Libros</a>
-        <br />
-      <div class="btn-toolbar pull-right" role="toolbar" aria-label="">
-        <a th:href="@{/autorForm/{id}(id=${autor.idAutor})}" class="btn btn-warning">Editar</a>
-        <a th:href="@{/deleteAutor/{id}(id=${autor.idAutor})}" class="btn btn-danger">Eliminar</a>
-      </div>
+   			<li class="list-group-item clearfix" th:each="autor:${autores}">
+      			<h3 class="list-group-item-heading" th:text="${autor.nombre} + ' ' + ${autor.apellidos}"></h3>
+      			<p class="list-group-item-text lead" th:text="${autor.biografia}"></p>
+      			<a class="btn" th:onclick="|consultarLibros(${autor.idAutor})|">Libros</a>
+       		 	<br />
+      			<div class="btn-toolbar pull-right" role="toolbar" aria-label="">
+        			<a th:href="@{/autorForm/{id}(id=${autor.idAutor})}" class="btn btn-warning">Editar</a>
+        			<a th:href="@{/deleteAutor/{id}(id=${autor.idAutor})}" class="btn btn-danger">Eliminar</a>
+      			</div>
     		</li>
     	</ul>
 	</div>
-    <div id="listaLibros" style="display:none">
-    	<table>
-    			<tr th:each="libro:${libros}">
-    				<td th:text="${libro.titulo}"></td>
-    			</tr>
+    <div class="listaLibros"  style="display:none">
+    	<table id="listaLibros" class="table">
     	</table>
     </div>
 

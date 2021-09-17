@@ -5,7 +5,9 @@
  */
 package com.hiberlibros.HiberLibros.repositories;
 
+import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Usuario
  */
 public interface UsuarioLibroRepository extends JpaRepository<UsuarioLibro,Integer>{
+    public List<UsuarioLibro> findByUsuario(Usuario u);
     
 }
