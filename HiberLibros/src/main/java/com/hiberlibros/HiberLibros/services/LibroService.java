@@ -25,5 +25,15 @@ public class LibroService implements LibroServiceI{
     public List<Libro> buscarLibro(String libro) {
         return libroRep.findByIsbnContainsOrTituloContainsIgnoreCase(libro, libro);
     }
+
+    @Override
+    public Libro libroId(Integer id) {
+       return libroRep.findById(id).get();
+    }
+
+    @Override
+    public void guardarLibro(Libro l) {
+        libroRep.save(l);
+    }
     
 }

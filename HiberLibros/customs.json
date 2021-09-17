@@ -6,9 +6,11 @@
         "th:text": {},
         "th:if": {},
         "th:object": {},
+        "th:onclick": {},
         "th:replace": {},
         "th:field": {},
         "th:href": {},
+        "th:each": {},
         "th:class": {},
         "th:value": {}
     }
