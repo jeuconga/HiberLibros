@@ -69,5 +69,10 @@ public class UsuarioService implements UsuarioServiceI{
         urService.save(usr);
         return usr.getMail();
     }
+
+    @Override
+    public Usuario usuarioId(Integer id) {
+        return urService.findById(id).get();
+    }
     
 }
