@@ -20,5 +20,6 @@ public interface UsuarioServiceI {
     public List<Usuario> usuariosList();
     public boolean registrado(String mail);
     public Usuario usuarioRegistrado(String mail);
+    public Usuario usuarioId(Integer id);
     
 }
