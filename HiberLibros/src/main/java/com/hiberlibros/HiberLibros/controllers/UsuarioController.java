@@ -6,7 +6,7 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Usuario;
-import javax.websocket.server.PathParam;
+import com.hiberlibros.HiberLibros.entities.UsuarioSeguridad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +21,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioServiceI service;
+    
+//    @Autowired
+//    private UsuarioSeguridad serviceUsuarioSeguridad;
 
     @GetMapping
     public String usuarioFormulario(Model m, String registro) {

@@ -24,6 +24,10 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,6 +61,9 @@ public class InicioController {
     @Autowired
     private PeticionService petiService;
 
+    @Autowired
+    private AuthenticationManager manager;
+
     @GetMapping
     public String inicio(Model m, String error) {
         if (error != null) {
@@ -65,6 +72,16 @@ public class InicioController {
 
         return "/principal/login";
     }
+    
+    @PostMapping("/loginentrar")
+    public String inicio(Model m, String username, String password) {
+        System.out.println("Pasa ---------------");
+        UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(username, password);
+        System.out.println("Pasa2 ---------------");
+        Authentication auth=manager.authenticate(token);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        return "redirect:/hiberlibros/entrar";
+    }    
 
     @GetMapping("/panelUsuario")
     public String panelUsuario(Model m, String mail) {
@@ -78,9 +95,10 @@ public class InicioController {
     }
 
     @PostMapping("/entrar")
-    public String entrar(String mail) {
-        if (usuService.registrado(mail)) {
-            return "redirect:/hiberlibros/panelUsuario?mail=" + mail;
+    public String entrar(String username, String password) {
+        
+        if (usuService.registrado(username)) {
+            return "redirect:/hiberlibros/panelUsuario?mail=" + username;
         } else {
             String error = "Usuario no registrado";
             return "redirect:/hiberlibros?error=" + error;
