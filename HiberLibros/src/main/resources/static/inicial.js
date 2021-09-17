@@ -44,7 +44,7 @@ function consultarLibros(pID) {
 				})
 			$("#listaLibros").append("</table>");
     	}
-	})
+	});
 }
 
 
