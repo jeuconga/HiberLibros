@@ -1,7 +1,7 @@
 function registrarUsuario() {
     bootbox.dialog({
         title: 'Registro Usuario',
-        size: 'small',
+        size: 'large',
         message: $("#nuevoUsuario").html()
     });
 
@@ -9,7 +9,7 @@ function registrarUsuario() {
 function editarUsuario() {
     bootbox.dialog({
         title: 'Editar',
-        size: 'small',
+        size: 'large',
         message: $("#editarUsuario").html()
     });
 

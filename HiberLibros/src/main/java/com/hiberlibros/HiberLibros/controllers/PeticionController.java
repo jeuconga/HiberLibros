@@ -7,6 +7,7 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Peticion;
 import com.hiberlibros.HiberLibros.entities.Usuario;
+import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 import com.hiberlibros.HiberLibros.services.PeticionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PeticionController {
     @Autowired
     private PeticionService servicePeticion;
+    @Autowired
+    private UsuarioServiceI uService;
     
     @GetMapping(value = "/peticion")
     public String peticion(Model m, Peticion p){
@@ -34,10 +37,11 @@ public class PeticionController {
         return "/peticion/peticion";
     }
     
-    @PostMapping(value = "/alta")
-    public String peticionAlta(Model m, Peticion p){
-        servicePeticion.insertaModificaPeticion(p);
-        return "redirect:/peticion/peticion";
+    @GetMapping(value = "/alta")
+    public String peticionAlta(Model m, Integer id_ul, Integer id_solicitante){
+        Peticion p=new Peticion();
+        servicePeticion.insertaPeticion(p, id_ul, id_solicitante); 
+        return "redirect:/hiberlibros/panelUsuario?mail="+uService.usuarioId(id_solicitante).getMail();
     }
     
     @PostMapping(value = "/baja")
@@ -45,7 +49,11 @@ public class PeticionController {
         servicePeticion.eliminaPeticion(p);
         return "redirect:/peticion/peticion";
     }
-    
+    @GetMapping("/baja")
+    public String retirarSolicitud(Integer id, String mail){
+        servicePeticion.eliminarId(id);
+        return "redirect:/hiberlibros/panelUsuario?mail="+mail;
+    }
     @PostMapping(value = "/modificacion")
     public String peticionModificacion(Model m, Peticion p){
         servicePeticion.insertaModificaPeticion(p);

@@ -17,6 +17,7 @@
                                 <th>Valoracion</th>
                                 <th>Estado</th>
                                 <th>Quiero/Tengo</th>
+                                <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,6 +30,7 @@
                                 <td th:text="${l.libro.valoracionLibro}"></td>
                                 <td th:text="${l.estadoConservacion}"></td>
                                 <td th:text="${l.quieroTengo}"></td>
+                                <td><a th:href="@{/hiberlibros/borrarUL(id=${l.id},mail=${usuario.mail})}" class="btn btn-sm btn-secondary">Borrar</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -38,15 +40,14 @@
                     <h2>Tus relatos</h2>
                     <table class="table"  >
                         <tr>
-<!--                            <th>id</th>-->
+                            <!--                            <th>id</th>-->
                             <th>titulo</th>
                             <th>Género</th>
                             <th>Valoraciones</th>
                             <th>NºValoraciones</th>
                         </tr>
-
                         <tr th:each="rel:${relatos}">    
-<!--                            <td th:text="${rel.id}"></td>  -->
+                            <!--                            <td th:text="${rel.id}"></td>  -->
                             <td th:text="${rel.titulo}"></td>
                             <td th:text="${rel.genero.nombre}"></td>   
                             <td class="text-center"> 
@@ -65,21 +66,41 @@
                 <div class='col-3'>
                     <h2>Nuevas Peticiones</h2>
                     <table class="table">
-                        <tr>
-                            <th>Usuario</th>
-                            <th>Libro</th>
-                            <th>Sus Libros</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Libro</th>
+                                <th>Gestionar</th>
+                            </tr>                           
+                        </thead>
+                        <tbody>
+                            <tr th:each="petiR:${petiRecibidas}">
+                                <td th:text="${petiR.idUsuarioLibro.libro.titulo}"></td>
+                                <td th:text="${petiR.idUsuarioSolicitante.nombre}"></td>
+                                <td><a class="btn btn-sm btn-secondary">Gestionar</a></td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div class='col-3'>
                     <h2>Tus peticiones</h2>
                     <table class="table">
-                        <tr>
-                            <th>Usuario</th>
-                            <th>Libro</th>
-
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Libro</th>
+                                <th>Estado</th>
+                                <th>Retirar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="peti:${misPeticiones}">
+                                <td th:text="${peti.idUsuarioLibro.usuario.nombre}"></td>
+                                <td th:text="${peti.idUsuarioLibro.libro.titulo}"></td>
+                                <td>Pendiente</td>
+                                <td><a th:href="@{/peticion/baja(id=${peti.id},mail=${usuario.mail})}" class="btn btn-secondary btn-sm">Retirar</a></td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div class='col-6'>
@@ -96,6 +117,7 @@
                 </div>
             </div>
         </div>
+        <a th:onclick="|eliminarU(${usuario.id})|" class="btn btn-outline-danger" title='Borrar usuario'>Borrar</a>
     </body>
 
 </html>

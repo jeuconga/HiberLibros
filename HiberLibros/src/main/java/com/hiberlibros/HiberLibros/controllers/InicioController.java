@@ -11,12 +11,13 @@ import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
 import com.hiberlibros.HiberLibros.entities.Relato;
 import com.hiberlibros.HiberLibros.interfaces.LibroServiceI;
+import com.hiberlibros.HiberLibros.interfaces.UsuarioLibroServiceI;
 import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
-import com.hiberlibros.HiberLibros.repositories.UsuarioLibroRepository;
 import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
 import com.hiberlibros.HiberLibros.services.EditorialService;
+import com.hiberlibros.HiberLibros.services.PeticionService;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -50,8 +51,11 @@ public class InicioController {
     @Autowired
     private LibroServiceI liService;
     @Autowired
-    private UsuarioLibroRepository ulRepo;
     private RelatoRepository repoRelato;
+    @Autowired
+    private UsuarioLibroServiceI ulService; 
+    @Autowired
+    private PeticionService petiService;
 
     @GetMapping
     public String inicio(Model m, String error) {
@@ -64,13 +68,12 @@ public class InicioController {
 
     @GetMapping("/panelUsuario")
     public String panelUsuario(Model m, String mail) {
-        Usuario u=usuService.usuarioRegistrado(mail);
-        m.addAttribute("usuario", u);
-        m.addAttribute("libros",ulRepo.findByUsuario(u));
-        m.addAttribute("usuario", usuService.usuarioRegistrado(mail));
-        
-        //mostrar relatos por ID logeado
+        Usuario u = usuService.usuarioRegistrado(mail);
         m.addAttribute("relatos", repoRelato.findByUsuario(u));
+        m.addAttribute("usuario", u);
+        m.addAttribute("libros", ulService.buscarUsuario(u));
+        m.addAttribute("misPeticiones",petiService.consutarPeticionesUsuarioPendientes(u));
+        m.addAttribute("petiRecibidas", petiService.consultarPeticonesRecibidas(u));
         return "principal/usuarioPanel";
     }
 
@@ -97,7 +100,6 @@ public class InicioController {
         m.addAttribute("buscador", buscador);
         if (buscador != null) {
             libros = liService.buscarLibro(buscador);
-
             if (libros.size() == 0) {
                 noLibros = "Ningun libro encontrado";
             } else {
@@ -106,7 +108,6 @@ public class InicioController {
             }
         }
         m.addAttribute("noLibros", noLibros);
-
         return "principal/guardarLibro";
     }
 
@@ -114,10 +115,8 @@ public class InicioController {
     public String guardarLibro(Integer libro, Integer usuario, UsuarioLibro ul) {
         Usuario u = usuService.usuarioId(usuario);
         Libro l = liService.libroId(libro);
-        ul.setUsuario(u);
-        ul.setLibro(l);
         String mail = u.getMail();
-        ulRepo.save(ul);
+        ulService.guardar(ul, l, u);
         return "redirect:/hiberlibros/panelUsuario?mail=" + mail;
     }
 
@@ -132,26 +131,31 @@ public class InicioController {
         autorRepo.save(autor);
         return "redirect:/hiberlibros/guardarLibro?id=" + id + "&buscador=XXX";
     }
-    
+
     @PostMapping("/registroLibro")
-    public String registrarLibro(UsuarioLibro ul,Libro l, Integer id_usuario,Integer id_genero, Integer id_editorial,Integer id_autor){
+    public String registrarLibro(UsuarioLibro ul, Libro l, Integer id_usuario, Integer id_genero, Integer id_editorial, Integer id_autor) {
         l.setGenero(generoRepo.getById(id_genero));
         l.setEditorial(editoService.consultaPorIdEditorial(id_editorial));
         l.setAutor(autorRepo.findById(id_autor).get());
         liService.guardarLibro(l);
-        Usuario u=usuService.usuarioId(id_usuario);
-        ul.setUsuario(u);
-        ul.setLibro(l);
-        ulRepo.save(ul);
+        Usuario u = usuService.usuarioId(id_usuario);
+        ulService.guardar(ul, l, u);
         return "redirect:/hiberlibros/panelUsuario?mail=" + u.getMail();
-    } 
-    
+    }
+
     @GetMapping("/buscarLibro")
-    public String buscarLibro(Model m, Integer id){
+    public String buscarLibro(Model m, Integer id, String buscador) {
         m.addAttribute("usuario", usuService.usuarioId(id));
+        if(buscador==null){
+            m.addAttribute("libros", ulService.todos()); 
+        }else{
+            m.addAttribute("libros", ulService.buscarContiene(buscador));
+        }
+        
+        
         return "principal/buscarLibro";
     }
-            
+
     @PostMapping("/guardarRelato")
     public String formularioRelato(Model m, Integer id, Relato relato, MultipartFile ficherosubido) {
         String subir = "c:\\zzzzSubirFicheros\\" + ficherosubido.getOriginalFilename();
@@ -175,12 +179,15 @@ public class InicioController {
 
     @GetMapping("/relato")
     public String prueba(Model model, Integer id) {
-
         model.addAttribute("generos", generoRepo.findAll());
         model.addAttribute("relatos", repoRelato.findAll());
         model.addAttribute("usuario", usuService.usuarioId(id));
         return "principal/relato";
     }
+    @GetMapping("/borrarUL")
+    public String borrarUsuLibro(Integer id, String mail){
+        ulService.borrar(id);
+        return "redirect:/hiberlibros/panelUsuario?mail=" +mail;
+    }
 
 }
-

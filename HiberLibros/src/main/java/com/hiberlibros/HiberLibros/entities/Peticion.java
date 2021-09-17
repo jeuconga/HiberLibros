@@ -5,6 +5,7 @@
  */
 package com.hiberlibros.HiberLibros.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,7 +27,7 @@ public class Peticion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @OneToOne
+    @OneToOne(cascade=CascadeType.REMOVE)
     @JoinColumn(name = "id_usuario_libro")
     private UsuarioLibro idUsuarioLibro;
     

@@ -13,5 +13,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RelatoRepository extends JpaRepository<Relato, Integer> {
     
-    public List<Relato> findByUsuario (Usuario usuario); 
+    public List<Relato> findByUsuario (Usuario u);
 }
