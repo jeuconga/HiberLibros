@@ -31,8 +31,7 @@ public class ValidacionService implements UserDetailsService {
     @Autowired
     private UsuarioRepository repoUsu;
 
-//    @Autowired
-//    private ModelMapper mapper;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -42,9 +41,9 @@ public class ValidacionService implements UserDetailsService {
             Optional<UsuarioSeguridad> usuarioSeguridad = repoUsuSeg.findByIdUsuario(usuario.get().getId());
             
             if (usuario.isPresent()) {
-                //UsuarioDto obj=mapper.map(usuario.get(), UsuarioDto.class);
+
                 UsuarioSeguridadDto obj = new UsuarioSeguridadDto();
-                obj.setMail(usuarioSeguridad.get().getMail()); 
+                obj.setUsername(usuarioSeguridad.get().getMail()); 
                 obj.setPassword(usuarioSeguridad.get().getPassword());
                 List<SimpleGrantedAuthority> roles = usuarioSeguridad.get().getRoles()
                         .stream()

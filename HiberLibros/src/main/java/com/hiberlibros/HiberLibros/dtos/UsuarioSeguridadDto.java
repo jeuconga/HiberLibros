@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class UsuarioSeguridadDto implements UserDetails {
 
     private Integer userId;
-    private String mail;
+    private String username;
     private String password;
     private List<SimpleGrantedAuthority> roles;
     
@@ -36,7 +36,7 @@ public class UsuarioSeguridadDto implements UserDetails {
 
     @Override
     public String getUsername() {
-        return mail;
+        return username;
     }
 
     @Override

@@ -16,9 +16,8 @@
                             <th>Valoracion</th>
                         </tr>
                     </table>
-                    <a class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;añadir libro</a>
+                    <a th:href="@{/hiberlibros/guardarLibro(id=${usuario.id})}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;añadir libro</a>
                 </div>
-
                 <div class='col-5'>
                     <h2>Tus relatos</h2>
                     <table class="table"  >
@@ -32,9 +31,7 @@
                     </table>
                     <a class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;añadir relato</a>
                 </div>
-
             </div>
-            
             <div class="row">
                 <div class='col-3'>
                     <h2>Nuevas Peticiones</h2>
@@ -56,7 +53,6 @@
                         </tr>
                     </table>
                 </div>
-
                 <div class='col-6'>
                     <h2>Intercambios</h2>
                     <table class="table"  >
@@ -69,9 +65,7 @@
                         </tr>
                     </table>
                 </div>
-
             </div>
-
         </div>
     </body>
 

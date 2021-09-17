@@ -8,6 +8,7 @@ package com.hiberlibros.HiberLibros.configuracion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,7 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
@@ -36,13 +37,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //             .antMatchers("/vuelos/**").hasAnyRole("Administrador")
 //             .antMatchers("/traducir/**").hasAnyRole("Administrador", "Usuario")
 //             .antMatchers("/url3").hasRole("Administrador")
-                ;
-        http.formLogin()
-                //.loginPage("/hiberlibros")
-                ;   //  /login. Spring
-        http.csrf().disable();
-        http.logout().logoutUrl("/milogout");
-        //http.formLogin();   //  /login. Spring
+          .and()
+            .formLogin()
+                .loginPage("/hiberlibros")
+                .permitAll()
+                .usernameParameter("username")
+                .passwordParameter("password")
+          .and()
+            .logout()
+    //            .logoutUrl("/milogout")
+          .and()
+            .csrf().disable();
+
+    }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean(); //To change body of generated methods, choose Tools | Templates.
     }
 
     

@@ -1,0 +1,76 @@
+<html xmlns:th="https://www.thymeleaf.org" 
+      th:replace="principal/layoutUsuario::layout(~{::body})">
+
+    <body>
+        <div class="container-fluid"> 
+            <form action="/hiberlibros/guardarLibro">
+                <input type="hidden" name="id" th:value="${usuario.id}"/>
+                <input type="text" name="buscador" placeholder="Buscar por título o ISBN"/>
+                <input type="submit" value="buscar" class="btn btn-primary"/>
+                
+            </form>
+            
+            
+            
+
+            <div th:if="${#strings.equals(noLibros,'Ningun libro encontrado')}">
+                <p th:text="${noLibros}"></p>
+                <form action="/hiberlibros/registroLibro" method="post" th:object="${libro}">
+                    <div class="row" >    
+                        <input type="hidden" name="id_usuario" th:value="${usuario.id}"/>
+
+                        <div class="col-2">
+                            <label for="isbn" class="form-label">ISBN</label>
+                            <input class="form-input" th:field="*{isbn}" placeholder="ISBN" required=""/>
+                        </div>
+                        <div class="col-2">
+                            <label for="titulo" class="form-label">Título</label>
+                            <input class="form-input" th:field="*{titulo}" placeholder="Título" required=""/>
+                        </div>
+                        <div class="col-2">
+                            <label for="idioma" class="form-label">Idioma</label>
+                            <input class="form-input" th:field="*{idioma}" placeholder="Idioma" required=""/>
+                        </div>
+                        <div class="col-2">
+                            <label for="uriPortada" class="form-label">URL</label>
+                            <input class="form-input" th:field="*{uriPortada}" placeholder="URL"/>
+                        </div>
+                        <div class="col-2">
+                            <label for="valoracionLibro" class="form-label">Valoración</label>
+                            <input type="number" min="0" max="10" step="0.1" class="form-input" th:field="*{valoracionLibro}" placeholder="Valoración"/>
+                        </div>             
+                        <div class="col-3" >
+                            <span class="m-1">Autor</span> 
+                            <select  class="m-1"  name="id_autor">
+                                <option></option>
+                                <option th:each="autor:${autores}" th:text="${autor.nombre + autor.apellidos}" th:value="${autor.idAutor}"></option>
+                            </select>
+                        </div>
+                        <div class="col-3" >
+                            <span class="m-1">Editorial</span> 
+                            <select  class="m-1"  name="id_editorial">
+                                <option></option>
+                                <option th:each="edit:${editoriales}" th:text="${edit.nombreEditorial}" th:value="${edit.id}"></option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <span class="m-1">Genero</span> 
+                            <select  class="m-1"  name="id_genero">
+                                <option></option>
+                                <option th:each="gen:${generos}" th:text="${gen.nombre}" th:value="${gen.id}"></option>
+                            </select></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <button type="submit" class="btn btn-secondary">
+                                <i class="fas fa-arrow-circle-up"></i> &nbsp;Guardar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </body>
+
+</html>

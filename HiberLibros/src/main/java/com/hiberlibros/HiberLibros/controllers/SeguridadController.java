@@ -60,8 +60,14 @@ public class SeguridadController {
         return "saluda 3";
     }
 
+      
+//    @PostMapping("/login")
+//    public String login() {
+//        return "login";
+//    }
+    
     @GetMapping("/login2")
-    public String login() {
+    public String login2() {
         return "/admin/milogin";
     }
 
@@ -96,6 +102,8 @@ public class SeguridadController {
         return "redirect:/admin/altaUsuarioSeguridad";
 
     }
+    
+    
 
     @GetMapping("/info")
     @ResponseBody
