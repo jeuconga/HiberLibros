@@ -36,7 +36,7 @@ public class RelatoController {
         model.addAttribute("generos", repoGenero.findAll());
         model.addAttribute("relatos", repoRelato.findAll());
 
-          return "/principal/relato";
+        return "/principal/relato";
     }
 
     @PostMapping("/guardarRelato")
@@ -57,7 +57,7 @@ public class RelatoController {
             e.printStackTrace();
 
         }
-          return "redirect:/relato";
+        return "redirect:/relato";
     }
 
     @GetMapping("/eliminarRelato")

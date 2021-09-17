@@ -3,7 +3,8 @@
 
     <body>
         <div class="container">
-            <form action="/relato/guardarRelato" method="post" enctype="multipart/form-data">
+            <form action="/hiberlibros/guardarRelato" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id_usuario" th:value="${usuario.id}"/>
                 <label>Titulo : </label>
                 <input type="text" name="titulo" required/> <br> <br>
 
@@ -42,24 +43,24 @@
             </form>
             <hr> <br> <br>
 
-            <table>
-                <tr>
-                    <th>id</th>
-                    <th>titulo</th>
-                    <th>valoracion usuarios</th>
-                    <th>Genero</th>
-                    <th>numero valoraciones</th>
-                </tr>
-                <tr th:each="rel:${relatos}">
-                    <td th:text="${rel.id}"></td>            
-                    <td th:text="${rel.titulo}"></td>  
-                    <td th:text="${rel.valoracionUsuarios}"></td>  
-                    <td th:text="${rel.genero.nombre}"></td>  
-                    <td th:text="${rel.numeroValoraciones}"></td>  
-                    <td> <a class="btn btn-danger"  th:href="${'/relato/eliminarRelato?id='+rel.id}" >Eliminar</a></td>
-                    <td> <a class="btn btn-secondary"  th:href="${'/relato/modificar?id='+rel.id}" >Modificar</a></td>
-                </tr>
-            </table>
+            <!--            <table>
+                            <tr>
+                                <th>id</th>
+                                <th>titulo</th>
+                                <th>valoracion usuarios</th>
+                                <th>Genero</th>
+                                <th>numero valoraciones</th>
+                            </tr>
+                            <tr th:each="rel:${relatos}">
+                                <td th:text="${rel.id}"></td>            
+                                <td th:text="${rel.titulo}"></td>  
+                                <td th:text="${rel.valoracionUsuarios}"></td>  
+                                <td th:text="${rel.genero.nombre}"></td>  
+                                <td th:text="${rel.numeroValoraciones}"></td>  
+                                <td> <a class="btn btn-danger"  th:href="${'/relato/eliminarRelato?id='+rel.id}" >Eliminar</a></td>
+                                <td> <a class="btn btn-secondary"  th:href="${'/relato/modificar?id='+rel.id}" >Modificar</a></td>
+                            </tr>
+                        </table>-->
             <hr> <br> <br>
         </div>
     </body>
