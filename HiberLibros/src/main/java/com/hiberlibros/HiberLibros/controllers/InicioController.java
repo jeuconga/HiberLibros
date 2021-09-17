@@ -9,11 +9,13 @@ import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.entities.Libro;
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
+import com.hiberlibros.HiberLibros.entities.Relato;
 import com.hiberlibros.HiberLibros.interfaces.LibroServiceI;
 import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.UsuarioLibroRepository;
+import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
 import com.hiberlibros.HiberLibros.services.EditorialService;
 import java.io.File;
 import java.nio.file.Files;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -48,6 +51,7 @@ public class InicioController {
     private LibroServiceI liService;
     @Autowired
     private UsuarioLibroRepository ulRepo;
+    private RelatoRepository repoRelato;
 
     @GetMapping
     public String inicio(Model m, String error) {
@@ -144,5 +148,35 @@ public class InicioController {
         return "principal/buscarLibro";
     }
             
+    @PostMapping("/guardarRelato")
+    public String formularioRelato(Model m, Integer id, Relato relato, MultipartFile ficherosubido) {
+        String subir = "c:\\zzzzSubirFicheros\\" + ficherosubido.getOriginalFilename();
+        File f = new File(subir);
+        f.getParentFile().mkdirs();
+        try {
+            Files.copy(ficherosubido.getInputStream(), f.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            relato.setFichero(subir);
+            relato.setValoracionUsuarios(new Double(0));
+            relato.setNumeroValoraciones(0);
+            relato.setUsuario(usuService.usuarioId(id));
+            repoRelato.save(relato);
+            m.addAttribute("usuario", usuService.usuarioId(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+        return "redirect:/hiberlibros/panelUsuario?mail=" + usuService.usuarioId(id).getMail();
+    }
+
+    @GetMapping("/relato")
+    public String prueba(Model model, Integer id) {
+
+        model.addAttribute("generos", generoRepo.findAll());
+        model.addAttribute("relatos", repoRelato.findAll());
+        model.addAttribute("usuario", usuService.usuarioId(id));
+        return "principal/relato";
+    }
 
 }
+
