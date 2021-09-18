@@ -25,13 +25,22 @@
             </div>
 
         </nav>
-	<a th:href="@{/autorForm}" class="btn btn-success offset-5"> Nuevo autor</a>
+        </br>
+        <div class="container">
+        	<div class="row">
+            	<form action="/buscarAutor" method="get" class="offset-12">
+                	<input type="text" name="buscador" placeholder="Buscar autor"/>
+                	<input type="submit" value="Buscar" class="btn btn-primary"/>
+            	</form>
+				<a th:href="@{/autorForm}" class="btn btn-success offset-6"> Nuevo autor</a>
+			</div>
+		</div>
 	<div class="container">
   		<ul class="list-group">
    			<li class="list-group-item clearfix" th:each="autor:${autores}">
       			<h3 class="list-group-item-heading" th:text="${autor.nombre} + ' ' + ${autor.apellidos}"></h3>
       			<p class="list-group-item-text lead" th:text="${autor.biografia}"></p>
-      			<a class="btn" th:onclick="|consultarLibros(${autor.idAutor})|">Libros</a>
+      			<a class="btn btn-secondary" th:onclick="|consultarLibros(${autor.idAutor})|">Libros</a>
        		 	<br />
       			<div class="btn-toolbar pull-right" role="toolbar" aria-label="">
         			<a th:href="@{/autorForm/{id}(id=${autor.idAutor})}" class="btn btn-warning">Editar</a>

@@ -59,4 +59,14 @@ public class AutorController {
 	public List<Libro> getLibros(Integer id){
 		return  autorService.consultarlibros(id);
 	}
+	@GetMapping("/buscarAutor")
+	public String buscarAutores(Model m,String buscador){
+        m.addAttribute("buscador", buscador);
+		if (buscador == null) {
+            m.addAttribute("autores", autorRepo.findAll());
+        } else {
+            m.addAttribute("autores", autorService.consultarAutores(buscador));
+        }
+        return "autores/lista";
+	}
 }
