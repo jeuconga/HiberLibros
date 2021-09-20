@@ -8,14 +8,14 @@ package com.hiberlibros.HiberLibros.services;
 import com.hiberlibros.HiberLibros.entities.Peticion;
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
-import com.hiberlibros.HiberLibros.interfaces.UsuarioLibroServiceI;
-import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 import com.hiberlibros.HiberLibros.repositories.PeticionRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 
 @Service
 public class PeticionService {
@@ -24,13 +24,17 @@ public class PeticionService {
     private PeticionRepository repoPeticion;
 
     @Autowired
-    private UsuarioLibroServiceI ulService;
+    private IUsuarioLibroService ulService;
 
     @Autowired
-    private UsuarioServiceI uService;
+    private IUsuarioService uService;
 
     public List<Peticion> consultaTodasPeticiones() {
         return repoPeticion.findAll();
+    }
+    
+    public Peticion consultarPeticionId(Integer id){
+        return repoPeticion.findById(id).get();
     }
 
     public void insertaPeticion(Peticion p, Integer id_ul, Integer id_solicitante) { //guarda la petición y obtiene aquí los objetos UL y Usuario

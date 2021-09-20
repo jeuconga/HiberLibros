@@ -12,10 +12,8 @@ import java.util.List;
  *
  * @author Usuario
  */
-public interface UsuarioServiceI {
+public interface IUsuarioService {
     
-    
-    public String guardarUsuarioYSeguridad(Usuario u,String password);
     public String guardarUsuario(Usuario u);
     public String editarUsuario(Usuario u);
     public void borrarUsuario(Integer id);
@@ -23,5 +21,6 @@ public interface UsuarioServiceI {
     public boolean registrado(String mail);
     public Usuario usuarioRegistrado(String mail);
     public Usuario usuarioId(Integer id);
+    public String guardarUsuarioYSeguridad(Usuario u, String password);
     
 }

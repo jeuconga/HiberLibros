@@ -6,18 +6,18 @@
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Libro;
-import com.hiberlibros.HiberLibros.interfaces.LibroServiceI;
 import com.hiberlibros.HiberLibros.repositories.LibroRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 
 /**
  *
  * @author Usuario
  */
 @Service
-public class LibroService implements LibroServiceI{
+public class LibroService implements ILibroService{
     @Autowired
     private LibroRepository libroRep;
 
