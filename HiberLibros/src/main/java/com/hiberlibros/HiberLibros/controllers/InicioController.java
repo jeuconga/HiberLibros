@@ -213,7 +213,7 @@ public class InicioController {
         model.addAttribute("generos", generoRepo.findAll());
         model.addAttribute("relatos", repoRelato.findAll());
         model.addAttribute("usuario", usuService.usuarioId(id));
-        return "principal/relato";
+        return "principal/relato"; 
     }
 
     @GetMapping("/borrarUL")//borra un libro de UsuarioLibro sin eliminarlo de la tabla de Libros
@@ -221,5 +221,4 @@ public class InicioController {
         ulService.borrar(id);
         return "redirect:/hiberlibros/panelUsuario?mail=" + mail;
     }
-
 }
