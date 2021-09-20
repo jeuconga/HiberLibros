@@ -10,6 +10,7 @@ import com.hiberlibros.HiberLibros.entities.Libro;
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
 import com.hiberlibros.HiberLibros.entities.Relato;
+import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
 import com.hiberlibros.HiberLibros.interfaces.LibroServiceI;
 import com.hiberlibros.HiberLibros.interfaces.UsuarioLibroServiceI;
 import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
@@ -75,6 +76,16 @@ public class InicioController {
         return "/principal/login";
     }
 
+    
+    @Autowired
+    private ISeguridadService serviceSeguridad;
+    
+    @GetMapping("/pruebaContexto")
+    @ResponseBody
+    public String pruebaContexto(){
+        return serviceSeguridad.getMailFromContext();
+    }
+    
     @PostMapping("/loginentrar")
     public String inicio(Model m, String username, String password) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
@@ -84,10 +95,12 @@ public class InicioController {
         List<String> roles = auth.getAuthorities().stream().map(x -> x.getAuthority()).collect(Collectors.toList());
         for (String rol : roles) {
                 if ("ROLE_Administrador".equals(rol)) {
-                    return "redirect:/hiberlibros/panelAdministrador?mail=" + username;
+                    //return "redirect:/hiberlibros/panelAdministrador?mail=" + username;
+                        return "redirect:/hiberlibros/vistaAdministrador";
                 } else {
                     if ("ROLE_Usuario".equals(rol)) {
-                        return "redirect:/hiberlibros/panelUsuario?mail=" + username;
+                       // return "redirect:/hiberlibros/panelUsuario?mail=" + username;
+                        return "redirect:/hiberlibros/panelUsuario";
                     } 
                 }
         }
@@ -105,7 +118,7 @@ public class InicioController {
     
     @GetMapping("/panelUsuario") //entrada al panel principal de usuario, se pasan todos los elementos que se han de mostrar
     public String panelUsuario(Model m, String mail) {
-        Usuario u = usuService.usuarioRegistrado(mail);
+        Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         m.addAttribute("relatos", repoRelato.findByUsuario(u));
         m.addAttribute("usuario", u);
         m.addAttribute("libros", ulService.buscarUsuario(u));
