@@ -7,12 +7,11 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.entities.Libro;
+import com.hiberlibros.HiberLibros.entities.Peticion;
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
 import com.hiberlibros.HiberLibros.entities.Relato;
-import com.hiberlibros.HiberLibros.interfaces.LibroServiceI;
-import com.hiberlibros.HiberLibros.interfaces.UsuarioLibroServiceI;
-import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
+import com.hiberlibros.HiberLibros.interfaces.IIntercambioService;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
@@ -37,6 +36,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import com.hiberlibros.HiberLibros.interfaces.ILibroService;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 
 /**
  *
@@ -47,7 +49,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class InicioController {
 
     @Autowired
-    private UsuarioServiceI usuService;
+    private IUsuarioService usuService;
     @Autowired
     private GeneroRepository generoRepo;
     @Autowired
@@ -55,16 +57,19 @@ public class InicioController {
     @Autowired
     private EditorialService editoService;
     @Autowired
-    private LibroServiceI liService;
+    private ILibroService liService;
     @Autowired
     private RelatoRepository repoRelato;
     @Autowired
-    private UsuarioLibroServiceI ulService;
+    private IUsuarioLibroService ulService;
     @Autowired
     private PeticionService petiService;
 
     @Autowired
     private AuthenticationManager manager;
+
+    @Autowired
+    private IIntercambioService serviceInter;
 
     @GetMapping
     public String inicio(Model m, String error) {
@@ -83,13 +88,13 @@ public class InicioController {
 
         List<String> roles = auth.getAuthorities().stream().map(x -> x.getAuthority()).collect(Collectors.toList());
         for (String rol : roles) {
-                if ("ROLE_Administrador".equals(rol)) {
-                    return "redirect:/hiberlibros/panelAdministrador?mail=" + username;
-                } else {
-                    if ("ROLE_Usuario".equals(rol)) {
-                        return "redirect:/hiberlibros/panelUsuario?mail=" + username;
-                    } 
+            if ("ROLE_Administrador".equals(rol)) {
+                return "redirect:/hiberlibros/panelAdministrador?mail=" + username;
+            } else {
+                if ("ROLE_Usuario".equals(rol)) {
+                    return "redirect:/hiberlibros/panelUsuario?mail=" + username;
                 }
+            }
         }
         String error = "Usuario no registrado";
         return "redirect:/hiberlibros?error=" + error;
@@ -106,11 +111,14 @@ public class InicioController {
     @GetMapping("/panelUsuario") //entrada al panel principal de usuario, se pasan todos los elementos que se han de mostrar
     public String panelUsuario(Model m, String mail) {
         Usuario u = usuService.usuarioRegistrado(mail);
+        List<UsuarioLibro> ul = ulService.buscarUsuario(u);
         m.addAttribute("relatos", repoRelato.findByUsuario(u));
         m.addAttribute("usuario", u);
-        m.addAttribute("libros", ulService.buscarUsuario(u));
+        m.addAttribute("libros", ul);
         m.addAttribute("misPeticiones", petiService.consutarPeticionesUsuarioPendientes(u));
         m.addAttribute("petiRecibidas", petiService.consultarPeticonesRecibidas(u));
+        m.addAttribute("intercambiosPropios", serviceInter.encontrarULPrestador(ul));
+        m.addAttribute("intercambiosPeticiones", serviceInter.encontrarULPrestatario(ul));
         return "principal/usuarioPanel";
     }
 
@@ -216,6 +224,31 @@ public class InicioController {
     public String borrarUsuLibro(Integer id, String mail) {
         ulService.borrar(id);
         return "redirect:/hiberlibros/panelUsuario?mail=" + mail;
+    }
+
+    @GetMapping("/gestionarPeticion")
+    public String gestionarPeticion(Model m, Integer id) {
+        Peticion p = petiService.consultarPeticionId(id);
+        m.addAttribute("peticiones", p);
+        m.addAttribute("librosSolicitante", ulService.buscarUsuarioDisponibilidad(p.getIdUsuarioSolicitante(), "Tengo", "Libre"));
+        return "principal/formPeticion";
+    }
+
+    @PostMapping("/realizarIntercambio")
+    public String realizarIntercambio(Integer id_peticion, Integer usuarioPrestatario) {
+        Peticion p = petiService.consultarPeticionId(id_peticion);
+        UsuarioLibro ulPrestatario = ulService.encontrarId(usuarioPrestatario);
+        UsuarioLibro ulPrestador = p.getIdUsuarioLibro();
+        serviceInter.guardarIntercambio(ulPrestatario, ulPrestador);
+        petiService.aceptarPeticion(p);
+
+        return "redirect:/hiberlibros/panelUsuario?mail=" + petiService.consultarPeticionId(id_peticion).getIdUsuarioLibro().getUsuario().getMail();
+    }
+
+    @GetMapping("/finIntercambio")
+    public String finIntercambio(Integer id, Integer id_usuario) {
+        serviceInter.finIntercambio(id);
+        return "redirect:/hiberlibros/panelUsuario?mail=" +usuService.usuarioId(id_usuario).getMail();
     }
 
 }

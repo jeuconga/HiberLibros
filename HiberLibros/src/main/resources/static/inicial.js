@@ -61,11 +61,27 @@ function anyadirAutor(pID) {
             message: "<div id='autorForm'>" + $("#autor").html() + "</div>"
         });
         $("#autorForm form").deserialize(pJson);
-
     });
-
-
 }
 
+function gestionarPeticion(pId) {
+    $.ajax({
+        url: "gestionarPeticion",
+        data: {
+            id: pId
+        },
+        success: function (pHtml) {
+            bootbox.dialog({
+                title: "Guardar intercambio",
+                size: "large",
+                message: pHtml
+            })
+        },
+        error: function (err) {
+            alert('Error 404, page not found')
+        }
+    })
+
+}
 
 

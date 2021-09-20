@@ -8,20 +8,20 @@ package com.hiberlibros.HiberLibros.services;
 import com.hiberlibros.HiberLibros.entities.Libro;
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
-import com.hiberlibros.HiberLibros.interfaces.UsuarioLibroServiceI;
 import com.hiberlibros.HiberLibros.repositories.UsuarioLibroRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
 
 /**
  *
  * @author Usuario
  */
 @Service
-public class UsuarioLibroService implements UsuarioLibroServiceI {
+public class UsuarioLibroService implements IUsuarioLibroService {
     @Autowired
     private UsuarioLibroRepository ulRepo;
     @Autowired
@@ -68,6 +68,11 @@ public class UsuarioLibroService implements UsuarioLibroServiceI {
     public void borrar(Integer id) {
         
         ulRepo.deleteById(id);
+    }
+
+    @Override
+    public List<UsuarioLibro> buscarUsuarioDisponibilidad(Usuario u, String tengo, String disponibilidad) {
+        return ulRepo.findByUsuarioAndQuieroTengoAndEstadoPrestamo(u, tengo, disponibilidad);
     }
     
     

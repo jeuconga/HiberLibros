@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hiberlibros.HiberLibros.repositories.UsuarioRepository;
-import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 import java.util.Optional;
 import javax.transaction.Transactional;
 
@@ -15,8 +15,7 @@ import javax.transaction.Transactional;
  * @author Usuario
  */
 @Service
-public class UsuarioService implements UsuarioServiceI {
-
+public class UsuarioService implements IUsuarioService{
     @Autowired
     private UsuarioRepository urService;
 
