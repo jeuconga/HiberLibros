@@ -34,7 +34,7 @@ function consultarLibros(pID) {
 			},
 		datatype: 'json',
 		success: function(json){
-				$("#listaLibros").html("<table class='table col-12' id='tabla'>");
+				$("#listaLibros").html("<table class='table table-striped col-12' id='tabla'>");
 				$("#tabla").append("<thead><tr><th>Titulo</th><th>Valoracion</th></tr></thead>");
 				$.each(json, function(key,value){
 							var fila = $("<tr>");
@@ -45,7 +45,7 @@ function consultarLibros(pID) {
 				});
 			 	bootbox.dialog({
             		title: 'Lista de libros',
-           	 		size: 'small',
+           	 		size: 'medium',
 					message:  $("#listaLibros").html()
 				});
     	}
