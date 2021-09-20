@@ -82,9 +82,7 @@ public class InicioController {
 
     @PostMapping("/loginentrar")
     public String inicio(Model m, String username, String password) {
-        System.out.println("Pasa ---------------");
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-        System.out.println("Pasa2 ---------------");
         Authentication auth = manager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
 
@@ -102,6 +100,14 @@ public class InicioController {
         return "redirect:/hiberlibros?error=" + error;
     }
 
+    @GetMapping("/logout")
+    public String logout(){
+        SecurityContextHolder.clearContext();
+        return "/principal/logout";
+    }
+    
+    
+    
     @GetMapping("/panelUsuario") //entrada al panel principal de usuario, se pasan todos los elementos que se han de mostrar
     public String panelUsuario(Model m, String mail) {
         Usuario u = usuService.usuarioRegistrado(mail);
@@ -116,17 +122,7 @@ public class InicioController {
         return "principal/usuarioPanel";
     }
 
-    // @PostMapping("/entrar")
-//    @GetMapping("/entrar")
-//    public String entrar(String username, String password) {
-//        
-//        if (usuService.registrado(username)) {
-//            return "redirect:/hiberlibros/panelUsuario?mail=" + username;
-//        } else {
-//            String error = "Usuario no registrado";
-//            return "redirect:/hiberlibros?error=" + error;
-//        }
-//    }
+
     @GetMapping("/guardarLibro") //Guarda libros en la base de datos. Primero guarda un libro, y posteriormente lo mete en la tabla Usuario Libros
     public String formularioLibro(Model m, Integer id, String buscador) {
         List<Libro> libros = new ArrayList<>();

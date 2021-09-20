@@ -21,5 +21,6 @@ public interface IUsuarioService {
     public boolean registrado(String mail);
     public Usuario usuarioRegistrado(String mail);
     public Usuario usuarioId(Integer id);
+    public String guardarUsuarioYSeguridad(Usuario u, String password);
     
 }

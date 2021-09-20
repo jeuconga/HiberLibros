@@ -1,7 +1,9 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hiberlibros.HiberLibros.dtos.LibroDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
-import com.hiberlibros.HiberLibros.entities.Libro;
+import com.hiberlibros.HiberLibros.repositories.AutorLibroRepository;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.services.AutorService;
 
@@ -26,8 +29,14 @@ public class AutorController {
 	@Autowired(required = false)
 	private AutorRepository autorRepo;
 	
+	@Autowired
+	private AutorLibroRepository repo;
+	
 	@Autowired(required = false)
 	private AutorService autorService;
+	
+    @Autowired
+    private ModelMapper obj;
 
 	@GetMapping("/autorLista")
 	public String lista(Model m){
@@ -56,8 +65,12 @@ public class AutorController {
 	}
 	@GetMapping("/getLibrosAutor")
 	@ResponseBody
-	public List<Libro> getLibros(Integer id){
-		return  autorService.consultarlibros(id);
+	public List<LibroDto> getLibros(Integer id){
+        return repo.findAll()
+                .stream()
+                .filter(z -> z.getAutor().getIdAutor() == id)
+                .map(x-> obj.map(x.getLibro(), LibroDto.class))
+                .collect(Collectors.toList());
 	}
 	@GetMapping("/buscarAutor")
 	public String buscarAutores(Model m,String buscador){

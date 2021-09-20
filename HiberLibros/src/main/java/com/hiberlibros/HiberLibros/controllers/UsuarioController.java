@@ -6,7 +6,7 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Usuario;
-import com.hiberlibros.HiberLibros.entities.UsuarioSeguridad;
+import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,43 +20,47 @@ import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 public class UsuarioController {
 
     @Autowired
-    private IUsuarioService service;
+    private IUsuarioService serviceUsuario;
     
-//    @Autowired
-//    private UsuarioSeguridad serviceUsuarioSeguridad;
+    @Autowired
+    private ISeguridadService serviceUsuarioSeguridad;
 
     @GetMapping
     public String usuarioFormulario(Model m, String registro) { //devuelve una lista con todos los usuarios, parte administrador
         m.addAttribute("registro", registro);
-        m.addAttribute("usuarios", service.usuariosList());
+        m.addAttribute("usuarios", serviceUsuario.usuariosList());
         return "/usuarios/usuariosFormulario";
     }
 
     @PostMapping("/guardarUsuario")//guarda un usuario devuelve un mensaje de error concreto
-    public String usuarioRegistrar(Usuario u) {
-        String resultado = service.guardarUsuario(u);
+    public String usuarioRegistrar(Usuario u, String password) {
+        //String resultado = service.guardarUsuario(u);
+        String resultado = serviceUsuario.guardarUsuarioYSeguridad(u,password);
         if (resultado.contains("Error")) {
             return "redirect:/hiberlibros?error=" + resultado;//mail existente, mail no válido
         } else {
-            return "redirect:/hiberlibros/panelUsuario?mail=" + u.getMail();//va al panel de usuario con el mail
+
+            //return "redirect:/hiberlibros/panelUsuario?mail=" + u.getMail();
+            return "redirect:/hiberlibros";
+
         }
 
     }
 
     @PostMapping("/editarUsuario")//edita usuario, manda el usuario para rellenar el formulario
     public String usuarioEditar(Usuario u) {
-        return "redirect:/hiberlibros/panelUsuario?mail=" + service.editarUsuario(u);
+        return "redirect:/hiberlibros/panelUsuario?mail=" + serviceUsuario.editarUsuario(u);
     }
 
     @GetMapping("/borrar")
     public String borrar(Integer id) {//borra usuario por ID en administrador
-        service.borrarUsuario(id);
+        serviceUsuario.borrarUsuario(id);
         return "redirect:/usuarios";
     }
 
     @GetMapping("/borrarUsuario")//borra usuario por ID en HIBERLIBRO
     public String borrarUsuario(Integer id) {
-        service.borrarUsuario(id);
+        serviceUsuario.borrarUsuario(id);
         return "redirect:/hiberlibros";
     }
 
