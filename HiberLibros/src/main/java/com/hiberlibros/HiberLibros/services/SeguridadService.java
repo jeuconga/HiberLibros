@@ -67,7 +67,8 @@ public class SeguridadService implements ISeguridadService {
     @Transactional
     public long bajaUsuarioSeguridad (Integer idUsuarioSeguridad){
         repoUsuSeg.deleteById(idUsuarioSeguridad);
-        Long elementosBorrados = repoRol.deleteByIdUsuarioSeguridad(idUsuarioSeguridad);
+        Long elementosBorrados = new Long(0);
+       // Long elementosBorrados = repoRol.deleteByIdUsuarioSeguridad(idUsuarioSeguridad);
         return elementosBorrados;
     }
     
