@@ -2,6 +2,7 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Relato;
+import com.hiberlibros.HiberLibros.interfaces.RelatoServiceI1;
 import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
@@ -27,11 +28,12 @@ public class RelatoController {
 
     @Autowired
     private RelatoRepository repoRelato;
-
     @Autowired
     private GeneroRepository repoGenero;
     @Autowired
     private UsuarioServiceI usuService;
+    @Autowired
+    private RelatoServiceI1 relatoService;
 
     @GetMapping
     public String prueba(Model model) {
@@ -84,12 +86,18 @@ public class RelatoController {
     }
 
     @PostMapping("/addValoracion")
-    public String addValoracion(Model m, Double valoracion, Integer id) {
-        Optional<Relato> rel = repoRelato.findById(id);
-        if (rel.isPresent()) {
-            calcularValoracion(id, valoracion);
+    public String addValoracion(Model m, Double valoracion, Integer id, Integer idUsuario) {
+        try {
+            Optional<Relato> rel = repoRelato.findById(id);
+            if (rel.isPresent()) {
+                calcularValoracion(id, valoracion);
+            }
+            m.addAttribute("usuario", usuService.usuarioId(idUsuario));
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return "redirect:/relato";
+        return "redirect:/relato/listaRelatos?id=" + idUsuario;
     }
     //metodo para calcular el numero de valoraciones y calcular la media entre ellas
 
@@ -99,7 +107,8 @@ public class RelatoController {
             relato.get().setNumeroValoraciones(relato.get().getNumeroValoraciones() + 1);
             Double val = (relato.get().getValoracionUsuarios() * (relato.get().getNumeroValoraciones() - 1) + valoracion)
                     / relato.get().getNumeroValoraciones();
-            relato.get().setValoracionUsuarios(val);
+            double redondeo = Math.round(val * 100.0) / 100.0;
+            relato.get().setValoracionUsuarios(redondeo);
             repoRelato.save(relato.get());
 
         }
@@ -125,6 +134,36 @@ public class RelatoController {
         repoRelato.save(relato);
 
         return "redirect:/relato";
+    }
+
+    @GetMapping("/buscarRelato")
+    public String buscarRelato(Model m, Integer id, String busqueda) {
+        m.addAttribute("usuario", usuService.usuarioId(id));
+        if (busqueda == null) {
+            m.addAttribute("relatos", repoRelato.findAll());
+        } else {
+            m.addAttribute("relatos", repoRelato.findByTituloContainingIgnoreCase(busqueda));
+        }
+
+        return "/principal/buscarRelatos";
+    }
+
+    @GetMapping("/buscarPorValoracionMayor")
+    public String mostrarPorValoracionMayor(Model model, Integer id) {
+
+        model.addAttribute("generos", repoGenero.findAll());
+        model.addAttribute("relatos", relatoService.buscarPorValoracionMenorAMayor());
+        model.addAttribute("usuario", usuService.usuarioId(id));
+        return "/principal/buscarRelatos";
+    }
+    
+    @GetMapping("/buscarPorValoracionMenor")
+    public String mostrarPorValoracionMenor(Model model, Integer id) {
+
+        model.addAttribute("generos", repoGenero.findAll());
+        model.addAttribute("relatos", relatoService.buscarPorValoracionMayorAMenor());
+        model.addAttribute("usuario", usuService.usuarioId(id));
+        return "/principal/buscarRelatos";
     }
 
 }
