@@ -13,4 +13,5 @@ public interface UsuarioSeguridadRepository extends CrudRepository<UsuarioSeguri
 
    // public Optional<UsuarioSeguridad> findByNombre(String username);
     public Optional<UsuarioSeguridad> findByIdUsuario(int idUsuario);
+    public Optional<UsuarioSeguridad> findByMail(String mail);
 }
