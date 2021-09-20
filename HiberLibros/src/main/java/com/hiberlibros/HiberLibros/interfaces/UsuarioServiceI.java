@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface UsuarioServiceI {
     
+    
+    public String guardarUsuarioYSeguridad(Usuario u,String password);
     public String guardarUsuario(Usuario u);
     public String editarUsuario(Usuario u);
     public void borrarUsuario(Integer id);

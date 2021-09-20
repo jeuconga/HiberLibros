@@ -7,6 +7,7 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.entities.UsuarioSeguridad;
+import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,43 +21,45 @@ import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 public class UsuarioController {
 
     @Autowired
-    private UsuarioServiceI service;
+    private UsuarioServiceI serviceUsuario;
     
-//    @Autowired
-//    private UsuarioSeguridad serviceUsuarioSeguridad;
+    @Autowired
+    private ISeguridadService serviceUsuarioSeguridad;
 
     @GetMapping
     public String usuarioFormulario(Model m, String registro) {
         m.addAttribute("registro", registro);
-        m.addAttribute("usuarios", service.usuariosList());
+        m.addAttribute("usuarios", serviceUsuario.usuariosList());
         return "/usuarios/usuariosFormulario";
     }
 
     @PostMapping("/guardarUsuario")
-    public String usuarioRegistrar(Usuario u) {
-        String resultado = service.guardarUsuario(u);
+    public String usuarioRegistrar(Usuario u, String password) {
+        //String resultado = service.guardarUsuario(u);
+        String resultado = serviceUsuario.guardarUsuarioYSeguridad(u,password);
         if (resultado.contains("Error")) {
             return "redirect:/hiberlibros?error=" + resultado;
         } else {
-            return "redirect:/hiberlibros/panelUsuario?mail=" + u.getMail();
+            //return "redirect:/hiberlibros/panelUsuario?mail=" + u.getMail();
+            return "redirect:/hiberlibros";
         }
 
     }
 
     @PostMapping("/editarUsuario")
     public String usuarioEditar(Usuario u) {
-        return "redirect:/hiberlibros/panelUsuario?mail=" + service.editarUsuario(u);
+        return "redirect:/hiberlibros/panelUsuario?mail=" + serviceUsuario.editarUsuario(u);
     }
 
     @GetMapping("/borrar")
     public String borrar(Integer id) {
-        service.borrarUsuario(id);
+        serviceUsuario.borrarUsuario(id);
         return "redirect:/usuarios";
     }
 
     @GetMapping("/borrarUsuario")
     public String borrarUsuario(Integer id) {
-        service.borrarUsuario(id);
+        serviceUsuario.borrarUsuario(id);
         return "redirect:/hiberlibros";
     }
 

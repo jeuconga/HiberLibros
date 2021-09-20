@@ -2,11 +2,13 @@
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Usuario;
+import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hiberlibros.HiberLibros.repositories.UsuarioRepository;
 import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
+import java.util.Optional;
 
 /**
  *
@@ -16,7 +18,22 @@ import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 public class UsuarioService implements UsuarioServiceI{
     @Autowired
     private UsuarioRepository urService;
+    
+    @Autowired
+    private ISeguridadService serviceUsuarioSeguridad;
 
+    
+    @Override
+    public String guardarUsuarioYSeguridad(Usuario u, String password) {
+        String resultado = guardarUsuario(u);
+        Optional<Usuario> usu = urService.findByMail (u.getMail());
+        if (usu.isPresent()){
+            serviceUsuarioSeguridad.altaUsuarioSeguridad(  u.getMail(), u.getId(), password , "Usuario");
+        }
+        
+        return resultado;
+    }
+    
     @Override
     public String guardarUsuario(Usuario u) {
         String resultado="";
@@ -74,5 +91,6 @@ public class UsuarioService implements UsuarioServiceI{
     public Usuario usuarioId(Integer id) {
         return urService.findById(id).get();
     }
+
     
 }
