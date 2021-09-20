@@ -38,14 +38,14 @@ public class UsuarioService implements UsuarioServiceI{
     public String guardarUsuario(Usuario u) {
         String resultado="";
         int auxMail=u.getMail().indexOf("@");
-        String mailSubstring=u.getMail().substring(auxMail);
+        String mailSubstring=u.getMail().substring(auxMail);//para comprar si el mail tiene buen formato
         if(u.getNombre()==null || u.getApellido()==null || u.getDireccion()==null  || u.getCiudad()==null  || u.getMail()==null || u.getTelef()==null){
             resultado="Error: Campo requerido vacío";
         }
-        else if(!mailSubstring.contains(".")){
+        else if(!mailSubstring.contains(".")){ //@blabla. si no punto consideramos que no esta bien
             resultado="Error: e-mail incorrecto";
         }
-        else if(urService.findByMailContainsIgnoreCase(u.getMail()).isPresent()){
+        else if(urService.findByMailContainsIgnoreCase(u.getMail()).isPresent()){//su ya existe ese mail
             resultado="Error: Ya existe un usuario registrado con ese e-mail";
         }
         else{
@@ -67,7 +67,7 @@ public class UsuarioService implements UsuarioServiceI{
     }
 
     @Override
-    public boolean registrado(String mail) {
+    public boolean registrado(String mail) { //comprueba si existe ese usuario por mail
         if(urService.findByMail(mail).isEmpty()){
             return false;
         }

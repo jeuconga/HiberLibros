@@ -37,7 +37,7 @@ public class PeticionController {
         return "/peticion/peticion";
     }
     
-    @GetMapping(value = "/alta")
+    @GetMapping(value = "/alta") //Recibe los integer y crea una nueva petición, vuelve al panel de usuario
     public String peticionAlta(Model m, Integer id_ul, Integer id_solicitante){
         Peticion p=new Peticion();
         servicePeticion.insertaPeticion(p, id_ul, id_solicitante); 
@@ -49,10 +49,10 @@ public class PeticionController {
         servicePeticion.eliminaPeticion(p);
         return "redirect:/peticion/peticion";
     }
-    @GetMapping("/baja")
+    @GetMapping("/baja") //retira una solicitud solo con el ID de la petición para no tener que mandar un objeto petición
     public String retirarSolicitud(Integer id, String mail){
         servicePeticion.eliminarId(id);
-        return "redirect:/hiberlibros/panelUsuario?mail="+mail;
+        return "redirect:/hiberlibros/panelUsuario?mail="+mail;//vuelve al panel
     }
     @PostMapping(value = "/modificacion")
     public String peticionModificacion(Model m, Peticion p){
