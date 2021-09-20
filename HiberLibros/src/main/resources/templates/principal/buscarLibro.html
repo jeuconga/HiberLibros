@@ -1,0 +1,37 @@
+<html xmlns:th="https://www.thymeleaf.org" 
+      th:replace="principal/layoutUsuario::layout(~{::body})">
+
+    <body>
+        <div class="container-fluid">
+            <form action="/hiberlibros/buscarLibro" method="get">
+                <input type="hidden" name="id" th:value="${usuario.id}"/>
+                <input type="text" name="buscador" placeholder="Buscar por título o ISBN"/>
+                <input type="submit" value="buscar" class="btn btn-primary"/>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Titulo</th>
+                        <th>Idioma</th>
+                        <th>Editorial</th>
+                        <th>Valoracion</th>
+                        <th>Estado</th>
+                        <th>Quiero/Tengo</th>
+                        <th>Propietario</th>
+                        <th>Reservar</th>
+                    </tr>
+                </thead>
+                <tr th:each='l:${libros}'>
+                    <td th:text="${l.libro.titulo}"></td>
+                    <td th:text="${l.libro.idioma}"></td>
+                    <td th:text="${l.libro.editorial.nombreEditorial}"></td>
+                    <td th:text="${l.libro.valoracionLibro}"></td>
+                    <td th:text="${l.estadoConservacion}"></td>
+                    <td th:text="${l.quieroTengo}"></td>
+                    <td th:text="${l.usuario.nombre}"></td>
+                    <td><a th:href="@{/peticion/alta(id_ul=${l.id}, id_solicitante=${usuario.id})}"   class="btn btn-secondary">Pedir</a></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

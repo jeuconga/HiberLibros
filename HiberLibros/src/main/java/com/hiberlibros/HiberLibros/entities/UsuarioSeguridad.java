@@ -5,12 +5,15 @@
  */
 package com.hiberlibros.HiberLibros.entities;
 
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -18,22 +21,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
-@Table(name="peticiones")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Peticion {
+@Entity
+@Table(name="usuarios_seguridad")
+public class UsuarioSeguridad {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @OneToOne(cascade=CascadeType.REMOVE)
-    @JoinColumn(name = "id_usuario_libro")
-    private UsuarioLibro idUsuarioLibro;
+    private Integer idUsuario;
     
-    @OneToOne
-    @JoinColumn(name = "id_usuario_solicitante")
-    private Usuario idUsuarioSolicitante;
-    private Boolean aceptacion;
-    private Boolean pendienteTratar;
+    private String mail;
+    private String password;
+    
+    
+    @OneToMany(mappedBy = "idUsuario" ,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Rol> roles;
+    
 }

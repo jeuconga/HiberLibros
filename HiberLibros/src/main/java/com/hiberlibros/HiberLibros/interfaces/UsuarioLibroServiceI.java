@@ -3,20 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hiberlibros.HiberLibros.repositories;
+package com.hiberlibros.HiberLibros.interfaces;
 
 import com.hiberlibros.HiberLibros.entities.Libro;
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Usuario
  */
-public interface UsuarioLibroRepository extends JpaRepository<UsuarioLibro,Integer>{
-    public List<UsuarioLibro> findByUsuario(Usuario u);
-    public List<UsuarioLibro> findByLibro(Libro l);
+public interface UsuarioLibroServiceI {
+    
+    public UsuarioLibro encontrarId(Integer id);
+    public List<UsuarioLibro> buscarContiene(String buscador);
+    public List<UsuarioLibro> buscarUsuario (Usuario u);
+    public List<UsuarioLibro> todos();
+    public void guardar(UsuarioLibro ul, Libro l, Usuario u);
+    public void borrar(Integer id);
     
 }

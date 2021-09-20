@@ -1,6 +1,7 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Genero;
+import com.hiberlibros.HiberLibros.interfaces.IGeneroService;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.services.GeneroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,31 +21,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class GeneroController {
     
     @Autowired
-    private GeneroService generoService;
-    
-    @Autowired
     private GeneroRepository generoRepository;
     
     
-    @GetMapping("/ver")
+    @GetMapping
     public String verGeneros(Model model){
         model.addAttribute("generos", generoRepository.findAll());
         model.addAttribute("generoForm", new Genero());
-        return "genero";
+        
+        return "/generos/genero";
     }
     
     @PostMapping("/guardar")
     public String formulario(Genero genero){
         generoRepository.save(genero);
-        return "redirect:ver";
+        
+        return "redirect:/genero";
     }
     
     @GetMapping("/borrar/{id}")
     public String borrarGenero(@PathVariable Integer id){
-        System.out.println(id + "Eyyyyyyyyyyyyyyyyyyyyyyyy");
         generoRepository.deleteById(id);
         
+        return "redirect:/genero";
+    }
+    
+    @GetMapping("/editar/{id}")
+    public String editarGenero(Model model, @PathVariable Integer id){
+        Genero editGenero = generoRepository.getById(id);
+        model.addAttribute("genero", editGenero);
         
-        return "redirect:/genero/ver";
+        return "/generos/editar";
     }
 }

@@ -1,5 +1,7 @@
 package com.hiberlibros.HiberLibros.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,19 +9,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hiberlibros.HiberLibros.entities.Autor;
+import com.hiberlibros.HiberLibros.entities.Libro;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
+import com.hiberlibros.HiberLibros.services.AutorService;
 
 import lombok.Setter;
 
 @Controller
-@RequestMapping("")
+@RequestMapping
 public class AutorController {
 
 	@Setter
 	@Autowired(required = false)
 	private AutorRepository autorRepo;
+	
+	@Autowired(required = false)
+	private AutorService autorService;
 
 	@GetMapping("/autorLista")
 	public String lista(Model m){
@@ -45,5 +53,20 @@ public class AutorController {
 	public String delete(@PathVariable Integer id){
 		autorRepo.deleteById(id);
 		return "redirect:/autorLista";
-	} 
+	}
+	@GetMapping("/getLibrosAutor")
+	@ResponseBody
+	public List<Libro> getLibros(Integer id){
+		return  autorService.consultarlibros(id);
+	}
+	@GetMapping("/buscarAutor")
+	public String buscarAutores(Model m,String buscador){
+        m.addAttribute("buscador", buscador);
+		if (buscador == null) {
+            m.addAttribute("autores", autorRepo.findAll());
+        } else {
+            m.addAttribute("autores", autorService.consultarAutores(buscador));
+        }
+        return "autores/lista";
+	}
 }

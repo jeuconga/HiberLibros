@@ -3,6 +3,7 @@ package com.hiberlibros.HiberLibros.interfaces;
 
 import com.hiberlibros.HiberLibros.entities.Genero;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -18,6 +19,8 @@ public interface IGeneroService {
     
     //Listar géneros
     public List<Genero> getGeneros();
+    
+     
     
     
     

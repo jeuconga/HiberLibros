@@ -7,7 +7,11 @@ package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Peticion;
 import com.hiberlibros.HiberLibros.entities.Usuario;
+import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
+import com.hiberlibros.HiberLibros.interfaces.UsuarioLibroServiceI;
+import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 import com.hiberlibros.HiberLibros.repositories.PeticionRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,40 +19,77 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PeticionService {
+
     @Autowired
     private PeticionRepository repoPeticion;
-    
-    public List<Peticion> consultaTodasPeticiones(){
+
+    @Autowired
+    private UsuarioLibroServiceI ulService;
+
+    @Autowired
+    private UsuarioServiceI uService;
+
+    public List<Peticion> consultaTodasPeticiones() {
         return repoPeticion.findAll();
     }
-     
-    public void insertaModificaPeticion(Peticion p){
+
+    public void insertaPeticion(Peticion p, Integer id_ul, Integer id_solicitante) {
+        p.setIdUsuarioLibro(ulService.encontrarId(id_ul));
+        p.setIdUsuarioSolicitante(uService.usuarioId(id_solicitante));
+        p.setAceptacion(false);
+        p.setPendienteTratar(true);
+
         repoPeticion.save(p);
     }
-    
-    public void eliminaPeticion(Peticion p){
+
+    public void insertaModificaPeticion(Peticion p) {
+
+        repoPeticion.save(p);
+    }
+
+    public void eliminaPeticion(Peticion p) {
         repoPeticion.deleteById(p.getId());
     }
-    
-    public void aceptarPeticion(Peticion p){
+    public void eliminarId(Integer id) {
+        repoPeticion.deleteById(id);
+    }
+
+    public void aceptarPeticion(Peticion p) {
         p.setAceptacion(Boolean.TRUE);
         p.setPendienteTratar(Boolean.FALSE);
         repoPeticion.save(p);
     }
-    
-    public void rechazarPeticion(Peticion p){
+
+    public void rechazarPeticion(Peticion p) {
         p.setAceptacion(Boolean.FALSE);
         p.setPendienteTratar(Boolean.FALSE);
         repoPeticion.save(p);
     }
-    
-    public List<Peticion> consultarPeticionesPendientes(Usuario u){
-        return repoPeticion.findByPendienteTratar(Boolean.TRUE).stream().filter(x-> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());
+
+    public List<Peticion> consultarPeticionesPendientes(Usuario u) {
+        return repoPeticion.findByPendienteTratar(Boolean.TRUE).stream().filter(x -> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());
     }
-    public List<Peticion> consultarPeticionesAceptadas(Usuario u){
-        return repoPeticion.findByAceptacion(Boolean.TRUE).stream().filter(x-> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());                
+
+    public List<Peticion> consultarPeticionesAceptadas(Usuario u) {
+        return repoPeticion.findByAceptacion(Boolean.TRUE).stream().filter(x -> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());
     }
-    public List<Peticion> consultarPeticionesRechazadas(Usuario u){
-        return repoPeticion.findByAceptacion(Boolean.FALSE).stream().filter(x-> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());                
+
+    public List<Peticion> consultarPeticionesRechazadas(Usuario u) {
+        return repoPeticion.findByAceptacion(Boolean.FALSE).stream().filter(x -> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());                
+    }
+        
+    public List<Peticion> consutarPeticionesUsuarioPendientes(Usuario u) {
+        return repoPeticion.findByPendienteTratarAndIdUsuarioSolicitante(Boolean.TRUE, u);
+    }
+    public List<Peticion> consultarPeticonesRecibidas(Usuario u){
+        List<Peticion> p=new ArrayList<>();
+        List<UsuarioLibro> ul=ulService.buscarUsuario(u);
+        ul.forEach(x->{
+            List<Peticion> pAux=repoPeticion.findByIdUsuarioLibroAndPendienteTratar(x, Boolean.TRUE);
+            pAux.forEach(y->{
+                p.add(y);
+            });
+        });
+        return p;
     }
 }
