@@ -8,6 +8,7 @@ package com.hiberlibros.HiberLibros.services;
 import com.hiberlibros.HiberLibros.entities.Intercambio;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
 import com.hiberlibros.HiberLibros.interfaces.IIntercambioService;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
 import com.hiberlibros.HiberLibros.repositories.IntercambioRepository;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ import org.springframework.stereotype.Service;
 public class IntercambioService implements IIntercambioService{
     @Autowired
     private IntercambioRepository repoInter;
+    
+    @Autowired
+    private IUsuarioLibroService serviceUL;
 
     @Override
     public void guardarIntercambio(UsuarioLibro ul_prestatario, UsuarioLibro ul_prestador) {
@@ -66,8 +70,16 @@ public class IntercambioService implements IIntercambioService{
         Date date = Date.from(Instant.now());
         i.setFechaDevolucion(date);
         repoInter.save(i);
+        UsuarioLibro ulPrestador=i.getUsuarioPrestador();
+        ulPrestador.setEstadoPrestamo("Libre");
+        serviceUL.editar(ulPrestador);
+        UsuarioLibro ulPrestatario=i.getUsuarioPrestatario();
+        ulPrestatario.setEstadoPrestamo("Libre");
+        serviceUL.editar(ulPrestatario);
        
     }
+
+
     
     
     
