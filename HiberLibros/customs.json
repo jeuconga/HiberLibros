@@ -1,23 +1,9 @@
 {
-    "elements": {
-        "th:block": {}
-    },
+    "elements": {},
     "attributes": {
         "th:text": {},
-        "th:if": {},
-        "th:object": {},
-<<<<<<< HEAD
-        "th:replace": {},
-        "th:field": {},
-        "th:href": {},
-=======
         "th:onclick": {},
-        "th:replace": {},
-        "th:field": {},
-        "th:href": {},
         "th:each": {},
->>>>>>> origin/master
-        "th:class": {},
         "th:value": {}
     }
 }

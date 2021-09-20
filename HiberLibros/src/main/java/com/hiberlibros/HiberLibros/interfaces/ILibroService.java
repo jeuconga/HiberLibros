@@ -5,10 +5,17 @@
  */
 package com.hiberlibros.HiberLibros.interfaces;
 
+import com.hiberlibros.HiberLibros.entities.Libro;
+import java.util.List;
+
 /**
  *
  * @author Usuario
  */
-public interface RelatoServiceI1 {
+public interface ILibroService {
+    
+    public List<Libro> buscarLibro(String libro);
+    public Libro libroId(Integer id);
+    public void guardarLibro(Libro l);
     
 }

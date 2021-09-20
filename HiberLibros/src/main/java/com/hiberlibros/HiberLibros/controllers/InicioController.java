@@ -7,12 +7,13 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.entities.Libro;
+import com.hiberlibros.HiberLibros.entities.Peticion;
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
 import com.hiberlibros.HiberLibros.entities.Relato;
-import com.hiberlibros.HiberLibros.interfaces.LibroServiceI;
-import com.hiberlibros.HiberLibros.interfaces.UsuarioLibroServiceI;
-import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
+import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
+
+import com.hiberlibros.HiberLibros.interfaces.IIntercambioService;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
@@ -37,6 +38,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import com.hiberlibros.HiberLibros.interfaces.ILibroService;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 
 /**
  *
@@ -47,7 +51,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class InicioController {
 
     @Autowired
-    private UsuarioServiceI usuService;
+    private IUsuarioService usuService;
     @Autowired
     private GeneroRepository generoRepo;
     @Autowired
@@ -55,16 +59,19 @@ public class InicioController {
     @Autowired
     private EditorialService editoService;
     @Autowired
-    private LibroServiceI liService;
+    private ILibroService liService;
     @Autowired
     private RelatoRepository repoRelato;
     @Autowired
-    private UsuarioLibroServiceI ulService;
+    private IUsuarioLibroService ulService;
     @Autowired
     private PeticionService petiService;
 
     @Autowired
     private AuthenticationManager manager;
+
+    @Autowired
+    private IIntercambioService serviceInter;
 
     @GetMapping
     public String inicio(Model m, String error) {
@@ -75,52 +82,65 @@ public class InicioController {
         return "/principal/login";
     }
 
+    @Autowired
+    private ISeguridadService serviceSeguridad;
+
+    @GetMapping("/pruebaContexto")
+    @ResponseBody
+    public String pruebaContexto() {
+        return serviceSeguridad.getMailFromContext();
+    }
+
     @PostMapping("/loginentrar")
     public String inicio(Model m, String username, String password) {
-        System.out.println("Pasa ---------------");
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-        System.out.println("Pasa2 ---------------");
         Authentication auth = manager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         List<String> roles = auth.getAuthorities().stream().map(x -> x.getAuthority()).collect(Collectors.toList());
         for (String rol : roles) {
-                if ("ROLE_Administrador".equals(rol)) {
-                    return "redirect:/hiberlibros/panelAdministrador?mail=" + username;
-                } else {
-                    if ("ROLE_Usuario".equals(rol)) {
-                        return "redirect:/hiberlibros/panelUsuario?mail=" + username;
-                    } 
+            if ("ROLE_Administrador".equals(rol)) {
+                //return "redirect:/hiberlibros/panelAdministrador?mail=" + username;
+                return "redirect:/hiberlibros/vistaAdministrador";
+            } else {
+                if ("ROLE_Usuario".equals(rol)) {
+                    // return "redirect:/hiberlibros/panelUsuario?mail=" + username;
+                    return "redirect:/hiberlibros/panelUsuario";
                 }
+            }
         }
-        String error = "Usuario no registrado";
-        return "redirect:/hiberlibros?error=" + error;
-    }
+  
+    String error = "Usuario no registrado";
+    return "redirect:/hiberlibros?error=" + error ;
+}
 
+@GetMapping("/logout")
+        public String logout(){
+        SecurityContextHolder.clearContext();
+        return "/principal/logout";
+    }
+    
+    
+    
     @GetMapping("/panelUsuario") //entrada al panel principal de usuario, se pasan todos los elementos que se han de mostrar
-    public String panelUsuario(Model m, String mail) {
-        Usuario u = usuService.usuarioRegistrado(mail);
+        public String panelUsuario(Model m, String mail) {
+        Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
+            
+        List<UsuarioLibro> ul = ulService.buscarUsuario(u);
+
         m.addAttribute("relatos", repoRelato.findByUsuario(u));
         m.addAttribute("usuario", u);
-        m.addAttribute("libros", ulService.buscarUsuario(u));
+        m.addAttribute("libros", ul);
         m.addAttribute("misPeticiones", petiService.consutarPeticionesUsuarioPendientes(u));
         m.addAttribute("petiRecibidas", petiService.consultarPeticonesRecibidas(u));
+        m.addAttribute("intercambiosPropios", serviceInter.encontrarULPrestador(ul));
+        m.addAttribute("intercambiosPeticiones", serviceInter.encontrarULPrestatario(ul));
         return "principal/usuarioPanel";
     }
 
-    // @PostMapping("/entrar")
-//    @GetMapping("/entrar")
-//    public String entrar(String username, String password) {
-//        
-//        if (usuService.registrado(username)) {
-//            return "redirect:/hiberlibros/panelUsuario?mail=" + username;
-//        } else {
-//            String error = "Usuario no registrado";
-//            return "redirect:/hiberlibros?error=" + error;
-//        }
-//    }
+
     @GetMapping("/guardarLibro") //Guarda libros en la base de datos. Primero guarda un libro, y posteriormente lo mete en la tabla Usuario Libros
-    public String formularioLibro(Model m, Integer id, String buscador) {
+        public String formularioLibro(Model m, Integer id, String buscador) {
         List<Libro> libros = new ArrayList<>();
         String noLibros = "";
         m.addAttribute("libro", new Libro());//Para el formulario
@@ -144,7 +164,7 @@ public class InicioController {
     }
 
     @PostMapping("/guardarLibro") //guarda un libro en el UsuarioLibro si ese libro existe previamente en la base de datos
-    public String guardarLibro(Integer libro, Integer usuario, UsuarioLibro ul) {
+        public String guardarLibro(Integer libro, Integer usuario, UsuarioLibro ul) {
         Usuario u = usuService.usuarioId(usuario);
         Libro l = liService.libroId(libro);
         String mail = u.getMail();
@@ -153,19 +173,19 @@ public class InicioController {
     }
 
     @PostMapping("/formAutor")
-    @ResponseBody
-    public Usuario formAutor(Integer id_usuario) {
+        @ResponseBody
+        public Usuario formAutor(Integer id_usuario) {
         return usuService.usuarioId(id_usuario);
     }
 
     @PostMapping("/saveAutor")//Guarda un autor y vuelve a la página de registrar libro
-    public String insertarAutor(Autor autor, Integer id) {
+        public String insertarAutor(Autor autor, Integer id) {
         autorRepo.save(autor);
         return "redirect:/hiberlibros/guardarLibro?id=" + id + "&buscador=XXX";
     }
 
     @PostMapping("/registroLibro")//Guarda un libro nuevo y luego lo guarda en Usuario Libro
-    public String registrarLibro(UsuarioLibro ul, Libro l, Integer id_usuario, Integer id_genero, Integer id_editorial, Integer id_autor) {
+        public String registrarLibro(UsuarioLibro ul, Libro l, Integer id_usuario, Integer id_genero, Integer id_editorial, Integer id_autor) {
         l.setGenero(generoRepo.getById(id_genero));
         l.setEditorial(editoService.consultaPorIdEditorial(id_editorial));
         l.setAutor(autorRepo.findById(id_autor).get());
@@ -176,7 +196,7 @@ public class InicioController {
     }
 
     @GetMapping("/buscarLibro")//Muestra la lita de libros, todos o los buscados si está relleno el campo buscador
-    public String buscarLibro(Model m, Integer id, String buscador) {
+        public String buscarLibro(Model m, Integer id, String buscador) {
         m.addAttribute("usuario", usuService.usuarioId(id));
         if (buscador == null) {
             m.addAttribute("libros", ulService.todos());
@@ -188,7 +208,7 @@ public class InicioController {
     }
 
     @PostMapping("/guardarRelato")
-    public String formularioRelato(Model m, Integer id, Relato relato, MultipartFile ficherosubido) {
+        public String formularioRelato(Model m, Integer id, Relato relato, MultipartFile ficherosubido) {
         String subir = "c:\\zzzzSubirFicheros\\" + ficherosubido.getOriginalFilename();
         File f = new File(subir);
         f.getParentFile().mkdirs();
@@ -209,7 +229,7 @@ public class InicioController {
     }
 
     @GetMapping("/relato")
-    public String prueba(Model model, Integer id) {
+        public String prueba(Model model, Integer id) {
         model.addAttribute("generos", generoRepo.findAll());
         model.addAttribute("relatos", repoRelato.findAll());
         model.addAttribute("usuario", usuService.usuarioId(id));
@@ -217,8 +237,34 @@ public class InicioController {
     }
 
     @GetMapping("/borrarUL")//borra un libro de UsuarioLibro sin eliminarlo de la tabla de Libros
-    public String borrarUsuLibro(Integer id, String mail) {
+        public String borrarUsuLibro(Integer id, String mail) {
         ulService.borrar(id);
         return "redirect:/hiberlibros/panelUsuario?mail=" + mail;
     }
+
+    @GetMapping("/gestionarPeticion")
+        public String gestionarPeticion(Model m, Integer id) {
+        Peticion p = petiService.consultarPeticionId(id);
+        m.addAttribute("peticiones", p);
+        m.addAttribute("librosSolicitante", ulService.buscarUsuarioDisponibilidad(p.getIdUsuarioSolicitante(), "Tengo", "Libre"));
+        return "principal/formPeticion";
+    }
+
+    @PostMapping("/realizarIntercambio")
+        public String realizarIntercambio(Integer id_peticion, Integer usuarioPrestatario) {
+        Peticion p = petiService.consultarPeticionId(id_peticion);
+        UsuarioLibro ulPrestatario = ulService.encontrarId(usuarioPrestatario);
+        UsuarioLibro ulPrestador = p.getIdUsuarioLibro();
+        serviceInter.guardarIntercambio(ulPrestatario, ulPrestador);
+        petiService.aceptarPeticion(p);
+
+        return "redirect:/hiberlibros/panelUsuario?mail=" + petiService.consultarPeticionId(id_peticion).getIdUsuarioLibro().getUsuario().getMail();
+    }
+
+    @GetMapping("/finIntercambio")
+        public String finIntercambio(Integer id, Integer id_usuario) {
+        serviceInter.finIntercambio(id);
+        return "redirect:/hiberlibros/panelUsuario?mail=" +usuService.usuarioId(id_usuario).getMail();
+    }
+
 }

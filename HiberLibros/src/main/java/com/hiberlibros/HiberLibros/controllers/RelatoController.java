@@ -2,7 +2,6 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Relato;
-import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
 import java.io.File;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.Optional;
 import org.springframework.web.bind.annotation.PathVariable;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 
 @Controller
 @RequestMapping("/relato")
@@ -31,7 +31,7 @@ public class RelatoController {
     @Autowired
     private GeneroRepository repoGenero;
     @Autowired
-    private UsuarioServiceI usuService;
+    private IUsuarioService usuService;
 
     @GetMapping
     public String prueba(Model model) {

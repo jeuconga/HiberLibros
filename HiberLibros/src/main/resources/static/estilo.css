@@ -13,8 +13,11 @@ header{
     margin-bottom: 2%;
 }
 
+.logout h3 {
+    color: #fff    
+}
 
-.login {
+.logout , .login {
     background: url(banner.jpg);
     width: 100%;
     background-position: center center;

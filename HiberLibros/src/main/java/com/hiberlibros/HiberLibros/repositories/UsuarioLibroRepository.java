@@ -17,6 +17,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface UsuarioLibroRepository extends JpaRepository<UsuarioLibro,Integer>{
     public List<UsuarioLibro> findByUsuario(Usuario u);
+    public List<UsuarioLibro> findByUsuarioAndQuieroTengoAndEstadoPrestamo(Usuario u, String quieroTengo, String estadoPrestamo);
     public List<UsuarioLibro> findByLibro(Libro l);
     
 }
