@@ -72,6 +72,7 @@ public class AutorController {
                 .map(x-> obj.map(x.getLibro(), LibroDto.class))
                 .collect(Collectors.toList());
 	}
+        
 	@GetMapping("/buscarAutor")
 	public String buscarAutores(Model m,String buscador){
         m.addAttribute("buscador", buscador);
