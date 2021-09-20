@@ -5,6 +5,7 @@
  */
 package com.hiberlibros.HiberLibros.services;
 
+import com.hiberlibros.HiberLibros.dtos.UsuarioSeguridadDto;
 import com.hiberlibros.HiberLibros.entities.Rol;
 import com.hiberlibros.HiberLibros.entities.UsuarioSeguridad;
 import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
@@ -15,6 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -78,5 +80,9 @@ public class SeguridadService implements ISeguridadService {
            return bajaUsuarioSeguridad(usuarioSeguridad.get().getId());
         }
         return 0;
+    }
+    
+    public String getMailFromContext(){
+        return ((UsuarioSeguridadDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
     }
 }
