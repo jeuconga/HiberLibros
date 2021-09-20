@@ -97,7 +97,7 @@ public class InicioController {
         return "redirect:/hiberlibros?error=" + error;
     }
 
-    @GetMapping("/panelUsuario")
+    @GetMapping("/panelUsuario") //entrada al panel principal de usuario, se pasan todos los elementos que se han de mostrar
     public String panelUsuario(Model m, String mail) {
         Usuario u = usuService.usuarioRegistrado(mail);
         m.addAttribute("relatos", repoRelato.findByUsuario(u));
@@ -119,31 +119,31 @@ public class InicioController {
 //            return "redirect:/hiberlibros?error=" + error;
 //        }
 //    }
-    @GetMapping("/guardarLibro")
+    @GetMapping("/guardarLibro") //Guarda libros en la base de datos. Primero guarda un libro, y posteriormente lo mete en la tabla Usuario Libros
     public String formularioLibro(Model m, Integer id, String buscador) {
         List<Libro> libros = new ArrayList<>();
         String noLibros = "";
-        m.addAttribute("libro", new Libro());
-        m.addAttribute("usuario", usuService.usuarioId(id));
-        m.addAttribute("autores", autorRepo.findAll());
-        m.addAttribute("autor", new Autor());
-        m.addAttribute("generos", generoRepo.findAll());
-        m.addAttribute("editoriales", editoService.consultaTodas());
-        m.addAttribute("buscador", buscador);
-        if (buscador != null) {
+        m.addAttribute("libro", new Libro());//Para el formulario
+        m.addAttribute("usuario", usuService.usuarioId(id));//Pruebas pasando datos usuario, hasta hacer cookies
+        m.addAttribute("autores", autorRepo.findAll());//autores para el desplegable
+        m.addAttribute("autor", new Autor());//autores para formulario
+        m.addAttribute("generos", generoRepo.findAll());//géneros formulario
+        m.addAttribute("editoriales", editoService.consultaTodas());//editoriales formulario
+        m.addAttribute("buscador", buscador);//Elemento de la barra buscador
+        if (buscador != null) {//si es distinto de nulo buscara el libro por isbn o título en la base de datos
             libros = liService.buscarLibro(buscador);
             if (libros.size() == 0) {
-                noLibros = "Ningun libro encontrado";
+                noLibros = "Ningun libro encontrado"; //si no existe devuelve un mensaje de error
             } else {
                 noLibros = "encontrado";
-                m.addAttribute("libros", libros);
+                m.addAttribute("libros", libros); //si existe devuelve un arraylist con todas las coincidencias
             }
         }
-        m.addAttribute("noLibros", noLibros);
+        m.addAttribute("noLibros", noLibros);//devuelve el mensaje de error o de éxito
         return "principal/guardarLibro";
     }
 
-    @PostMapping("/guardarLibro")
+    @PostMapping("/guardarLibro") //guarda un libro en el UsuarioLibro si ese libro existe previamente en la base de datos
     public String guardarLibro(Integer libro, Integer usuario, UsuarioLibro ul) {
         Usuario u = usuService.usuarioId(usuario);
         Libro l = liService.libroId(libro);
@@ -158,13 +158,13 @@ public class InicioController {
         return usuService.usuarioId(id_usuario);
     }
 
-    @PostMapping("/saveAutor")
+    @PostMapping("/saveAutor")//Guarda un autor y vuelve a la página de registrar libro
     public String insertarAutor(Autor autor, Integer id) {
         autorRepo.save(autor);
         return "redirect:/hiberlibros/guardarLibro?id=" + id + "&buscador=XXX";
     }
 
-    @PostMapping("/registroLibro")
+    @PostMapping("/registroLibro")//Guarda un libro nuevo y luego lo guarda en Usuario Libro
     public String registrarLibro(UsuarioLibro ul, Libro l, Integer id_usuario, Integer id_genero, Integer id_editorial, Integer id_autor) {
         l.setGenero(generoRepo.getById(id_genero));
         l.setEditorial(editoService.consultaPorIdEditorial(id_editorial));
@@ -172,10 +172,10 @@ public class InicioController {
         liService.guardarLibro(l);
         Usuario u = usuService.usuarioId(id_usuario);
         ulService.guardar(ul, l, u);
-        return "redirect:/hiberlibros/panelUsuario?mail=" + u.getMail();
+        return "redirect:/hiberlibros/panelUsuario?mail=" + u.getMail();//vuelve a la página inicial
     }
 
-    @GetMapping("/buscarLibro")
+    @GetMapping("/buscarLibro")//Muestra la lita de libros, todos o los buscados si está relleno el campo buscador
     public String buscarLibro(Model m, Integer id, String buscador) {
         m.addAttribute("usuario", usuService.usuarioId(id));
         if (buscador == null) {
@@ -216,7 +216,7 @@ public class InicioController {
         return "principal/relato";
     }
 
-    @GetMapping("/borrarUL")
+    @GetMapping("/borrarUL")//borra un libro de UsuarioLibro sin eliminarlo de la tabla de Libros
     public String borrarUsuLibro(Integer id, String mail) {
         ulService.borrar(id);
         return "redirect:/hiberlibros/panelUsuario?mail=" + mail;

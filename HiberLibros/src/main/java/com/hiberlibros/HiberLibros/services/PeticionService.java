@@ -33,7 +33,7 @@ public class PeticionService {
         return repoPeticion.findAll();
     }
 
-    public void insertaPeticion(Peticion p, Integer id_ul, Integer id_solicitante) {
+    public void insertaPeticion(Peticion p, Integer id_ul, Integer id_solicitante) { //guarda la petición y obtiene aquí los objetos UL y Usuario
         p.setIdUsuarioLibro(ulService.encontrarId(id_ul));
         p.setIdUsuarioSolicitante(uService.usuarioId(id_solicitante));
         p.setAceptacion(false);
@@ -81,13 +81,13 @@ public class PeticionService {
     public List<Peticion> consutarPeticionesUsuarioPendientes(Usuario u) {
         return repoPeticion.findByPendienteTratarAndIdUsuarioSolicitante(Boolean.TRUE, u);
     }
-    public List<Peticion> consultarPeticonesRecibidas(Usuario u){
+    public List<Peticion> consultarPeticonesRecibidas(Usuario u){ //Jesús
         List<Peticion> p=new ArrayList<>();
-        List<UsuarioLibro> ul=ulService.buscarUsuario(u);
+        List<UsuarioLibro> ul=ulService.buscarUsuario(u);//busca la lista de libros de un usuario
         ul.forEach(x->{
-            List<Peticion> pAux=repoPeticion.findByIdUsuarioLibroAndPendienteTratar(x, Boolean.TRUE);
+            List<Peticion> pAux=repoPeticion.findByIdUsuarioLibroAndPendienteTratar(x, Boolean.TRUE); //busca por UsuarioLibro y que este pendiente de tratar
             pAux.forEach(y->{
-                p.add(y);
+                p.add(y);//lo va almacenando hasta tener todos. 
             });
         });
         return p;

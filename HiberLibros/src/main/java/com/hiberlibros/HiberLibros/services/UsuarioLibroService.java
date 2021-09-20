@@ -35,9 +35,9 @@ public class UsuarioLibroService implements UsuarioLibroServiceI {
     @Override
     public List<UsuarioLibro> buscarContiene(String buscador) {
         List<UsuarioLibro> ul=new ArrayList<>();
-        List<Libro> l=libService.buscarLibro(buscador);        
+        List<Libro> l=libService.buscarLibro(buscador); //busca libros que contentan ese parámetro       
         l.forEach(x->{
-            List<UsuarioLibro> ulAux=ulRepo.findByLibro(x);
+            List<UsuarioLibro> ulAux=ulRepo.findByLibro(x);//Encuentra los libros que coiniciden dentro de usuarioLibros
             ulAux.forEach(y->{
                 ul.add(y);
             });
@@ -47,7 +47,7 @@ public class UsuarioLibroService implements UsuarioLibroServiceI {
     }
 
     @Override
-    public List<UsuarioLibro> buscarUsuario(Usuario u) {
+    public List<UsuarioLibro> buscarUsuario(Usuario u) {//busca por usuario
         return ulRepo.findByUsuario(u);
     }
 
@@ -57,7 +57,7 @@ public class UsuarioLibroService implements UsuarioLibroServiceI {
     }
 
     @Override
-    public void guardar(UsuarioLibro ul, Libro l, Usuario u) {
+    public void guardar(UsuarioLibro ul, Libro l, Usuario u) {//guarda el registro
         ul.setLibro(l);
         ul.setUsuario(u);
         ulRepo.save(ul);

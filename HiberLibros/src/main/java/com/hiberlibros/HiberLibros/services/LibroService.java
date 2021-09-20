@@ -22,7 +22,7 @@ public class LibroService implements LibroServiceI{
     private LibroRepository libroRep;
 
     @Override
-    public List<Libro> buscarLibro(String libro) {
+    public List<Libro> buscarLibro(String libro) {//recibe un string y busca si hay coincidencias en isbn o libro
         return libroRep.findByIsbnContainsOrTituloContainsIgnoreCase(libro, libro);
     }
 
