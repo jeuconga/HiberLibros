@@ -13,14 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 
 @Controller
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
     @Autowired
-    private UsuarioServiceI service;
+    private IUsuarioService service;
     
 //    @Autowired
 //    private UsuarioSeguridad serviceUsuarioSeguridad;

@@ -5,10 +5,10 @@
  */
 package com.hiberlibros.HiberLibros.services;
 
-import com.hiberlibros.HiberLibros.interfaces.RelatoServiceI1;
 import org.springframework.stereotype.Service;
+import com.hiberlibros.HiberLibros.interfaces.IRelatoService;
 
 @Service
-public class RelatoService implements RelatoServiceI1 {
+public class RelatoService implements IRelatoService {
 
 }

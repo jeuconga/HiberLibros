@@ -63,13 +63,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class='col-3'>
+                <div class='col-6'>
                     <h2>Nuevas Peticiones</h2>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Usuario</th>
                                 <th>Libro</th>
+                                <th>Usuario</th>
                                 <th>Gestionar</th>
                             </tr>                           
                         </thead>
@@ -77,12 +77,12 @@
                             <tr th:each="petiR:${petiRecibidas}">
                                 <td th:text="${petiR.idUsuarioLibro.libro.titulo}"></td>
                                 <td th:text="${petiR.idUsuarioSolicitante.nombre}"></td>
-                                <td><a class="btn btn-sm btn-secondary">Gestionar</a></td>
+                                <td><a th:onclick="|gestionarPeticion(${petiR.id})|" class="btn btn-sm btn-secondary">Gestionar</a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class='col-3'>
+                <div class='col-6'>
                     <h2>Tus peticiones</h2>
                     <table class="table">
                         <thead>
@@ -103,16 +103,39 @@
                         </tbody>
                     </table>
                 </div>
-                <div class='col-6'>
+            </div>
+            <div class='row'>
+                <div class='col-12'>
                     <h2>Intercambios</h2>
                     <table class="table"  >
-                        <tr>
-                            <th>Usuario</th>
-                            <th>Libro Prestado</th>
-                            <th>Libro Recibido</th>
-                            <th>Fecha de Inicio</th>
-                            <th>Fecha de devolución</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Libro Prestado</th>
+                                <th>Libro Recibido</th>
+                                <th>Fecha de Inicio</th>
+                                <th>Fecha de devolución</th>
+                                <th>Finalizar intercambio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="inter:${intercambiosPropios}">
+                                <td th:text="${inter.usuarioPrestatario.usuario.nombre}"></td>
+                                <td th:text="${inter.usuarioPrestador.libro.titulo}"></td>
+                                <td th:text="${inter.usuarioPrestatario.libro.titulo}"></td>
+                                <td th:text="${inter.fechaPrestamo}"></td>
+                                <td th:text="${inter.fechaDevolucion!=null?inter.fechaDevolucion:'Préstamo en curso'}"></td>
+                                <td><span th:if='${inter.fechaDevolucion==null}'><a th:href='@{/hiberlibros/finIntercambio(id=${inter.id}, id_usuario=${usuario.id})}' class='btn btn-secondary'>Finalizar</a></span></td>
+                            </tr>
+                            <tr th:each="interP:${intercambiosPeticiones}">
+                                <td th:text="${interP.usuarioPrestador.usuario.nombre}"></td>
+                                <td th:text="${interP.usuarioPrestatario.libro.titulo}"></td>
+                                <td th:text="${interP.usuarioPrestador.libro.titulo}"></td>
+                                <td th:text="${interP.fechaPrestamo}"></td>
+                                <td th:text="${interP.fechaDevolucion!=null?interP.fechaDevolucion:'Préstamo en curso'}"></td>
+                                <td><span th:if='${interP.fechaDevolucion=null}'><a th:href='@{/hiberlibros/finIntercambio(id=${interP.id}, id_usuario=${usuario.id})}' class='btn btn-secondary'>Finalizar</a></span></td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>

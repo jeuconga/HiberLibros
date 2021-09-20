@@ -6,7 +6,6 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Libro;
-import com.hiberlibros.HiberLibros.interfaces.LibroServiceI;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.EditorialRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 
 @Controller
 //@RequestMapping("/libros")
@@ -30,7 +30,7 @@ public class LibroController {
     @Autowired
     private AutorRepository AutRepo;
     @Autowired
-    private LibroServiceI libroService;
+    private ILibroService libroService;
 
  
     @GetMapping("/libros")

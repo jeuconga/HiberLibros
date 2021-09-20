@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Usuario
  */
-public interface UsuarioServiceI {
+public interface IUsuarioService {
     
     public String guardarUsuario(Usuario u);
     public String editarUsuario(Usuario u);

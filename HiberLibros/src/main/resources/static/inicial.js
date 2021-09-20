@@ -27,24 +27,24 @@ function eliminarU(pID) {
     });
 }
 function consultarLibros(pID) {
-	$.ajax({
-		url: '/getLibrosAutor',
-		data : {
-			id: pID
-			},
-		datatype: 'json',
-		success: function(json){
-			$("#listaLibros").html("");
-			$("#listaLibros").append("<table>");
-		    $.each(json, function(key,value){
-					var fila = $("<tr>");
-					$("<td>").html(value.titulo + "</td>" ).appendTo(fila);
-					fila.append("</tr>");
-					fila.appendTo("#listaLibros");
-				})
-			$("#listaLibros").append("</table>");
-    	}
-	});
+    $.ajax({
+        url: '/getLibrosAutor',
+        data: {
+            id: pID
+        },
+        datatype: 'json',
+        success: function (json) {
+            $("#listaLibros").html("");
+            $("#listaLibros").append("<table>");
+            $.each(json, function (key, value) {
+                var fila = $("<tr>");
+                $("<td>").html(value.titulo + "</td>").appendTo(fila);
+                fila.append("</tr>");
+                fila.appendTo("#listaLibros");
+            })
+            $("#listaLibros").append("</table>");
+        }
+    });
 }
 function anyadirAutor(pID) {
     $.post("/hiberlibros/formAutor", {
@@ -56,11 +56,27 @@ function anyadirAutor(pID) {
             message: "<div id='autorForm'>" + $("#autor").html() + "</div>"
         });
         $("#autorForm form").deserialize(pJson);
-
     });
-
-
 }
 
+function gestionarPeticion(pId) {
+    $.ajax({
+        url: "gestionarPeticion",
+        data: {
+            id: pId
+        },
+        success: function (pHtml) {
+            bootbox.dialog({
+                title: "Guardar intercambio",
+                size: "large",
+                message: pHtml
+            })
+        },
+        error: function (err) {
+            alert('Error 404, page not found')
+        }
+    })
+
+}
 
 
