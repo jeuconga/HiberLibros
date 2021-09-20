@@ -13,10 +13,10 @@ import com.hiberlibros.HiberLibros.repositories.UsuarioSeguridadRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 /**
  *
@@ -36,6 +36,7 @@ public class SeguridadService implements ISeguridadService {
     @Autowired
     private PasswordEncoder passEncoder;
     
+    @Transactional
     public String altaUsuarioSeguridad(String mail, Integer idUsuario, String password, String nombre_rol) {
         Optional<UsuarioSeguridad> usuAplic = repoUsuSeg.findByIdUsuario(idUsuario);
         if (usuAplic.isPresent()) {
@@ -63,4 +64,18 @@ public class SeguridadService implements ISeguridadService {
 
     }
     
+    @Transactional
+    public long bajaUsuarioSeguridad (Integer idUsuarioSeguridad){
+        repoUsuSeg.deleteById(idUsuarioSeguridad);
+        Long elementosBorrados = repoRol.deleteByIdUsuarioSeguridad(idUsuarioSeguridad);
+        return elementosBorrados;
+    }
+    
+    public long bajaUsuarioSeguridadPorMail (String mailUsuarioSeguridad){
+        Optional<UsuarioSeguridad> usuarioSeguridad = repoUsuSeg.findByMail(mailUsuarioSeguridad);
+        if (usuarioSeguridad.isPresent()){
+           return bajaUsuarioSeguridad(usuarioSeguridad.get().getId());
+        }
+        return 0;
+    }
 }

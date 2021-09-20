@@ -9,4 +9,5 @@ import com.hiberlibros.HiberLibros.entities.Rol;
 import org.springframework.data.repository.CrudRepository;
 
 public interface RolRepository extends CrudRepository<Rol, Integer>{
+    public long deleteByIdUsuarioSeguridad(Integer idUsuarioSeguridad);
 }
