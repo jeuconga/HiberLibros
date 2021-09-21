@@ -21,6 +21,7 @@ import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 @Controller
 //@RequestMapping("/libros")
 public class LibroController {
+
     @Autowired
     private LibroRepository librepo;
     @Autowired
@@ -32,45 +33,50 @@ public class LibroController {
     @Autowired
     private ILibroService libroService;
 
- 
     @GetMapping("/libros")
-    public String mostrarFormulario(Model m){
+    public String mostrarFormulario(Model m) {
         m.addAttribute("libros", librepo.findAll());
         m.addAttribute("generos", genRepo.findAll());
         m.addAttribute("editoriales", editRepo.findAll());
         m.addAttribute("autores", AutRepo.findAll());
-        System.out.println("autor " + AutRepo.findAll() );
+        System.out.println("autor " + AutRepo.findAll());
         return "libros/VistaLibro";
-    } 
-    
+    }
+
     @PostMapping("/guardar")
-    public String guardarLIbro(Model m,Libro libro, Integer id_genero, Integer id_editorial,Integer id_autor){
+    public String guardarLIbro(Model m, Libro libro, Integer id_genero, Integer id_editorial, Integer id_autor) {
         libro.setGenero(genRepo.getById(id_genero));
         libro.setEditorial(editRepo.getById(id_genero));
         libro.setAutor(AutRepo.getById(id_autor));
         librepo.save(libro);
         return "redirect:libros";
     }
-    
-  
-    
+
     @GetMapping("/eliminar")
-    public String eliminarLibro(Model m,Integer id){
-        Optional<Libro> l =librepo.findById(id);
-        if(l.isPresent()){
-            librepo.deleteById(id);           
+    public String eliminarLibro(Model m, Integer id) {
+        Optional<Libro> l = librepo.findById(id);
+        if (l.isPresent()) {
+            librepo.deleteById(id);
         }
         return "redirect:libros";
     }
-    
+
     @GetMapping("/modificar")
-    public String modificarLibro(Model m,Integer id){
-       m.addAttribute("libro", librepo.findById(id));
-       m.addAttribute("generos", genRepo.findAll());
-       m.addAttribute("editoriales", editRepo.findAll());
-       m.addAttribute("autores", AutRepo.findAll());
-       return "libros/modificar";
+    public String modificarLibro(Model m, Integer id) {
+        m.addAttribute("libro", librepo.findById(id));
+        m.addAttribute("generos", genRepo.findAll());
+        m.addAttribute("editoriales", editRepo.findAll());
+        m.addAttribute("autores", AutRepo.findAll());
+        return "libros/modificar";
     }
-    
- 
+
+    @PostMapping("/addValoracionLibro")
+    public String addValoracionLibro(Model m, Integer id, Integer valoracion) {
+        Optional<Libro> l = librepo.findById(id);
+        if (l.isPresent()) {
+            libroService.valorarLibro(l.get(), valoracion);
+        }
+        return "redirect:/hiberlibros/buscarLibro";
+    }
 }
+ 

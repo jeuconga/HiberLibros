@@ -41,6 +41,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  *
@@ -72,6 +74,8 @@ public class InicioController {
 
     @Autowired
     private IIntercambioService serviceInter;
+
+    private final String RUTA_BASE = "c:\\zzzzSubirFicheros\\";
 
     @GetMapping
     public String inicio(Model m, String error) {
@@ -138,8 +142,7 @@ public class InicioController {
         List<Libro> libros = new ArrayList<>();
         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         String noLibros = "";
-        m.addAttribute("libro", new Libro());//Para el formulario
-        m.addAttribute("usuario", u);//Pruebas pasando datos usuario, hasta hacer cookies
+        m.addAttribute("libro", new Libro());//Para el formulario        
         m.addAttribute("autores", autorRepo.findAll());//autores para el desplegable
         m.addAttribute("autor", new Autor());//autores para formulario
         m.addAttribute("generos", generoRepo.findAll());//géneros formulario
@@ -163,18 +166,19 @@ public class InicioController {
         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         Libro l = liService.libroId(libro);
         String mail = u.getMail();
+        if (l.getValoracionLibro() == null) {
+            l.setValoracionLibro(new Double(0));
+            l.setNumeroValoraciones(0);
+        } else {
+            l.setNumeroValoraciones(1);
+        }
+
         ulService.guardar(ul, l, u);
         return "redirect:/hiberlibros/panelUsuario";
     }
 
-    @PostMapping("/formAutor")
-    @ResponseBody
-    public Usuario formAutor(Integer id_usuario) {
-        return usuService.usuarioId(id_usuario);
-    }
-
     @PostMapping("/saveAutor")//Guarda un autor y vuelve a la página de registrar libro
-    public String insertarAutor(Autor autor, Integer id) {
+    public String insertarAutor(Autor autor) {
         autorRepo.save(autor);
         return "redirect:/hiberlibros/guardarLibro?buscador=XXX";
     }
@@ -197,7 +201,7 @@ public class InicioController {
         if (buscador == null) {
             m.addAttribute("libros", ulService.buscarDisponibles(u));
         } else {
-            m.addAttribute("libros", ulService.buscarContiene(buscador,u.getId()));
+            m.addAttribute("libros", ulService.buscarContiene(buscador, u.getId()));
         }
 
         return "principal/buscarLibro";
@@ -205,7 +209,11 @@ public class InicioController {
 
     @PostMapping("/guardarRelato")
     public String formularioRelato(Model m, Integer id, Relato relato, MultipartFile ficherosubido) {
-        String subir = "c:\\zzzzSubirFicheros\\" + ficherosubido.getOriginalFilename();
+        String nombre = UUID.randomUUID().toString();
+        String nombreFichero = ficherosubido.getOriginalFilename().toLowerCase();
+        String extension = nombreFichero.substring(nombreFichero.lastIndexOf("."));
+        System.out.println("Extension : " + extension);
+        String subir = RUTA_BASE + nombre + extension;
         File f = new File(subir);
         f.getParentFile().mkdirs();
         try {
@@ -221,7 +229,7 @@ public class InicioController {
 
         }
 
-        return "redirect:/hiberlibros/panelUsuario"; 
+        return "redirect:/hiberlibros/panelUsuario";
     }
 
     @GetMapping("/relato")
@@ -270,14 +278,14 @@ public class InicioController {
     }
 
     @GetMapping("/finIntercambio")
-    public String finIntercambio(Integer id) {       
+    public String finIntercambio(Integer id) {
         serviceInter.finIntercambio(id);
         return "redirect:/hiberlibros/panelUsuario";
     }
-    
+
     @GetMapping("/editarUsuario")
     @ResponseBody
-    public Usuario editar(){
+    public Usuario editar() {
         return usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
     }
 
