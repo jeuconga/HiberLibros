@@ -45,7 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .passwordParameter("password")
           .and()
             .logout()
-    //            .logoutUrl("/milogout")
           .and()
             .csrf().disable();
 

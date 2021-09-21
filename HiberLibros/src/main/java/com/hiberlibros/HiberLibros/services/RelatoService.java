@@ -13,9 +13,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.hiberlibros.HiberLibros.interfaces.IRelatoService;
 
 @Service
-public class RelatoService implements RelatoServiceI1 {
+public class RelatoService implements IRelatoService {
 
     @Autowired
     private RelatoService repoRelato;

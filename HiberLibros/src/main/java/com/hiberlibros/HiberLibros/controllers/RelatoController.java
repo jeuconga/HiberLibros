@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.Optional;
 import org.springframework.web.bind.annotation.PathVariable;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 
 @Controller
 @RequestMapping("/relato")
@@ -34,6 +35,7 @@ public class RelatoController {
     private UsuarioServiceI usuService;
     @Autowired
     private RelatoServiceI1 relatoService;
+
 
     @GetMapping
     public String prueba(Model model) {

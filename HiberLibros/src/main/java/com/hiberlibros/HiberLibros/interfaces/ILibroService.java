@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Usuario
  */
-public interface LibroServiceI {
+public interface ILibroService {
     
     public List<Libro> buscarLibro(String libro);
     public Libro libroId(Integer id);
