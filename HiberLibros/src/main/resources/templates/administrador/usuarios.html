@@ -1,0 +1,37 @@
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Titulo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="container">
+            <table class="table table-striped mt-5">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Dirección</th>
+                        <th>Ciudad</th>
+                        <th>E-mail</th>
+                        <th>Teléfono</th>
+                        <th>Valoración</th>
+                        <th>Dar de baja usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usu:${usuarios}">
+                        <td th:text="${usu.nombre}"></td>
+                        <td th:text="${usu.apellido}"></td>
+                        <td th:text="${usu.direccion}"></td>
+                        <td th:text="${usu.ciudad}"></td>
+                        <td th:text="${usu.mail}"></td>
+                        <td th:text="${usu.telef}"></td>
+                        <td th:text="${usu.valoracionUsuario}"></td>
+                        <td><a th:onclick="|eliminarU(${usu.id})|" class="btn btn-dark btn-sm"><i class="far fa-trash-alt" ><span style="margin-left:5px">Baja</span></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

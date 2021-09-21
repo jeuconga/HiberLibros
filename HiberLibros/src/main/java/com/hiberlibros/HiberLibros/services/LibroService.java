@@ -36,4 +36,11 @@ public class LibroService implements LibroServiceI{
         libroRep.save(l);
     }
     
+    public Integer contarLibros() {
+        long numLibros = libroRep.findAll().stream()
+                               .count();
+        return (int)(numLibros);
+    }
+
+    
 }

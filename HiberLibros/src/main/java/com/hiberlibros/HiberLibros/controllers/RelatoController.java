@@ -2,6 +2,7 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Relato;
+import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
@@ -38,7 +39,6 @@ public class RelatoController {
 
         model.addAttribute("generos", repoGenero.findAll());
         model.addAttribute("relatos", repoRelato.findAll());
-
         return "/principal/relato";
     }
 
@@ -126,5 +126,10 @@ public class RelatoController {
 
         return "redirect:/relato";
     }
-
+    
+    @GetMapping("/listarAdmin")
+        private String listarTodo(Model m){
+            m.addAttribute("relatos",repoRelato.findAll() );
+            return "/administrador/relatos";
+        }
 }

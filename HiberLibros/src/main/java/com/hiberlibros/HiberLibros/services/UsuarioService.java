@@ -48,6 +48,7 @@ public class UsuarioService implements UsuarioServiceI{
     public List<Usuario> usuariosList() {
         return urService.findAll();
     }
+    
 
     @Override
     public boolean registrado(String mail) {
@@ -74,5 +75,14 @@ public class UsuarioService implements UsuarioServiceI{
     public Usuario usuarioId(Integer id) {
         return urService.findById(id).get();
     }
+    
+    
+   
+    public Integer contarUsuarios() {
+        long numUsuario = urService.findAll().stream()
+                               .count();
+        return (int)(numUsuario);
+    }
+
     
 }

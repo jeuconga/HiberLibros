@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
+import com.hiberlibros.HiberLibros.repositories.UsuarioRepository;
 
 @Controller
 @RequestMapping("/usuarios")
@@ -21,6 +22,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioServiceI service;
+    
+    @Autowired
+    private UsuarioRepository usurepo;
     
 //    @Autowired
 //    private UsuarioSeguridad serviceUsuarioSeguridad;
@@ -59,5 +63,11 @@ public class UsuarioController {
         service.borrarUsuario(id);
         return "redirect:/hiberlibros";
     }
+    
+    @GetMapping("/listarAdmin")
+        private String listarTodo(Model m){
+            m.addAttribute("usuarios",usurepo.findAll() );
+            return "/administrador/usuarios";
+        }
 
 }

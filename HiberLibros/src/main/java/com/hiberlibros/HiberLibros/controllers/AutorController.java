@@ -57,6 +57,7 @@ public class AutorController {
 	@GetMapping("/getLibrosAutor")
 	@ResponseBody
 	public List<Libro> getLibros(Integer id){
+                System.out.println(id);
 		return  autorService.consultarlibros(id);
 	}
 	@GetMapping("/buscarAutor")
@@ -68,5 +69,18 @@ public class AutorController {
             m.addAttribute("autores", autorService.consultarAutores(buscador));
         }
         return "autores/lista";
+	}
+        
+        @GetMapping("/autores/listarAdmin")
+	public String listaAdmin(Model m){
+		m.addAttribute("autores", autorRepo.findAll());
+		return "administrador/autores";
+	}
+        
+        @GetMapping("/librosAutor")
+
+	public String LibrosDeAutor(Model m,Integer id){
+                m.addAttribute("libros", autorService.consultarlibros(id));
+                return "administrador/librosAutor";
 	}
 }
