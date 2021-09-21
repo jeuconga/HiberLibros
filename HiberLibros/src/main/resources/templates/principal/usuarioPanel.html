@@ -2,11 +2,26 @@
       th:replace="principal/layoutUsuario::layout(~{::body})">
 
     <body>
-        <div class="container-fluid">
+        <nav class="bg-secondary">
             <div class="row">
-                <div class='col-7'>
+                <div class="col-12 ">
+                    <ul class="nav">
+                        <li class="nav-item"><a  href="#tusLibros" class="btn btn-secondary">Tus Libros</a></li>
+                        <li class="nav-item"><a  href="#tusRelatos" class="btn btn-secondary">Tus Relatos</a></li>
+                        <li class="nav-item"><a  href="#tusPeticiones" class="btn btn-secondary">Tus Peticiones</a></li>
+                        <li class="nav-item"><a  href="#tusIntercambios" class="btn btn-secondary">Tus Intercambios</a></li>             
+                       
+
+                    </ul>
+                </div> 
+            </div>
+            
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div id="tusLibros" class='col-12'>
                     <h2>Tus libros</h2>
-                    <table class="table">
+                    <table class="table table-light">
                         <thead>
                             <tr>
                                 <th>ISBN</th>
@@ -36,9 +51,11 @@
                     </table>
                     <a href="/hiberlibros/guardarLibro" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;añadir libro</a>
                 </div>
-                <div class='col-5'>
+            </div>
+            <div class="row">
+                <div id="tusRelatos" class='col-12'>
                     <h2>Tus relatos</h2>
-                    <table class="table"  >
+                    <table class="table table-light"  >
                         <tr>
                             <!--                            <th>id</th>-->
                             <th>titulo</th>
@@ -62,10 +79,10 @@
 
                 </div>
             </div>
-            <div class="row">
+            <div id="tusPeticiones" class="row">
                 <div class='col-6'>
                     <h2>Nuevas Peticiones</h2>
-                    <table class="table">
+                    <table class="table table-light">
                         <thead>
                             <tr>
                                 <th>Libro</th>
@@ -84,7 +101,7 @@
                 </div>
                 <div class='col-6'>
                     <h2>Tus peticiones</h2>
-                    <table class="table">
+                    <table class="table table-light">
                         <thead>
                             <tr>
                                 <th>Usuario</th>
@@ -105,9 +122,9 @@
                 </div>
             </div>
             <div class='row'>
-                <div class='col-12'>
+                <div id="tusIntercambios" class='col-12'>
                     <h2>Intercambios</h2>
-                    <table class="table"  >
+                    <table class="table table-light"  >
                         <thead>
                             <tr>
                                 <th>Usuario</th>
