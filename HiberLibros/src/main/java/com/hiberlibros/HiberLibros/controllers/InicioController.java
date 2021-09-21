@@ -166,6 +166,13 @@ public class InicioController {
         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         Libro l = liService.libroId(libro);
         String mail = u.getMail();
+        if (l.getValoracionLibro() == null) {
+            l.setValoracionLibro(new Double(0));
+            l.setNumeroValoraciones(0);
+        } else {
+            l.setNumeroValoraciones(1);
+        }
+
         ulService.guardar(ul, l, u);
         return "redirect:/hiberlibros/panelUsuario";
     }
@@ -281,7 +288,5 @@ public class InicioController {
     public Usuario editar() {
         return usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
     }
-
-    
 
 }
