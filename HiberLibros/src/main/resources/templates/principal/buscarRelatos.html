@@ -14,6 +14,7 @@
                 <div class="testbox">
                     <h1 class="addrelato">Lista de relatos</h1>
 
+
                     <form action="/relato/buscarRelato" method="get">
                         <input type="hidden" name="id" th:value="${usuario.id}"/>
                         <input type="text" name="busqueda" placeholder="Buscar por título"/>
@@ -32,14 +33,14 @@
                         <div class="col-2">
 
                             <form action="/relato/buscarPorValoracionMayor" method="get">
-                                <input type="hidden" name="id" th:value="${usuario.id}"/>                  
-                                <button class="btn btn-primary"><i class="fas fa-sort-amount-up">Mayor a menor</i></button>
+                                <input type="hidden" name="id" th:value="${usuario.id}"/>                
+                                <button class="btn btn-primary">  <i class="fas fa-sort-amount-down">Mayor a menor</i></button>
                             </form> 
                         </div>
                         <div class="col-2">
                             <form action="/relato/buscarPorValoracionMenor" method="get">
                                 <input type="hidden" name="id" th:value="${usuario.id}"/>                  
-                                <button class="btn btn-primary"><i class="fas fa-sort-amount-down">Menor a mayor</i></button>
+                                <button class="btn btn-primary"><i class="fas fa-sort-amount-up">Menor a mayor</i></button>
                             </form> 
 
                         </div>
@@ -54,8 +55,14 @@
                             <th class="thbuscarrelatos">Valoración (0-5)</th>
                         </tr>             
                         <tr th:each="rel:${relatos}">     
+                         
+                            <td>
+                                <a th:href="@{/relato/download(descargar=${rel.fichero})}">
+                                    <span th:text="${rel.titulo}"></span>
+                                </a>
 
-                            <td th:text="${rel.titulo}"></td>  
+
+                            </td>  
                             <td class="text-center"> 
                                 <span th:text="${rel.valoracionUsuarios}" ></span>
                                 <i class="fas fa-star" style="color:orange"></i>      

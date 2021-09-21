@@ -41,6 +41,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
+import java.util.UUID;
 
 /**
  *
@@ -72,6 +73,8 @@ public class InicioController {
 
     @Autowired
     private IIntercambioService serviceInter;
+
+    private final String RUTA_BASE = "c:\\zzzzSubirFicheros\\";
 
     @GetMapping
     public String inicio(Model m, String error) {
@@ -180,7 +183,7 @@ public class InicioController {
     }
 
     @PostMapping("/registroLibro")//Guarda un libro nuevo y luego lo guarda en Usuario Libro
-    public String registrarLibro(UsuarioLibro ul, Libro l,Integer id_genero, Integer id_editorial, Integer id_autor) {
+    public String registrarLibro(UsuarioLibro ul, Libro l, Integer id_genero, Integer id_editorial, Integer id_autor) {
         l.setGenero(generoRepo.getById(id_genero));
         l.setEditorial(editoService.consultaPorIdEditorial(id_editorial));
         l.setAutor(autorRepo.findById(id_autor).get());
@@ -205,7 +208,11 @@ public class InicioController {
 
     @PostMapping("/guardarRelato")
     public String formularioRelato(Model m, Integer id, Relato relato, MultipartFile ficherosubido) {
-        String subir = "c:\\zzzzSubirFicheros\\" + ficherosubido.getOriginalFilename();
+        String nombre = UUID.randomUUID().toString();
+        String nombreFichero=ficherosubido.getOriginalFilename().toLowerCase();
+        String extension=nombreFichero.substring(nombreFichero.lastIndexOf("."));
+        System.out.println("Extension : " + extension);
+        String subir = RUTA_BASE + nombre + extension;
         File f = new File(subir);
         f.getParentFile().mkdirs();
         try {
@@ -234,7 +241,7 @@ public class InicioController {
 
     @GetMapping("/borrarUL")//borra un libro de UsuarioLibro sin eliminarlo de la tabla de Libros
     public String borrarUsuLibro(Integer id) {
-        UsuarioLibro ul=ulService.encontrarId(id);
+        UsuarioLibro ul = ulService.encontrarId(id);
         ul.setQuieroTengo("no");
         ulService.editar(ul);
         return "redirect:/hiberlibros/panelUsuario";
@@ -265,7 +272,7 @@ public class InicioController {
 
     @GetMapping("/finIntercambio")
     public String finIntercambio(Integer id) {
-        
+
         serviceInter.finIntercambio(id);
         return "redirect:/hiberlibros/panelUsuario";
     }

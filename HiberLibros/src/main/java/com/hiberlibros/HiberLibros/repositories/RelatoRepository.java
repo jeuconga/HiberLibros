@@ -17,6 +17,8 @@ public interface RelatoRepository extends JpaRepository<Relato, Integer> {
 
     public List<Relato> findByTituloContainingIgnoreCase(String titulo);
     
+    public Relato findByFichero(String fichero); 
+    
     
 
 }

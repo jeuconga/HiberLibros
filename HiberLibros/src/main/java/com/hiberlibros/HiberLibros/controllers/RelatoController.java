@@ -1,6 +1,5 @@
 package com.hiberlibros.HiberLibros.controllers;
 
-
 import com.hiberlibros.HiberLibros.entities.Relato;
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.interfaces.IRelatoService;
@@ -20,6 +19,17 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Optional;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.UUID;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/relato")
@@ -35,6 +45,8 @@ public class RelatoController {
     private ISeguridadService serviceSeguridad;
     @Autowired
     private IRelatoService relatoService;
+
+    private final String RUTA_BASE = "c:\\zzzzSubirFicheros\\";
 
     @GetMapping
     public String prueba(Model model) {
@@ -55,14 +67,12 @@ public class RelatoController {
     }
 
     @PostMapping("/guardarRelato")
-    public String guardarRelato(Relato relato, MultipartFile ficherosubido
-    ) {
-        String subir = "c:\\zzzzSubirFicheros\\" + ficherosubido.getOriginalFilename();
+    public String guardarRelato(Relato relato, MultipartFile ficherosubido) {
+        String nombre = UUID.randomUUID().toString();
+        String subir = RUTA_BASE + nombre;
         File f = new File(subir);
         f.getParentFile().mkdirs();
-
         try {
-
             Files.copy(ficherosubido.getInputStream(), f.toPath(), StandardCopyOption.REPLACE_EXISTING);
             relato.setFichero(subir);
             relato.setValoracionUsuarios(new Double(0));
@@ -77,11 +87,16 @@ public class RelatoController {
     }
 
     @GetMapping("/eliminarRelato")
-    public String eliminarRelato(Model m, Integer id
-    ) {
+    public String eliminarRelato(Model m, Integer id) {
         Optional<Relato> rel = repoRelato.findById(id);
         if (rel.isPresent()) {
             repoRelato.deleteById(id);
+        }
+        String rutarchivo = RUTA_BASE + rel.get().getFichero();
+        try {
+            Files.delete(Path.of(rutarchivo));
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
         return "redirect:/relato";
     }
@@ -165,6 +180,34 @@ public class RelatoController {
         model.addAttribute("relatos", relatoService.buscarPorValoracionMayorAMenor());
         model.addAttribute("usuario", usuService.usuarioId(id));
         return "/principal/buscarRelatos";
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<Resource> descargar(String descargar) throws IOException {
+
+        File file = new File(descargar);
+        Relato rel = repoRelato.findByFichero(descargar); 
+        String titulo = rel.getTitulo();
+        String extension = descargar.substring(descargar.lastIndexOf("."));    
+
+        HttpHeaders header = new HttpHeaders();
+        header.add("Content-Disposition", "attachment; filename=" + titulo + "." + extension);
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+
+        try {
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(descargar));
+            return ResponseEntity.ok()
+                    .headers(header)
+                    .contentLength(file.length())
+                    .contentType(MediaType.parseMediaType("application/octet-stream"))
+                    .body(resource);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
