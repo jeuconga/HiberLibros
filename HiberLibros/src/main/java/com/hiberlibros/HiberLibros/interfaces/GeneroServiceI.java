@@ -9,7 +9,7 @@ import java.util.Optional;
  *
  * @author Isabel
  */
-public interface IGeneroService {
+public interface GeneroServiceI {
     
     //Añadir género
     public void guardarGenero(Genero genero);

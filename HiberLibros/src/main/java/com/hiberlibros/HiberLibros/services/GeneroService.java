@@ -2,18 +2,18 @@
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Genero;
-import com.hiberlibros.HiberLibros.interfaces.IGeneroService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+import com.hiberlibros.HiberLibros.interfaces.GeneroServiceI;
 
 /**
  *
  * @author Isabel
  */
 @Service
-public class GeneroService implements IGeneroService {
+public class GeneroService implements GeneroServiceI {
     
     private List<Genero> listaGeneros = new ArrayList<>();
 

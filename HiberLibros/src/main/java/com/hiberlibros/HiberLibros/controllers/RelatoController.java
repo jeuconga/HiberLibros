@@ -2,8 +2,10 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Relato;
-import com.hiberlibros.HiberLibros.interfaces.RelatoServiceI1;
 import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
+import com.hiberlibros.HiberLibros.entities.Usuario;
+import com.hiberlibros.HiberLibros.interfaces.IRelatoService;
+import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
 import java.io.File;
@@ -32,10 +34,11 @@ public class RelatoController {
     @Autowired
     private GeneroRepository repoGenero;
     @Autowired
-    private UsuarioServiceI usuService;
+    private IUsuarioService usuService;
     @Autowired
-    private RelatoServiceI1 relatoService;
-
+    private ISeguridadService serviceSeguridad;
+    @Autowired
+    private IRelatoService relatoService;
 
     @GetMapping
     public String prueba(Model model) {
@@ -47,11 +50,11 @@ public class RelatoController {
     }
 
     @GetMapping("/listaRelatos")
-    public String mostrarRelatos(Model model, Integer id) {
-
+    public String mostrarRelatos(Model model) {
+        Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         model.addAttribute("generos", repoGenero.findAll());
         model.addAttribute("relatos", repoRelato.findAll());
-        model.addAttribute("usuario", usuService.usuarioId(id));
+        model.addAttribute("usuario", u);
         return "/principal/buscarRelatos";
     }
 
@@ -158,7 +161,7 @@ public class RelatoController {
         model.addAttribute("usuario", usuService.usuarioId(id));
         return "/principal/buscarRelatos";
     }
-    
+
     @GetMapping("/buscarPorValoracionMenor")
     public String mostrarPorValoracionMenor(Model model, Integer id) {
 

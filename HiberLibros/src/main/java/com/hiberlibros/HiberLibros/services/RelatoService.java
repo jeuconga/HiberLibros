@@ -6,7 +6,7 @@
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Relato;
-import com.hiberlibros.HiberLibros.interfaces.RelatoServiceI1;
+import com.hiberlibros.HiberLibros.interfaces.IRelatoService;
 import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
 import java.util.ArrayList;
 import java.util.List;

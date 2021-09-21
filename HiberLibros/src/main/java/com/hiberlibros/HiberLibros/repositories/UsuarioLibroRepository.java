@@ -18,6 +18,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UsuarioLibroRepository extends JpaRepository<UsuarioLibro,Integer>{
     public List<UsuarioLibro> findByUsuario(Usuario u);
     public List<UsuarioLibro> findByUsuarioAndQuieroTengoAndEstadoPrestamo(Usuario u, String quieroTengo, String estadoPrestamo);
-    public List<UsuarioLibro> findByLibro(Libro l);
+    public List<UsuarioLibro> findByLibroAndQuieroTengoAndEstadoPrestamo(Libro l, String quieroTengo, String estadoPrestamo);
+    public List<UsuarioLibro> findByUsuarioAndQuieroTengoNotOrderByQuieroTengoAsc(Usuario u, String quieroTengo);
+    public List<UsuarioLibro> findByUsuarioNotAndQuieroTengoAndEstadoPrestamo(Usuario u, String quieroTengo, String estadoPrestamo);
     
 }
