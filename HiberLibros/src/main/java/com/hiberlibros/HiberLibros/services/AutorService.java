@@ -1,6 +1,7 @@
 package com.hiberlibros.HiberLibros.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -26,14 +27,13 @@ public class AutorService implements IAutorService{
     private ModelMapper obj;
 	
 	@Override
-	public List<Autor> consultarAutores(String buscar){
+	public List<Autor> buscarAutores(String buscar){
 		return autorRepo.findAll().stream()
 				.filter(
 						x -> x.getNombre().concat(x.getApellidos()).toLowerCase()//paso nombre completo a minusuclas para comparar
 						.contains(buscar.toLowerCase())
 						)
-				.collect(Collectors.toList());
-		
+				.collect(Collectors.toList());	
 	}
 	
 	@Override
@@ -43,5 +43,26 @@ public class AutorService implements IAutorService{
                 .filter(z -> z.getAutor().getIdAutor() == id)
                 .map(x-> obj.map(x.getLibro(), LibroDto.class))
                 .collect(Collectors.toList());
+	}
+
+	@Override
+	public void guardarAutor(Autor a) {
+		autorRepo.save(a);	
+	}
+
+	@Override
+	public Optional<Autor> encontrarAutor(Integer id) {
+		return autorRepo.findById(id);	
+	}
+
+	@Override
+	public void borrarAutor(Integer id) {
+		autorRepo.deleteById(id);
+		
+	}
+
+	@Override
+	public List<Autor> consultarAutores() {
+		return autorRepo.findAll();
 	}
 }

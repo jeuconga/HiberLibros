@@ -26,56 +26,52 @@ import lombok.Setter;
 @RequestMapping
 public class AutorController {
 
-	@Setter
-	@Autowired(required = false)
-	private AutorRepository autorRepo;
-	
 	@Autowired(required = false)
 	private IAutorService autorService;
 
 	@GetMapping("/autorLista")
 	public String lista(Model m){
-		m.addAttribute("autores", autorRepo.findAll());
+		m.addAttribute("autores", autorService.consultarAutores());
 		return "autores/lista";
 	}
-	
+
 	@GetMapping("/autorForm")
 	public String read(Model m){
 		m.addAttribute("autor", new Autor());
 		return "autores/autorForm";
 	}
-	
+
 	@GetMapping("/autorForm/{id}")
 	public String find(Model m,@PathVariable Integer id){
-		m.addAttribute("autor", autorRepo.findById(id));
+		m.addAttribute("autor", autorService.encontrarAutor(id));
 		return "autores/autorForm";
 	}
 	@PostMapping("/saveAutor")
 	public String insertarAutor(Autor autor){
-		autorRepo.save(autor);
+		autorService.guardarAutor(autor);
 		return "redirect:autorLista";
 	}
-	
+
 	@GetMapping("/deleteAutor/{id}")
 	public String delete(@PathVariable Integer id){
-		autorRepo.deleteById(id);
+		autorService.borrarAutor(id);
 		return "redirect:/autorLista";
 	}
-	
+
 	@GetMapping("/getLibrosAutor")
 	@ResponseBody
 	public List<LibroDto> consultarLibros(Integer id){
 		return autorService.getLibros(id);
 	}
-        
+
 	@GetMapping("/buscarAutor")
 	public String buscarAutores(Model m,String buscador){
-        m.addAttribute("buscador", buscador);
+		m.addAttribute("buscador", buscador);
 		if (buscador == null) {
-            m.addAttribute("autores", autorRepo.findAll());
-        } else {
-            m.addAttribute("autores", autorService.consultarAutores(buscador));
-        }
-        return "autores/lista";
+			m.addAttribute("autores", autorService.consultarAutores());
+		} else {
+			m.addAttribute("autores", autorService.buscarAutores(buscador));
+		}
+		return "autores/lista";
 	}
 }
