@@ -33,11 +33,5 @@ public class Preferencia {
     
     @ManyToOne 
     @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
-    
-    @ManyToOne
-    @JoinColumn(name = "id_autor")
-    private Autor autor;
-    
-    
+    private Usuario usuario; 
 }

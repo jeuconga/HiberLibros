@@ -127,7 +127,7 @@ public class InicioController {
         m.addAttribute("usuario", u);
         m.addAttribute("libros", ulService.buscarUsuariotiene(u));
         m.addAttribute("misPeticiones", petiService.consutarPeticionesUsuarioPendientes(u));
-        m.addAttribute("petiRecibidas", petiService.consultarPeticonesRecibidas(u));
+//        m.addAttribute("petiRecibidas", petiService.consultarPeticonesRecibidas(u));
         m.addAttribute("intercambiosPropios", serviceInter.encontrarULPrestador(ul));
         m.addAttribute("intercambiosPeticiones", serviceInter.encontrarULPrestatario(ul));
         return "principal/usuarioPanel";
