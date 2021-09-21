@@ -138,8 +138,7 @@ public class InicioController {
         List<Libro> libros = new ArrayList<>();
         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         String noLibros = "";
-        m.addAttribute("libro", new Libro());//Para el formulario
-        m.addAttribute("usuario", u);//Pruebas pasando datos usuario, hasta hacer cookies
+        m.addAttribute("libro", new Libro());//Para el formulario        
         m.addAttribute("autores", autorRepo.findAll());//autores para el desplegable
         m.addAttribute("autor", new Autor());//autores para formulario
         m.addAttribute("generos", generoRepo.findAll());//géneros formulario
@@ -167,14 +166,9 @@ public class InicioController {
         return "redirect:/hiberlibros/panelUsuario";
     }
 
-    @PostMapping("/formAutor")
-    @ResponseBody
-    public Usuario formAutor(Integer id_usuario) {
-        return usuService.usuarioId(id_usuario);
-    }
 
     @PostMapping("/saveAutor")//Guarda un autor y vuelve a la página de registrar libro
-    public String insertarAutor(Autor autor, Integer id) {
+    public String insertarAutor(Autor autor) {
         autorRepo.save(autor);
         return "redirect:/hiberlibros/guardarLibro?buscador=XXX";
     }
