@@ -6,6 +6,7 @@
 package com.hiberlibros.HiberLibros.entities;
 
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -43,11 +44,11 @@ public class Intercambio {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaDevolucion;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_usuario_libro_prestador")
     private UsuarioLibro usuarioPrestador;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_usuario_libro_prestatario")
     private UsuarioLibro usuarioPrestatario;
     

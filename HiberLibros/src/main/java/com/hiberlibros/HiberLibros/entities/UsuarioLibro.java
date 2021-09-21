@@ -5,6 +5,7 @@
  */
 package com.hiberlibros.HiberLibros.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -36,11 +37,11 @@ public class UsuarioLibro {
     private String estadoPrestamo;
     private String quieroTengo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_libro")
     private Libro libro;
 
