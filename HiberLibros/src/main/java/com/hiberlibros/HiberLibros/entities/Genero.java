@@ -1,7 +1,6 @@
 package com.hiberlibros.HiberLibros.entities;
 
 import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,6 +32,9 @@ public class Genero {
     
    @OneToMany(mappedBy = "id")
     private List<Libro> listaLibros;
+   
+   @OneToMany(mappedBy = "id")
+   private List<Preferencia> listaPreferencias;
     
     
 }

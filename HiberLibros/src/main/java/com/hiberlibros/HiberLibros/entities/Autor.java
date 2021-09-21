@@ -30,6 +30,7 @@ public class Autor {
     private String apellidos;
     @Column
     private String biografia;
+    
     @OneToMany(mappedBy = "autor")
     private List<AutorLibro> autorLibros;
 
@@ -37,6 +38,8 @@ public class Autor {
 //    public String toString() {
 //        return ""+nombre + " " + apellidos;
 //    }
+    @OneToMany(mappedBy = "id")
+   private List<Preferencia> listaPreferencias;
 
 }
 
