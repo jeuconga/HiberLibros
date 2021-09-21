@@ -3,9 +3,9 @@
 
     <body>
         <div class="container-fluid"> 
-            <div th:if="${#strings.equals(noLibros,'')}">
+            <div th:if="${!#strings.equals(noLibros,'Ningun libro encontrado')}">
                 <form action="/hiberlibros/guardarLibro">
-                    <input type="hidden" name="id" th:value="${usuario.id}"/>
+                    
                     <input type="text" name="buscador" placeholder="Buscar por título o ISBN"/>
                     <input type="submit" value="buscar" class="btn btn-primary"/>
                 </form>
@@ -13,7 +13,7 @@
 
             <div th:if="${#strings.equals(noLibros,'encontrado')}">
                 <form action='/hiberlibros/guardarLibro' method="post">
-                    <input type='hidden' name='usuario' th:value="${usuario.id}"/>
+                    
                     <label for='estadoConservacion'>Estado:</label>
                     <select name='estadoConservacion'>
                         <option value='Mal'>Mal</option>
@@ -53,18 +53,42 @@
                         </tbody>
                     </table>
                     <input type='submit' value='Guardar' class='btn btn-primary'/>
-                    <a href="/hiberlibros/guardarLibro?buscador=XXX" class="btn btn-warning"><i class="far fa-trash-alt"></i>&nbsp;Añadir</a>
+                    <a href="/hiberlibros/guardarLibro?buscador=XXX" class="btn btn-warning"><i class="fas fa-plus-square"></i>&nbsp;Añadir</a>
                 </form> 
             </div>
 
 
             <div th:if="${#strings.equals(noLibros,'Ningun libro encontrado')}">
-                <p th:text="${noLibros}" class='rojo'></p>
 
                 <form action="/hiberlibros/registroLibro" method="post" th:object="${libro}">
-                    <div class="row" >    
-                        <input type="hidden" name="id_usuario" th:value="${usuario.id}"/>
+                    <div class="row" >  
+                        <div class="col-4" >
+                            <label for="id_autor">Autor</label> 
+                            <select  class="form-control"  name="id_autor" multiple>
+                                <option th:each="autor:${autores}" th:text="${autor.nombre +' '+ autor.apellidos}" th:value="${autor.idAutor}"></option>
+                            </select>
 
+                        </div>
+                        <div class="col-4" >
+                            <label for="id_editorial">Editorial</label> 
+                            <select  class="form-control" multiple  name="id_editorial">
+                                <option th:each="edit:${editoriales}" th:text="${edit.nombreEditorial}" th:value="${edit.id}"></option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label for="id_genero">Genero</label> 
+                            <select  class="form-control"  name="id_genero" multiple="">
+                                <option th:each="gen:${generos}" th:text="${gen.nombre}" th:value="${gen.id}"></option>
+                            </select></div>
+
+                        <div class="col-3" style="margin-top: 1%">
+
+                            <a th:onclick="|anyadirAutor()|" class="btn btn-secondary"><i class="fas fa-plus-square"></i>Añadir autor</a>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        
                         <div class="col-2">
                             <label for="isbn">ISBN</label>
                             <input class="form-control" th:field="*{isbn}" aria-describedby="isbnHelp" placeholder="ISBN" required=""/>
@@ -87,31 +111,9 @@
                             <label for="valoracionLibro">Valoración</label>
                             <input type="number" min="0" max="5" step="0.1" class="form-control" th:field="*{valoracionLibro}" placeholder="Valoración"/>
                         </div>             
-                        <div class="col-4" >
-                            <label for="id_autor">Autor</label> 
-                            <select  class="form-control"  name="id_autor" multiple>
-                                <option th:each="autor:${autores}" th:text="${autor.nombre +' '+ autor.apellidos}" th:value="${autor.idAutor}"></option>
-                            </select>
-                            
-                        </div>
-                        <div class="col-4" >
-                            <label for="id_editorial">Editorial</label> 
-                            <select  class="form-control" multiple  name="id_editorial">
-                                <option th:each="edit:${editoriales}" th:text="${edit.nombreEditorial}" th:value="${edit.id}"></option>
-                            </select>
-                        </div>
-                        <div class="col-4">
-                            <label for="id_genero">Genero</label> 
-                            <select  class="form-control"  name="id_genero" multiple="">
-                                <option th:each="gen:${generos}" th:text="${gen.nombre}" th:value="${gen.id}"></option>
-                            </select></div>
-                        
-                        <div class="col-3" style="margin-top: 1%">
-                            
-                            <a th:onclick="|anyadirAutor(${usuario.id})|" class="btn btn-secondary"><i class="fas fa-plus-square"></i>Añadir autor</a>
-                        </div>
+
                     </div>
-                    <hr/>
+
                     <div class="row">
                         <div class="col-4">
                             <label for='estadoConservacion'>Estado:</label>
@@ -122,11 +124,11 @@
                             </select>
                         </div>
                         <div class="col-4">
-                        <label for='quieroTengo'>¿Lo tienes o lo quieres?</label>
-                        <select class="form-control" multiple name='quieroTengo'>
-                            <option value='Quiero'>Quiero</option>
-                            <option value='Tengo' selected="">Tengo</option>
-                        </select>
+                            <label for='quieroTengo'>¿Lo tienes o lo quieres?</label>
+                            <select class="form-control" multiple name='quieroTengo'>
+                                <option value='Quiero'>Quiero</option>
+                                <option value='Tengo' selected="">Tengo</option>
+                            </select>
                         </div>
                         <input type='hidden' value='Libre' name='estadoPrestamo'/>
                     </div>
@@ -152,9 +154,7 @@
                         <div class="form-group">
                             <input type="text" class="form-control" th:field="*{apellidos}" placeholder="Apellidos"/>
                         </div>
-                        <div class="form-group">
 
-                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">

@@ -14,9 +14,9 @@ function editarUsuario() {
             bootbox.dialog({
                 title: 'Editar',
                 size: 'large',
-                 message: "<div id='editar'>" + $("#editarUsuario").html() + "</div>"
-        });
-        $("#editar form").deserialize(pJson);
+                message: "<div id='editar'>" + $("#editarUsuario").html() + "</div>"
+            });
+            $("#editar form").deserialize(pJson);
         }
 
     });
@@ -60,17 +60,13 @@ function consultarLibros(pID) {
         }
     });
 }
-function anyadirAutor(pID) {
-    $.post("/hiberlibros/formAutor", {
-        id_usuario: pID
-    }, function (pJson) {
-        bootbox.dialog({
-            title: 'Añadir autor',
-            size: 'large',
-            message: "<div id='autorForm'>" + $("#autor").html() + "</div>"
-        });
-        $("#autorForm form").deserialize(pJson);
+function anyadirAutor() {
+    bootbox.dialog({
+        title: 'Añadir autor',
+        size: 'large',
+        message: "<div id='autorForm'>" + $("#autor").html() + "</div>"
     });
+
 }
 
 function gestionarPeticion(pId) {
