@@ -38,6 +38,8 @@ public class Autor {
 //    public String toString() {
 //        return ""+nombre + " " + apellidos;
 //    }
+    @OneToMany(mappedBy = "id")
+   private List<Preferencia> listaPreferencias;
 
 }
 

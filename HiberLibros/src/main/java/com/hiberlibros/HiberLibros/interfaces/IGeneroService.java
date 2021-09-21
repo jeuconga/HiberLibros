@@ -3,13 +3,12 @@ package com.hiberlibros.HiberLibros.interfaces;
 
 import com.hiberlibros.HiberLibros.entities.Genero;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
  * @author Isabel
  */
-public interface GeneroServiceI {
+public interface IGeneroService {
     
     //Añadir género
     public void guardarGenero(Genero genero);
