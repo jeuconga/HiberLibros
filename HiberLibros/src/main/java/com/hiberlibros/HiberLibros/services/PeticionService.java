@@ -55,7 +55,9 @@ public class PeticionService {
         repoPeticion.deleteById(p.getId());
     }
     public void eliminarId(Integer id) {
-        repoPeticion.deleteById(id);
+        Peticion p=repoPeticion.findById(id).get();
+        p.setPendienteTratar(Boolean.FALSE);
+        repoPeticion.save(p);
     }
 
     public void aceptarPeticion(Peticion p) {
@@ -64,7 +66,8 @@ public class PeticionService {
         repoPeticion.save(p);
     }
 
-    public void rechazarPeticion(Peticion p) {
+    public void rechazarPeticion(Integer id) {
+        Peticion p=repoPeticion.findById(id).get();
         p.setAceptacion(Boolean.FALSE);
         p.setPendienteTratar(Boolean.FALSE);
         repoPeticion.save(p);
