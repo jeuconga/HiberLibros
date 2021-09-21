@@ -2,13 +2,13 @@
       th:replace="principal/layoutUsuario::layout(~{::body})">
 
     <body>
-        <div class="container-fluid">
+        <div class="container">
             <form action="/hiberlibros/buscarLibro" method="get">
-                <input type="hidden" name="id" th:value="${usuario.id}"/>
                 <input type="text" name="buscador" placeholder="Buscar por título o ISBN"/>
-                <input type="submit" value="buscar" class="btn btn-primary"/>
+                <input type="submit" value="Buscar" class="btn btn-primary"/>
+                <a href="/hiberlibros/buscarLibro" class="btn btn-warning"><i class="far fa-trash-alt"></i>&nbsp;Limpiar filtros</a>
             </form>
-            <table class="table">
+            <table class="table table-light">
                 <thead>
                     <tr>
                         <th>Titulo</th>

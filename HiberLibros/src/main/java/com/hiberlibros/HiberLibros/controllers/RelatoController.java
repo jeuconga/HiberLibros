@@ -86,19 +86,19 @@ public class RelatoController {
         return "redirect:/relato";
     }
 
-    @GetMapping("/eliminarRelato")
+    @GetMapping("/eliminarRelato") 
     public String eliminarRelato(Model m, Integer id) {
         Optional<Relato> rel = repoRelato.findById(id);
         if (rel.isPresent()) {
             repoRelato.deleteById(id);
         }
-        String rutarchivo = RUTA_BASE + rel.get().getFichero();
-        try {
+        String rutarchivo = rel.get().getFichero();
+        try {  
             Files.delete(Path.of(rutarchivo));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "redirect:/relato";
+        return "redirect:/hiberlibros/panelUsuario";
     }
 
     @PostMapping("/addValoracion")
@@ -186,9 +186,9 @@ public class RelatoController {
     public ResponseEntity<Resource> descargar(String descargar) throws IOException {
 
         File file = new File(descargar);
-        Relato rel = repoRelato.findByFichero(descargar); 
+        Relato rel = repoRelato.findByFichero(descargar);
         String titulo = rel.getTitulo();
-        String extension = descargar.substring(descargar.lastIndexOf("."));    
+        String extension = descargar.substring(descargar.lastIndexOf("."));
 
         HttpHeaders header = new HttpHeaders();
         header.add("Content-Disposition", "attachment; filename=" + titulo + "." + extension);

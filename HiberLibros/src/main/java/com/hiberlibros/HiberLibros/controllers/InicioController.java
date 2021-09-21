@@ -200,7 +200,7 @@ public class InicioController {
         if (buscador == null) {
             m.addAttribute("libros", ulService.buscarDisponibles(u));
         } else {
-            m.addAttribute("libros", ulService.buscarContiene(buscador));
+            m.addAttribute("libros", ulService.buscarContiene(buscador,u.getId()));
         }
 
         return "principal/buscarLibro";
@@ -228,7 +228,7 @@ public class InicioController {
 
         }
 
-        return "redirect:/hiberlibros/panelUsuario?mail=" + usuService.usuarioId(id).getMail();
+        return "redirect:/hiberlibros/panelUsuario"; 
     }
 
     @GetMapping("/relato")
@@ -270,11 +270,22 @@ public class InicioController {
         return "redirect:/hiberlibros/panelUsuario";
     }
 
-    @GetMapping("/finIntercambio")
-    public String finIntercambio(Integer id) {
+    @GetMapping("/rechazarIntercambio")
+    public String rechazarIntercambio(Integer id) {
+        petiService.rechazarPeticion(id);
+        return "redirect:/hiberlibros/panelUsuario";
+    }
 
+    @GetMapping("/finIntercambio")
+    public String finIntercambio(Integer id) {       
         serviceInter.finIntercambio(id);
         return "redirect:/hiberlibros/panelUsuario";
+    }
+    
+    @GetMapping("/editarUsuario")
+    @ResponseBody
+    public Usuario editar(){
+        return usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
     }
 
 }

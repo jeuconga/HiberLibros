@@ -17,7 +17,7 @@ import java.util.List;
 public interface IUsuarioLibroService {
     
     public UsuarioLibro encontrarId(Integer id);
-    public List<UsuarioLibro> buscarContiene(String buscador);
+    public List<UsuarioLibro> buscarContiene(String buscador, Integer id);
     public List<UsuarioLibro> buscarUsuario (Usuario u);
     public List<UsuarioLibro> buscarUsuarioDisponibilidad(Usuario u, String tengo, String disponibilidad);
     public List<UsuarioLibro> todos();

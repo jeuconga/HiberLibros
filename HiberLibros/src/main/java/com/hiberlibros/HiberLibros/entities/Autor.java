@@ -2,6 +2,7 @@ package com.hiberlibros.HiberLibros.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,13 +31,15 @@ public class Autor {
     private String apellidos;
     @Column
     private String biografia;
-    @OneToMany(mappedBy = "autor")
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.REMOVE)//si  se borra autor, se borra relacion de autor_libro
     private List<AutorLibro> autorLibros;
 
 //    @Override
 //    public String toString() {
 //        return ""+nombre + " " + apellidos;
 //    }
+    @OneToMany(mappedBy = "id")
+   private List<Preferencia> listaPreferencias;
 
 }
 

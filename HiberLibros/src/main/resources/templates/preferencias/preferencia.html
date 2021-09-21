@@ -8,15 +8,20 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
         <style>
+            body{
+                align-content: center;
+            }
             .contenedor{
                 margin: 15px;
                 margin-left: 40px;
             }
             .contenedorlista{
                 margin: 15px;
+                
             }
             h1{
-                margin-left: 40px;
+                margin-bottom: 20px;
+                text-align: center;
             }
             .btn-outline-primary{
                 margin-left: 50px;
@@ -25,35 +30,57 @@
                 margin-left: 50px;
             }
             label{
-                text-transform: uppercase;
                 margin-right: 15px;
             }
         </style>
     </head>
+    
     <body>
-        <div class="contenedor">
-            <form action="/preferencia/anadir" method="post">
-                <label>Añadir preferencia</label>
-                <input type="submit" value="+" class="btn btn-outline-dark"/>   
-            </form>
-        </div>
-        <hr>
         <div class="contenedorlista row col-4">
             <h1>Mis preferencias</h1>
+            <h3>Por género</h3>
             <table class="table table-bordered">
                 <tr>
                     <th>Géneros</th>
-                    <th>Autores</th>
                 </tr>
-                <tr th:each='preferencia: ${preferencias}'>
-                    <td th:text='${preferencia.id}' type="hidden"></td>
-                    <td th:text='${preferencia.id}'></td>
+                <tr th:each="preferencia:${preferencias}">
+                    <td th:text= "${#objects.nullSafe(preferencia?.genero?.nombre,'')}"></td>
                     <td>
                         <a class="btn btn-outline-danger" th:href="@{/preferencia/borrar/{id} (id=${preferencia.id})}">Eliminar</a>
                         <a class="btn btn-outline-primary" th:href="@{/preferencia/editar/{id} (id=${preferencia.id})}">Editar</a>
                     </td>
                 </tr>
             </table>
+<!-- AÑADIR GENERO           -->
+            <div class="contenedor">
+                <form action="/preferencia/anadir" method="post">
+                    <label>Añadir género</label>
+                    <input type="submit" value="+" class="btn btn-outline-dark"/>   
+                </form>
+            </div>
+
+            <h3>Por autores</h3>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Autores</th>
+                </tr>
+                <tr th:each="preferencia:${preferencias}">
+                    <td th:text= "${#objects.nullSafe(preferencia?.autor?.nombre,'')}"></td>
+                    <!--                    <td th:text="${preferencia.genero.nombre}"></td>
+                                        <td th:text="${preferencia.autor.nombre}"></td>-->
+                    <td>
+                        <a class="btn btn-outline-danger" th:href="@{/preferencia/borrar/{id} (id=${preferencia.id})}">Eliminar</a>
+                        <a class="btn btn-outline-primary" th:href="@{/preferencia/editar/{id} (id=${preferencia.id})}">Editar</a>
+                    </td>
+                </tr>
+            </table>
+<!-- AÑADIR AUTOR           -->
+            <div class="contenedor">
+                <form action="/preferencia/anadir" method="post">
+                    <label>Añadir autor</label>
+                    <input type="submit" value="+" class="btn btn-outline-dark"/>   
+                </form>
+            </div>
     </body>
 </html>
 

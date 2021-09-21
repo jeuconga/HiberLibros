@@ -6,7 +6,6 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Preferencia;
-import com.hiberlibros.HiberLibros.interfaces.PreferenciaServiceI;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.PreferenciaRepository;
@@ -16,19 +15,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.hiberlibros.HiberLibros.interfaces.IPreferenciaService;
+import com.hiberlibros.HiberLibros.services.PreferenciaService;
 
 /**
  *
- * @author Usuario
+ * @author Isabel
  */
 @Controller
 @RequestMapping("preferencia")
 public class PreferenciaController {
     
     @Autowired
-    private PreferenciaServiceI prefService;    
-    @Autowired
-    private PreferenciaRepository prefRepo;    
+    private PreferenciaService prefService;     
     @Autowired
     private GeneroRepository genRepo;
     @Autowired
@@ -36,19 +35,17 @@ public class PreferenciaController {
     
     @GetMapping
     public String verPreferencias(Model model){
-        model.addAttribute("preferencias", prefRepo.findAll());
+        model.addAttribute("preferencias", prefService.findAll());
         model.addAttribute("generos", genRepo.findAll());
         model.addAttribute("autores", autorRepo.findAll());
+        
         
         return "/preferencias/preferencia";
     }
     
     @PostMapping("/anadir")
-    public String anadirPreferencia(Model model, Preferencia preferencia, Integer id_genero, Integer id_autor){
-    preferencia.setGenero(genRepo.getById(id_genero));
-    preferencia.setAutor(autorRepo.getById(id_autor));
-    
-    prefRepo.save(preferencia);
+    public String anadirPreferencia(Model model, Preferencia preferencia){
+    prefService.addPreferencia(preferencia);
     
     return "redirect: preferencia";
     }

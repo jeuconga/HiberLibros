@@ -2,11 +2,26 @@
       th:replace="principal/layoutUsuario::layout(~{::body})">
 
     <body>
-        <div class="container-fluid">
+        <nav class="bg-secondary">
             <div class="row">
-                <div class='col-7'>
+                <div class="col-12 ">
+                    <ul class="nav">
+                        <li class="nav-item"><a  href="#tusLibros" class="btn btn-secondary">Tus Libros</a></li>
+                        <li class="nav-item"><a  href="#tusRelatos" class="btn btn-secondary">Tus Relatos</a></li>
+                        <li class="nav-item"><a  href="#tusPeticiones" class="btn btn-secondary">Tus Peticiones</a></li>
+                        <li class="nav-item"><a  href="#tusIntercambios" class="btn btn-secondary">Tus Intercambios</a></li>             
+                       
+
+                    </ul>
+                </div> 
+            </div>
+            
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div id="tusLibros" class='col-12'>
                     <h2>Tus libros</h2>
-                    <table class="table">
+                    <table class="table table-light">
                         <thead>
                             <tr>
                                 <th>ISBN</th>
@@ -30,15 +45,17 @@
                                 <td th:text="${l.libro.valoracionLibro}"></td>
                                 <td th:text="${l.estadoConservacion}"></td>
                                 <td th:text="${l.quieroTengo}"></td>
-                                <td><a th:href="@{/hiberlibros/borrarUL(id=${l.id})}" class="btn btn-sm btn-secondary">Borrar</a></td>
+                                    <td><a th:href="@{/hiberlibros/borrarUL(id=${l.id})}" class="btn btn-sm btn-secondary">Borrar</a></td>
                             </tr>
                         </tbody>
                     </table>
                     <a href="/hiberlibros/guardarLibro" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;añadir libro</a>
                 </div>
-                <div class='col-5'>
+            </div>
+            <div class="row">
+                <div id="tusRelatos" class='col-12'>
                     <h2>Tus relatos</h2>
-                    <table class="table"  >
+                    <table class="table table-light"  >
                         <tr>
                             <!--                            <th>id</th>-->
                             <th>titulo</th>
@@ -55,6 +72,7 @@
                                 <i class="fas fa-star" style="color:orange"></i>     
                             </td>  
                             <td th:text="${rel.numeroValoraciones}" style="text-align: center"></td> 
+                             <td><a th:href="@{/relato/eliminarRelato(id=${rel.id})}" class="btn btn-sm btn-secondary">Borrar</a></td>
 
                         </tr>
                     </table>
@@ -62,10 +80,10 @@
 
                 </div>
             </div>
-            <div class="row">
+            <div id="tusPeticiones" class="row">
                 <div class='col-6'>
                     <h2>Nuevas Peticiones</h2>
-                    <table class="table">
+                    <table class="table table-light">
                         <thead>
                             <tr>
                                 <th>Libro</th>
@@ -84,7 +102,7 @@
                 </div>
                 <div class='col-6'>
                     <h2>Tus peticiones</h2>
-                    <table class="table">
+                    <table class="table table-light">
                         <thead>
                             <tr>
                                 <th>Usuario</th>
@@ -98,16 +116,16 @@
                                 <td th:text="${peti.idUsuarioLibro.usuario.nombre}"></td>
                                 <td th:text="${peti.idUsuarioLibro.libro.titulo}"></td>
                                 <td>Pendiente</td>
-                                <td><a th:href="@{/peticion/baja(id=${peti.id},mail=${usuario.mail})}" class="btn btn-secondary btn-sm">Retirar</a></td>
+                                <td><a th:href="@{/peticion/baja(id=${peti.id})}" class="btn btn-secondary btn-sm">Retirar</a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class='row'>
-                <div class='col-12'>
+                <div id="tusIntercambios" class='col-12'>
                     <h2>Intercambios</h2>
-                    <table class="table"  >
+                    <table class="table table-light"  >
                         <thead>
                             <tr>
                                 <th>Usuario</th>

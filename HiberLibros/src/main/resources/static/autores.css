@@ -1,6 +1,6 @@
 @charset "ISO-8859-1";
 
-.lista { background-color: #9198e5; color:#163a63; background-size:auto;}
+.lista { background-color: white; color:#163a63; background-size:auto;}
 
 a{ color:blue;}
 
@@ -10,10 +10,13 @@ a{ color:blue;}
 
 .btn-toolbar {margin-top:10px;}
 
-
-
-
-
+nav{
+	background-color: #0D3264;
+}
+thead{
+	background-color: #0D3264;
+	color:white;
+}
 .formulario{
     background: url(https://www.lavanguardia.com/files/article_main_microformat/uploads/2019/04/21/5fa523af58c79.jpeg);
     background-repeat: no-repeat;
