@@ -17,5 +17,5 @@ public interface ILibroService {
     public List<Libro> buscarLibro(String libro);
     public Libro libroId(Integer id);
     public void guardarLibro(Libro l);
-    
+    public void valorarLibro(Libro l,Integer valoracion);
 }
