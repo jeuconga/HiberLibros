@@ -136,14 +136,27 @@ label {
     unicode-bidi: bidi-override;
 }
 
-label:hover,
-label:hover ~ label {
+.puntuacion{
+       color: orange;
+        display: none;
+    
+}
+
+
+.estrella:hover,
+.estrella:hover ~ label{
     color: orange;
 }
+
+
 
 input[type="radio"]:checked ~ label {
     color: orange;
 }
+
+
+
+
 .testbox {
     margin: 20px auto;
     padding-left: 20px;
