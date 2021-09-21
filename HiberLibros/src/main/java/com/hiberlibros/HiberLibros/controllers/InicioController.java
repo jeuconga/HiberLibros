@@ -180,7 +180,7 @@ public class InicioController {
     }
 
     @PostMapping("/registroLibro")//Guarda un libro nuevo y luego lo guarda en Usuario Libro
-    public String registrarLibro(UsuarioLibro ul, Libro l,Integer id_genero, Integer id_editorial, Integer id_autor) {
+    public String registrarLibro(UsuarioLibro ul, Libro l, Integer id_genero, Integer id_editorial, Integer id_autor) {
         l.setGenero(generoRepo.getById(id_genero));
         l.setEditorial(editoService.consultaPorIdEditorial(id_editorial));
         l.setAutor(autorRepo.findById(id_autor).get());
@@ -197,7 +197,7 @@ public class InicioController {
         if (buscador == null) {
             m.addAttribute("libros", ulService.buscarDisponibles(u));
         } else {
-            m.addAttribute("libros", ulService.buscarContiene(buscador));
+            m.addAttribute("libros", ulService.buscarContiene(buscador,u.getId()));
         }
 
         return "principal/buscarLibro";
@@ -221,7 +221,7 @@ public class InicioController {
 
         }
 
-        return "redirect:/hiberlibros/panelUsuario?mail=" + usuService.usuarioId(id).getMail();
+        return "redirect:/hiberlibros/panelUsuario"; 
     }
 
     @GetMapping("/relato")
@@ -234,7 +234,7 @@ public class InicioController {
 
     @GetMapping("/borrarUL")//borra un libro de UsuarioLibro sin eliminarlo de la tabla de Libros
     public String borrarUsuLibro(Integer id) {
-        UsuarioLibro ul=ulService.encontrarId(id);
+        UsuarioLibro ul = ulService.encontrarId(id);
         ul.setQuieroTengo("no");
         ulService.editar(ul);
         return "redirect:/hiberlibros/panelUsuario";
@@ -263,11 +263,22 @@ public class InicioController {
         return "redirect:/hiberlibros/panelUsuario";
     }
 
+    @GetMapping("/rechazarIntercambio")
+    public String rechazarIntercambio(Integer id) {
+        petiService.rechazarPeticion(id);
+        return "redirect:/hiberlibros/panelUsuario";
+    }
+
     @GetMapping("/finIntercambio")
-    public String finIntercambio(Integer id) {
-        
+    public String finIntercambio(Integer id) {       
         serviceInter.finIntercambio(id);
         return "redirect:/hiberlibros/panelUsuario";
+    }
+    
+    @GetMapping("/editarUsuario")
+    @ResponseBody
+    public Usuario editar(){
+        return usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
     }
 
 }

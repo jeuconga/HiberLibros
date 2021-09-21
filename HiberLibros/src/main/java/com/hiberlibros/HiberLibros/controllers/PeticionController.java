@@ -41,7 +41,7 @@ public class PeticionController {
     public String peticionAlta(Model m, Integer id_ul, Integer id_solicitante){
         Peticion p=new Peticion();
         servicePeticion.insertaPeticion(p, id_ul, id_solicitante); 
-        return "redirect:/hiberlibros/panelUsuario?mail="+uService.usuarioId(id_solicitante).getMail();
+        return "redirect:/hiberlibros/panelUsuario";
     }
     
     @PostMapping(value = "/baja")
@@ -50,9 +50,9 @@ public class PeticionController {
         return "redirect:/peticion/peticion";
     }
     @GetMapping("/baja") //retira una solicitud solo con el ID de la petición para no tener que mandar un objeto petición
-    public String retirarSolicitud(Integer id, String mail){
+    public String retirarSolicitud(Integer id){
         servicePeticion.eliminarId(id);
-        return "redirect:/hiberlibros/panelUsuario?mail="+mail;//vuelve al panel
+        return "redirect:/hiberlibros/panelUsuario";//vuelve al panel
     }
     @PostMapping(value = "/modificacion")
     public String peticionModificacion(Model m, Peticion p){
@@ -67,8 +67,8 @@ public class PeticionController {
     }
             
     @PostMapping(value = "/rechazar")
-    public String rechazarPeticion(Model m, Peticion p, Usuario u){
-        servicePeticion.rechazarPeticion(p);
+    public String rechazarPeticion(Model m, Integer id, Usuario u){
+        servicePeticion.rechazarPeticion(id);
         return "redirect:/peticion/peticion";
     }
     

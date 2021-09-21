@@ -38,36 +38,36 @@
             <th:block th:include="${htmlcuerpo}"/>
         </div>
         <div id="editarUsuario" style="display:none">
-            <form action="/usuarios/editarUsuario" th:object="${usuario}" method="post">
-                <input type="hidden" th:field="*{id}"/>
+            <form action="/usuarios/editarUsuario" method="post">
+                <input type="hidden" name="id"/>
                 <div class="row">
                     <div class="col-6">
                         <label for="nombre">Nombre: </label>
-                        <input class="form-control" type="text" th:field="*{nombre}" required=""/>
+                        <input class="form-control" type="text" name="nombre" required=""/>
                     </div>
                     <div class="col-6">
                         <label for="apellido">Apellido: </label>
-                        <input class="form-control" type="text" th:field="*{apellido}" required=""/>
+                        <input class="form-control" type="text" name="apellido" required=""/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <label for="direccion">Dirección: </label>
-                        <input class="form-control" type="text" th:field="*{direccion}" required=""/>
+                        <input class="form-control" type="text" name="direccion" required=""/>
                     </div>
                     <div class="col-6">
                         <label for="ciudad">Ciudad: </label>
-                        <input class="form-control" type="text" th:field="*{ciudad}" required=""/>
+                        <input class="form-control" type="text" name="ciudad" required=""/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <label for="mail">Correo electrónico: </label>
-                        <input class="form-control" type="email" th:field="*{mail}" readonly=""/>
+                        <input class="form-control" type="email" name="mail" readonly=""/>
                     </div>
                     <div class="col-6">
                         <label for="telef">Teléfono: </label>
-                        <input class="form-control" type="number" th:field="*{telef}" required=""/>
+                        <input class="form-control" type="number" name="telef" required=""/>
                     </div>
                 </div>
                 <br/>
