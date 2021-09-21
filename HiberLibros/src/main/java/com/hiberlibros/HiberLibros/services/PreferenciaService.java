@@ -2,39 +2,42 @@
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Preferencia;
-import com.hiberlibros.HiberLibros.entities.Usuario;
-import com.hiberlibros.HiberLibros.interfaces.PreferenciaServiceI;
 import com.hiberlibros.HiberLibros.repositories.PreferenciaRepository;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.hiberlibros.HiberLibros.interfaces.IPreferenciaService;
+import com.hiberlibros.HiberLibros.repositories.UsuarioRepository;
 
 /**
  *
- * @author Usuario
+ * @author Isabel
  */
 @Service
-public class PreferenciaService implements PreferenciaServiceI {
+public class PreferenciaService implements IPreferenciaService {
     
     @Autowired
     private PreferenciaRepository prefRepo;
-    
-    private List<Preferencia> listaPreferencias = new ArrayList<>();
+    @Autowired
+    private UsuarioRepository usuRepo;
 
     @Override
-    public List<Preferencia> getPreferencias() {
-        return listaPreferencias;
+    public List<Preferencia> findByUsuario(Integer idUsuario) {
+        return prefRepo.findByUsuario(usuRepo.findById(idUsuario).get());   
+    } 
+
+    @Override
+    public List<Preferencia> findAll() {
+        return prefRepo.findAll();       
     }
 
     @Override
-    public Preferencia buscaId(Integer id) {
-        return prefRepo.findById(id).get();
+    public Preferencia addPreferencia(Preferencia preferencia) {
+        Preferencia nuevaPref = new Preferencia();
+        nuevaPref.setGenero(preferencia.getGenero());
+        nuevaPref.setAutor(preferencia.getAutor());
+        nuevaPref.setUsuario(preferencia.getUsuario());
+        
+        return prefRepo.save(nuevaPref);
     }
-
-    @Override
-    public List<Preferencia> buscaUsuario(Usuario usuario) {
-        return prefRepo.findByUsuario(usuario);
-    }
-    
 }
