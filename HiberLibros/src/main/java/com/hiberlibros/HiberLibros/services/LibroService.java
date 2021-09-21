@@ -35,5 +35,16 @@ public class LibroService implements ILibroService{
     public void guardarLibro(Libro l) {
         libroRep.save(l);
     }
+
+    @Override
+    public void valorarLibro(Libro l,Integer valoracion) {
+        l.setNumeroValoraciones(l.getNumeroValoraciones() +1);
+        l.setValoracionLibro((l.getValoracionLibro()* (l.getNumeroValoraciones() -1) + valoracion )/ l.getNumeroValoraciones() );
+        double redondeo = Math.round(l.getValoracionLibro()*100)/100;
+        l.setValoracionLibro(redondeo);
+        guardarLibro(l);
+    }
+    
+    
     
 }
