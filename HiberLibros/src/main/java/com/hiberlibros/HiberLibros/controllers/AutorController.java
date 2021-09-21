@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hiberlibros.HiberLibros.dtos.LibroDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
+import com.hiberlibros.HiberLibros.interfaces.IAutorService;
 import com.hiberlibros.HiberLibros.repositories.AutorLibroRepository;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.services.AutorService;
@@ -29,25 +30,21 @@ public class AutorController {
 	@Autowired(required = false)
 	private AutorRepository autorRepo;
 	
-	@Autowired
-	private AutorLibroRepository repo;
-	
 	@Autowired(required = false)
-	private AutorService autorService;
-	
-    @Autowired
-    private ModelMapper obj;
+	private IAutorService autorService;
 
 	@GetMapping("/autorLista")
 	public String lista(Model m){
 		m.addAttribute("autores", autorRepo.findAll());
 		return "autores/lista";
 	}
+	
 	@GetMapping("/autorForm")
 	public String read(Model m){
 		m.addAttribute("autor", new Autor());
 		return "autores/autorForm";
 	}
+	
 	@GetMapping("/autorForm/{id}")
 	public String find(Model m,@PathVariable Integer id){
 		m.addAttribute("autor", autorRepo.findById(id));
@@ -58,19 +55,17 @@ public class AutorController {
 		autorRepo.save(autor);
 		return "redirect:autorLista";
 	}
+	
 	@GetMapping("/deleteAutor/{id}")
 	public String delete(@PathVariable Integer id){
 		autorRepo.deleteById(id);
 		return "redirect:/autorLista";
 	}
+	
 	@GetMapping("/getLibrosAutor")
 	@ResponseBody
-	public List<LibroDto> getLibros(Integer id){
-        return repo.findAll()
-                .stream()
-                .filter(z -> z.getAutor().getIdAutor() == id)
-                .map(x-> obj.map(x.getLibro(), LibroDto.class))
-                .collect(Collectors.toList());
+	public List<LibroDto> consultarLibros(Integer id){
+		return autorService.getLibros(id);
 	}
         
 	@GetMapping("/buscarAutor")
