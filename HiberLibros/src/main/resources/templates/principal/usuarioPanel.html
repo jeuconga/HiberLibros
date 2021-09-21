@@ -98,7 +98,7 @@
                                 <td th:text="${peti.idUsuarioLibro.usuario.nombre}"></td>
                                 <td th:text="${peti.idUsuarioLibro.libro.titulo}"></td>
                                 <td>Pendiente</td>
-                                <td><a th:href="@{/peticion/baja(id=${peti.id},mail=${usuario.mail})}" class="btn btn-secondary btn-sm">Retirar</a></td>
+                                <td><a th:href="@{/peticion/baja(id=${peti.id})}" class="btn btn-secondary btn-sm">Retirar</a></td>
                             </tr>
                         </tbody>
                     </table>
