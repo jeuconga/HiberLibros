@@ -57,12 +57,12 @@ insert into preferencias (id,id_genero,id_usuario) values (5,2,2);
 insert into preferencias (id,id_genero,id_usuario) values (6,3,3);
 insert into preferencias (id,id_genero,id_usuario) values (7,4,4);
 
-insert into usuario_libro (id,estado_conservacion,estado_prestamo,quiero_tengo,id_libro,id_usuario) values (1,"Buen Estado","Disponible","quiero",1,1);
-insert into usuario_libro (id,estado_conservacion,estado_prestamo,quiero_tengo,id_libro,id_usuario) values (2,"Buen Estado","Prestado","tengo",1,4);
-insert into usuario_libro (id,estado_conservacion,estado_prestamo,quiero_tengo,id_libro,id_usuario) values (3,"Buen Estado","Disponible","tengo",3,2);
-insert into usuario_libro (id,estado_conservacion,estado_prestamo,quiero_tengo,id_libro,id_usuario) values (4,"Buen Estado","Disponible","tengo",3,4);
-insert into usuario_libro (id,estado_conservacion,estado_prestamo,quiero_tengo,id_libro,id_usuario) values (5,"Deteriorado","Prestado","tengo",4,1);
-insert into usuario_libro (id,estado_conservacion,estado_prestamo,quiero_tengo,id_libro,id_usuario) values (6,"Bastante Roto","Prestado","tengo",5,3);
+insert into usuario_libro (id,estado_conservacion,estado_prestamo,quiero_tengo,id_libro,id_usuario) values (1,"Buen Estado","Libre","Quiero",1,1);
+insert into usuario_libro (id,estado_conservacion,estado_prestamo,quiero_tengo,id_libro,id_usuario) values (2,"Buen Estado","Ocupado","Tengo",1,4);
+insert into usuario_libro (id,estado_conservacion,estado_prestamo,quiero_tengo,id_libro,id_usuario) values (3,"Buen Estado","Libre","Tengo",3,2);
+insert into usuario_libro (id,estado_conservacion,estado_prestamo,quiero_tengo,id_libro,id_usuario) values (4,"Buen Estado","Libre","Tengo",3,4);
+insert into usuario_libro (id,estado_conservacion,estado_prestamo,quiero_tengo,id_libro,id_usuario) values (5,"Deteriorado","Ocupado","Tengo",4,1);
+insert into usuario_libro (id,estado_conservacion,estado_prestamo,quiero_tengo,id_libro,id_usuario) values (6,"Bastante Roto","Ocupado","Tengo",5,3);
 
 insert into peticiones (id,aceptacion, id_usuario_libro,id_usuario_solicitante, pendiente_tratar )  values (1,null,1,2,true);
 insert into peticiones (id,aceptacion, id_usuario_libro,id_usuario_solicitante, pendiente_tratar )  values (2,null,1,2,false);
