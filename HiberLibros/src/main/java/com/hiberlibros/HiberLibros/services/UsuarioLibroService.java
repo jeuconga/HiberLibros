@@ -37,7 +37,7 @@ public class UsuarioLibroService implements IUsuarioLibroService {
         List<UsuarioLibro> ul=new ArrayList<>();
         List<Libro> l=libService.buscarLibro(buscador); //busca libros que contentan ese parámetro       
         l.forEach(x->{
-            List<UsuarioLibro> ulAux=ulRepo.findByLibro(x);//Encuentra los libros que coiniciden dentro de usuarioLibros
+            List<UsuarioLibro> ulAux=ulRepo.findByLibroAndQuieroTengoAndEstadoPrestamo(x,"Tengo","Libre");//Encuentra los libros que coiniciden dentro de usuarioLibros
             ulAux.forEach(y->{
                 ul.add(y);
             });
@@ -73,6 +73,21 @@ public class UsuarioLibroService implements IUsuarioLibroService {
     @Override
     public List<UsuarioLibro> buscarUsuarioDisponibilidad(Usuario u, String tengo, String disponibilidad) {
         return ulRepo.findByUsuarioAndQuieroTengoAndEstadoPrestamo(u, tengo, disponibilidad);
+    }
+
+    @Override
+    public void editar(UsuarioLibro ul) {
+        ulRepo.save(ul);
+    }
+
+    @Override
+    public List<UsuarioLibro> buscarUsuariotiene(Usuario u) {
+        return ulRepo.findByUsuarioAndQuieroTengoNotOrderByQuieroTengoAsc(u, "no");
+    }
+
+    @Override
+    public List<UsuarioLibro> buscarDisponibles(Usuario u) {
+        return ulRepo.findByUsuarioNotAndQuieroTengoAndEstadoPrestamo(u, "Tengo", "Libre");
     }
     
     

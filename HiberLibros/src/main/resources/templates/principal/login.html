@@ -16,7 +16,7 @@
         <header class="bg-primary">
             <h1 class="text-secondary">HiberLibros <i class="fas fa-book-open text-secondary"></i></h1>
         </header> 
-        <p th:if="${error!=null}"><span th:text="${error}" class="text-secondary"></span></p>
+        <p th:if="${error!=null}" ><span th:text="${error}" class="text-secondary"></span></p>
         <div class="register-photo">
             <div class="form-container">
 
@@ -67,9 +67,13 @@
                         <label for="password">Password: </label>
                         <input class="form-control" type="password" name="password" required=""/>
                     </div>
+                    <div class="col-6">
+                        <label for="rep_password">Repetir password: </label>
+                        <input class="form-control" type="password" name="rep_password" required=""/>
+                    </div>
                 </div>
                 <br/>
-                <input type="submit" value="Editar" class="btn btn-primary"/>
+                <input type="submit" value="Guardar" class="btn btn-primary"/>
             </form>
         </div>
 

@@ -23,5 +23,7 @@ public interface IUsuarioLibroService {
     public List<UsuarioLibro> todos();
     public void guardar(UsuarioLibro ul, Libro l, Usuario u);
     public void borrar(Integer id);
-    
+    public void editar(UsuarioLibro ul);
+    public List<UsuarioLibro> buscarUsuariotiene(Usuario u);
+    public List<UsuarioLibro> buscarDisponibles(Usuario u);
 }
