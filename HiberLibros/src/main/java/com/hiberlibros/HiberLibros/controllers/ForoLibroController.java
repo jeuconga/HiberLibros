@@ -19,6 +19,6 @@ public class ForoLibroController {
     @GetMapping("/libro")
     public String recuperarForos (Integer idLibro){
     
-        return "/foros/libro";
+        return "/principal/foro";
     }
 }
