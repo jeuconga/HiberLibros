@@ -37,9 +37,9 @@ public class PeticionService {
         return repoPeticion.findById(id).get();
     }
 
-    public void insertaPeticion(Peticion p, Integer id_ul, Integer id_solicitante) { //guarda la petición y obtiene aquí los objetos UL y Usuario
+    public void insertaPeticion(Peticion p, Integer id_ul, Usuario u) { //guarda la petición y obtiene aquí los objetos UL y Usuario
         p.setIdUsuarioLibro(ulService.encontrarId(id_ul));
-        p.setIdUsuarioSolicitante(uService.usuarioId(id_solicitante));
+        p.setIdUsuarioSolicitante(u);
         p.setAceptacion(false);
         p.setPendienteTratar(true);
 
