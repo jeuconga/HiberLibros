@@ -1,40 +1,43 @@
-
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Preferencia;
 import com.hiberlibros.HiberLibros.entities.Usuario;
-import com.hiberlibros.HiberLibros.interfaces.PreferenciaServiceI;
 import com.hiberlibros.HiberLibros.repositories.PreferenciaRepository;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.hiberlibros.HiberLibros.interfaces.IPreferenciaService;
+import com.hiberlibros.HiberLibros.repositories.UsuarioRepository;
 
 /**
  *
- * @author Usuario
+ * @author Isabel
  */
 @Service
-public class PreferenciaService implements PreferenciaServiceI {
+public class PreferenciaService implements IPreferenciaService {
     
     @Autowired
     private PreferenciaRepository prefRepo;
-    
-    private List<Preferencia> listaPreferencias = new ArrayList<>();
+    @Autowired
+    private UsuarioRepository usuRepo;
 
     @Override
-    public List<Preferencia> getPreferencias() {
-        return listaPreferencias;
-    }
-
-    @Override
-    public Preferencia buscaId(Integer id) {
-        return prefRepo.findById(id).get();
-    }
-
-    @Override
-    public List<Preferencia> buscaUsuario(Usuario usuario) {
+    public List<Preferencia> findByUsuario(Usuario usuario) {
         return prefRepo.findByUsuario(usuario);
+    } 
+
+    @Override
+    public List<Preferencia> findAll() {
+        return prefRepo.findAll();       
     }
-    
+
+    @Override
+    public void addPreferencia(Preferencia preferencia) {
+            prefRepo.save(preferencia);
+    }
+
+    @Override
+    public void borrarPreferencia(Integer id) {
+        prefRepo.deleteById(id);
+    }
 }

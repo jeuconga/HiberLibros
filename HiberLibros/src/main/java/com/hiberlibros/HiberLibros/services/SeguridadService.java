@@ -45,8 +45,6 @@ public class SeguridadService implements ISeguridadService {
             List<Rol> roles = usuAplic.get().getRoles();
             List<Rol> rolesFiltrados = roles.stream().filter(x -> x.getNombre_rol().equals(nombre_rol)).collect(Collectors.toList());
             if (rolesFiltrados.size() > 0) {
-//                m.addAttribute("errMensaje", "alta no realizada: usuario con este Rol activado previamente");
-//                return "/admin/adminGestion";
                   return "error: alta no realizada: usuario con este Rol activado previamente";
             }
         }

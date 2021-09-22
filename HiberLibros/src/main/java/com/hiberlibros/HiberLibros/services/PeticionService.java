@@ -55,7 +55,9 @@ public class PeticionService {
         repoPeticion.deleteById(p.getId());
     }
     public void eliminarId(Integer id) {
-        repoPeticion.deleteById(id);
+        Peticion p=repoPeticion.findById(id).get();
+        p.setPendienteTratar(Boolean.FALSE);
+        repoPeticion.save(p);
     }
 
     public void aceptarPeticion(Peticion p) {
@@ -64,7 +66,8 @@ public class PeticionService {
         repoPeticion.save(p);
     }
 
-    public void rechazarPeticion(Peticion p) {
+    public void rechazarPeticion(Integer id) {
+        Peticion p=repoPeticion.findById(id).get();
         p.setAceptacion(Boolean.FALSE);
         p.setPendienteTratar(Boolean.FALSE);
         repoPeticion.save(p);
@@ -85,15 +88,15 @@ public class PeticionService {
     public List<Peticion> consutarPeticionesUsuarioPendientes(Usuario u) {
         return repoPeticion.findByPendienteTratarAndIdUsuarioSolicitante(Boolean.TRUE, u);
     }
-    public List<Peticion> consultarPeticonesRecibidas(Usuario u){ //Jesús
-        List<Peticion> p=new ArrayList<>();
-        List<UsuarioLibro> ul=ulService.buscarUsuario(u);//busca la lista de libros de un usuario
-        ul.forEach(x->{
-            List<Peticion> pAux=repoPeticion.findByIdUsuarioLibroAndPendienteTratar(x, Boolean.TRUE); //busca por UsuarioLibro y que este pendiente de tratar
-            pAux.forEach(y->{
-                p.add(y);//lo va almacenando hasta tener todos. 
-            });
-        });
-        return p;
-    }
+//    public List<Peticion> consultarPeticonesRecibidas(Usuario u){ //Jesús
+//        List<Peticion> p=new ArrayList<>();
+//        List<UsuarioLibro> ul=ulService.buscarUsuario(u);//busca la lista de libros de un usuario
+//        ul.forEach(x->{
+//            List<Peticion> pAux=repoPeticion.findByIdUsuarioLibroAndPendienteTratar(x, Boolean.TRUE); //busca por UsuarioLibro y que este pendiente de tratar
+//            pAux.forEach(y->{
+//                p.add(y);//lo va almacenando hasta tener todos. 
+//            });
+//        });
+//        return p;
+//    }
 }

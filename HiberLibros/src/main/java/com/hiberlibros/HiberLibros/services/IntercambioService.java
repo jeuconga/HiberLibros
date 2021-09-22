@@ -44,9 +44,9 @@ public class IntercambioService implements IIntercambioService{
     public List<Intercambio> encontrarULPrestador(List<UsuarioLibro> ul) {
         List<Intercambio> iList=new ArrayList<>();
         ul.forEach(x->{
-            Optional<Intercambio> i=repoInter.findByUsuarioPrestador(x);
-            if(i.isPresent()){
-                iList.add(i.get());
+            List<Intercambio> i=repoInter.findByUsuarioPrestador(x);
+            if(i.size()!=0){
+                i.forEach(y->iList.add(y));
             }
         });
         return iList;
@@ -56,9 +56,9 @@ public class IntercambioService implements IIntercambioService{
     public List<Intercambio> encontrarULPrestatario(List<UsuarioLibro> ul) {
         List<Intercambio> iList=new ArrayList<>();
         ul.forEach(x->{
-            Optional<Intercambio> i=repoInter.findByUsuarioPrestatario(x);
-            if(i.isPresent()){
-                iList.add(i.get());
+            List<Intercambio> i=repoInter.findByUsuarioPrestatario(x);
+            if(i.size()!=0){
+                i.forEach(y->iList.add(y));
             }
         });
         return iList;

@@ -18,7 +18,8 @@ import com.hiberlibros.HiberLibros.interfaces.ILibroService;
  * @author Usuario
  */
 @Service
-public class LibroService implements ILibroService{
+public class LibroService implements ILibroService {
+
     @Autowired
     private LibroRepository libroRep;
 
@@ -29,13 +30,14 @@ public class LibroService implements ILibroService{
 
     @Override
     public Libro libroId(Integer id) {
-       return libroRep.findById(id).get();
+        return libroRep.findById(id).get();
     }
 
     @Override
     public void guardarLibro(Libro l) {
         libroRep.save(l);
     }
+<<<<<<< HEAD
     
     public Integer contarLibros() {
         long numLibros = libroRep.findAll().stream()
@@ -49,4 +51,17 @@ public class LibroService implements ILibroService{
     }
 
     
+=======
+
+    @Override
+    public void valorarLibro(Libro l, Integer valoracion) {
+        l.setNumeroValoraciones(l.getNumeroValoraciones() + 1);
+        double operacion = (l.getValoracionLibro() * (l.getNumeroValoraciones() - 1) + valoracion) / l.getNumeroValoraciones();
+        double redondeo = Math.round(operacion * 100) / 100.0;
+        l.setValoracionLibro(redondeo);
+        guardarLibro(l);
+    }
+
+>>>>>>> origin/master
 }
+ 

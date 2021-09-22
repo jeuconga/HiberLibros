@@ -1,4 +1,8 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.hiberlibros.HiberLibros.entities;
 
 import javax.persistence.Entity;
@@ -14,24 +18,23 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author Isabel
+ * @author Usuario
  */
-@Data  
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="preferencias")
-public class Preferencia {
-    
+@Table(name = "comentarios_foros")
+public class ComentarioForo{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @ManyToOne
-    @JoinColumn(name="id_genero")
-    private Genero genero;
+    private String  comentarioForo;
     
-    @ManyToOne 
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario; 
+    private Integer idUsuarioApertura;
+
+    @ManyToOne()
+    @JoinColumn(name = "id_foro_libro")
+    private ForoLibro foroLibro;
 }

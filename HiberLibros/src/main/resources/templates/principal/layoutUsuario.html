@@ -13,8 +13,7 @@
     </head>
     <body>
         <header class="bg-primary">
-
-            <h1 class="text-secondary">HiberLibros <i class="fas fa-book-open text-secondary"></i></h1>
+            <img src="../logoHiberlibros.jpg" alt="alt" width="450" height="100"/>
         </header>  
         <nav class="bg-primary">
             <div class="row">
@@ -24,7 +23,7 @@
                         <li class="nav-item"><a onclick="editarUsuario()" class="btn btn-primary">Editar</a></li>
                         <li class="nav-item"><a href="/hiberlibros/buscarLibro" class="btn btn-primary">Buscar Libro</a></li>
                         <li class="nav-item"><a href="/relato/listaRelatos" class="btn btn-primary">Buscar Relatos</a></li>             
-                        <li class="nav-item"><a class="btn btn-primary">Preferencias</a></li>
+                        <li class="nav-item"><a href="/preferencia" class="btn btn-primary">Preferencias</a></li>
 
                     </ul>
                 </div> 
@@ -38,36 +37,36 @@
             <th:block th:include="${htmlcuerpo}"/>
         </div>
         <div id="editarUsuario" style="display:none">
-            <form action="/usuarios/editarUsuario" th:object="${usuario}" method="post">
-                <input type="hidden" th:field="*{id}"/>
+            <form action="/usuarios/editarUsuario" method="post">
+                <input type="hidden" name="id"/>
                 <div class="row">
                     <div class="col-6">
                         <label for="nombre">Nombre: </label>
-                        <input class="form-control" type="text" th:field="*{nombre}" required=""/>
+                        <input class="form-control" type="text" name="nombre" required=""/>
                     </div>
                     <div class="col-6">
                         <label for="apellido">Apellido: </label>
-                        <input class="form-control" type="text" th:field="*{apellido}" required=""/>
+                        <input class="form-control" type="text" name="apellido" required=""/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <label for="direccion">Dirección: </label>
-                        <input class="form-control" type="text" th:field="*{direccion}" required=""/>
+                        <input class="form-control" type="text" name="direccion" required=""/>
                     </div>
                     <div class="col-6">
                         <label for="ciudad">Ciudad: </label>
-                        <input class="form-control" type="text" th:field="*{ciudad}" required=""/>
+                        <input class="form-control" type="text" name="ciudad" required=""/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <label for="mail">Correo electrónico: </label>
-                        <input class="form-control" type="email" th:field="*{mail}" readonly=""/>
+                        <input class="form-control" type="email" name="mail" readonly=""/>
                     </div>
                     <div class="col-6">
                         <label for="telef">Teléfono: </label>
-                        <input class="form-control" type="number" th:field="*{telef}" required=""/>
+                        <input class="form-control" type="number" name="telef" required=""/>
                     </div>
                 </div>
                 <br/>

@@ -6,7 +6,7 @@
     color:green
 }
 header{
-    padding:2% !important  
+    padding:2% !important ;
 }
 .container, .container-fluid{
     margin-top:2%;
@@ -27,6 +27,7 @@ header{
     background-color: #505e6c;
 
 }
+
 
 .register-photo {  
     display: flex;

@@ -34,12 +34,17 @@ public class LibroController {
     @Autowired
     private ILibroService libroService;
 
-    @GetMapping
+
+    @GetMapping("/libros")
+
     public String mostrarFormulario(Model m) {
         m.addAttribute("libros", librepo.findAll());
         m.addAttribute("generos", genRepo.findAll());
         m.addAttribute("editoriales", editRepo.findAll());
         m.addAttribute("autores", AutRepo.findAll());
+
+        System.out.println("autor " + AutRepo.findAll());
+
         return "libros/VistaLibro";
     }
 
@@ -68,6 +73,7 @@ public class LibroController {
         m.addAttribute("editoriales", editRepo.findAll());
         m.addAttribute("autores", AutRepo.findAll());
         return "libros/modificar";
+
     }
 
     @GetMapping("/listarAdmin")
@@ -86,7 +92,9 @@ public class LibroController {
         libro.setAutor(AutRepo.getById(id_autor));
         librepo.save(libro);
         return "/administrador/vistaAdministrador";
+
     }
+
     
       @GetMapping("/eliminarAdmin")
     public String eliminarAdmin(Model m, Integer id) {
@@ -97,4 +105,16 @@ public class LibroController {
         return "/administrador/vistaAdministrador";
     }
 
+
+
+    @PostMapping("/addValoracionLibro")
+    public String addValoracionLibro(Model m, Integer id, Integer valoracion) {
+        Optional<Libro> l = librepo.findById(id);
+        if (l.isPresent()) {
+            libroService.valorarLibro(l.get(), valoracion);
+        }
+        return "redirect:/hiberlibros/buscarLibro";
+    }
+
 }
+ 

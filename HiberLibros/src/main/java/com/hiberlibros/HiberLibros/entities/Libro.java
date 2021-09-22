@@ -35,6 +35,7 @@ public class Libro {
     private String idioma;
     private String uriPortada;
     private Double valoracionLibro;
+    private Integer numeroValoraciones;
     
      @ManyToOne(fetch = FetchType.EAGER) 
     
