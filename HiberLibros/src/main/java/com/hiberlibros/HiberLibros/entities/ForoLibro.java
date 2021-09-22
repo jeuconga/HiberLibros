@@ -31,7 +31,7 @@ public class ForoLibro {
     
     @ManyToOne//pk libro
     @JoinColumn(name= "id_libro")
-    private Libro libro;   // libro del que es el foro
+    private Libro   idLibro;   // libro del que es el foro
     private String  tituloForo; // titulo del foro
     private Integer idUsuarioCreador;  //id Usuario creador del hilo
     

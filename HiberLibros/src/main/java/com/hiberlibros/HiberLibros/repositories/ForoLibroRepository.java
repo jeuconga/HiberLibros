@@ -14,5 +14,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Usuario
  */
 public interface ForoLibroRepository extends JpaRepository<ForoLibro, Integer>{
-   // public List<ForoLibro> findByIdLibro(Integer idLibro);
+    public List<ForoLibro> findByIdLibro(Integer idLibro);
 }
