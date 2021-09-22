@@ -1,7 +1,9 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper; 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hiberlibros.HiberLibros.dtos.LibroDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.entities.Libro;
+import com.hiberlibros.HiberLibros.interfaces.ILibroService;
+import com.hiberlibros.HiberLibros.repositories.AutorLibroRepository;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.services.AutorService;
 
@@ -22,12 +27,22 @@ import lombok.Setter;
 @RequestMapping
 public class AutorController {
 
-	@Setter
-	@Autowired(required = false)
+	
+	@Autowired
 	private AutorRepository autorRepo;
 	
-	@Autowired(required = false)
+	@Autowired
+	private AutorLibroRepository repo;
+	
+	@Autowired
 	private AutorService autorService;
+        @Autowired
+        private AutorLibroRepository alrepo;
+        @Autowired
+        private ILibroService ilibroservice;
+	
+    @Autowired
+    private ModelMapper obj;
 
 	@GetMapping("/autorLista")
 	public String lista(Model m){
@@ -56,10 +71,16 @@ public class AutorController {
 	}
 	@GetMapping("/getLibrosAutor")
 	@ResponseBody
-	public List<Libro> getLibros(Integer id){
-                System.out.println(id);
-		return  autorService.consultarlibros(id);
+	public List<LibroDto> getLibros(Integer id){
+        return (List<LibroDto>) repo.findAll()
+                .stream()
+                .filter(z -> z.getAutor().getIdAutor() == id)
+                .map(x-> obj.map(x.getLibro(), LibroDto.class))
+                .collect(Collectors.toList());
+
 	}
+        
+        
 	@GetMapping("/buscarAutor")
 	public String buscarAutores(Model m,String buscador){
         m.addAttribute("buscador", buscador);
@@ -78,9 +99,27 @@ public class AutorController {
 	}
         
         @GetMapping("/librosAutor")
-
 	public String LibrosDeAutor(Model m,Integer id){
-                m.addAttribute("libros", autorService.consultarlibros(id));
-                return "administrador/librosAutor";
+            Autor a=autorRepo.findById(id).get();
+            
+            m.addAttribute("libros",ilibroservice.encontrarPorAutor(a));  
+            return "administrador/librosAutor"; 
+	}
+        
+        @GetMapping("/editarAutor")
+        public String editarAutor(Model m,Integer id){
+            m.addAttribute("autor", autorRepo.findById(id));
+            return "administrador/editAutor";
+        }
+        
+        @PostMapping("/guardarAutor")
+	public String guardarAutor(Model m,Autor autor){
+		autorRepo.save(autor);
+		return "administrador/vistaAdministrador";
+	}
+        @GetMapping("/eliminarAutor")
+	public String eliminarAutorAdmin(Integer id){
+		autorRepo.deleteById(id);
+		return "administrador/vistaAdministrador";
 	}
 }

@@ -11,7 +11,7 @@
             <div class=" m-2">
                 <div class="row" >             
 
-                    <form action="guardarAdmin" method="post" th:object="${libro}" >
+                    <form action="/libros/guardarAdmin" method="post" th:object="${libro}" >
                         <input class="m-1"  type="hidden" th:field="*{id}"/>
                         <span class="m-1">ISBN</span><input class="m-1"  th:field="*{isbn}" placeholder="Descripcion" required /><br/>
                         <span class="m-1">Titulo</span> <input  class="m-1"   th:field="*{titulo}" /><br/>

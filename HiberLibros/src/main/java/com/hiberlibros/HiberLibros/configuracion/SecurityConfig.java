@@ -28,8 +28,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+//               .antMatchers("/**").denyAll()
 //             .antMatchers("/**").permitAll() 
-               .antMatchers("/admin/**").hasRole("Administrador")
+
+               .antMatchers("/panelAdmin/**").hasRole("Administrador")
+
+//               .antMatchers("/relato/**").permitAll()
+               .antMatchers("/admin/info").permitAll() 
                .antMatchers("/admin/url1").hasAnyRole("Administrador", "Usuario")
 //             .antMatchers("/login").permitAll()
 //             .antMatchers("/altaUsuario").permitAll()
@@ -45,7 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .passwordParameter("password")
           .and()
             .logout()
-    //            .logoutUrl("/milogout")
           .and()
             .csrf().disable();
 

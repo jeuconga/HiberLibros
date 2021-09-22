@@ -7,7 +7,6 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Peticion;
 import com.hiberlibros.HiberLibros.entities.Usuario;
-import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
 import com.hiberlibros.HiberLibros.services.PeticionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 
 /**
  *
@@ -26,7 +26,7 @@ public class PeticionController {
     @Autowired
     private PeticionService servicePeticion;
     @Autowired
-    private UsuarioServiceI uService;
+    private IUsuarioService uService;
     
     @GetMapping(value = "/peticion")
     public String peticion(Model m, Peticion p){
@@ -37,7 +37,7 @@ public class PeticionController {
         return "/peticion/peticion";
     }
     
-    @GetMapping(value = "/alta")
+    @GetMapping(value = "/alta") //Recibe los integer y crea una nueva petición, vuelve al panel de usuario
     public String peticionAlta(Model m, Integer id_ul, Integer id_solicitante){
         Peticion p=new Peticion();
         servicePeticion.insertaPeticion(p, id_ul, id_solicitante); 
@@ -49,10 +49,10 @@ public class PeticionController {
         servicePeticion.eliminaPeticion(p);
         return "redirect:/peticion/peticion";
     }
-    @GetMapping("/baja")
+    @GetMapping("/baja") //retira una solicitud solo con el ID de la petición para no tener que mandar un objeto petición
     public String retirarSolicitud(Integer id, String mail){
         servicePeticion.eliminarId(id);
-        return "redirect:/hiberlibros/panelUsuario?mail="+mail;
+        return "redirect:/hiberlibros/panelUsuario?mail="+mail;//vuelve al panel
     }
     @PostMapping(value = "/modificacion")
     public String peticionModificacion(Model m, Peticion p){

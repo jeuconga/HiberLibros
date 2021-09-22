@@ -31,7 +31,7 @@ public class Autor {
     @Column
     private String biografia;
     @OneToMany(mappedBy = "autor")
-    private List<AutorLibro> autorLibros;
+    private List<Libro> libros;
 
 //    @Override
 //    public String toString() {

@@ -11,9 +11,9 @@
                <tr th:each="autor:${autores}">
                    <td class="list-group-item-heading" th:text="${autor.nombre} + ' ' + ${autor.apellidos}"></td>
                    <td><p class="list-group-item-text lead" th:text="${autor.biografia}"></p></td>
-                   <td><a class="btn btn-dark btn-sm" th:href="${'/librosAutor?id='+autor.idAutor}"><i class="fas fa-list"><span class="ml-1">Lista de libros</span></i></a></td>
-                   <td><a class="btn btn-dark btn-sm" th:href="@{/autorForm/{id}(id=${autor.idAutor})}" ><i class="far fa-edit"><span style="margin-left:5px">Editar</span></i></a></td>
-                   <td><a class="btn btn-dark btn-sm" th:href="@{/deleteAutor/{id}(id=${autor.idAutor})}" ><i class="far fa-trash-alt" ><span style="margin-left:5px">Eliminar</span></i></a></td>
+                   <td><a class="btn btn-dark btn-sm" th:onclick="|mostrarLibros(${autor.idAutor})|"><i class="fas fa-list"><span class="ml-1">Lista de libros</span></i></a></td>
+                   <td><a class="btn btn-dark btn-sm" th:onclick="|editarAutor(${autor.idAutor})|" ><i class="far fa-edit"><span style="margin-left:5px">Editar</span></i></a></td>
+                   <td><a class="btn btn-dark btn-sm" th:onclick="|eliminarAutor(${autor.idAutor})|" ><i class="far fa-trash-alt" ><span style="margin-left:5px">Eliminar</span></i></a></td>
                </tr>
                
            </table>		 			

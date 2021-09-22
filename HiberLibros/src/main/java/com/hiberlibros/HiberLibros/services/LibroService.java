@@ -5,24 +5,25 @@
  */
 package com.hiberlibros.HiberLibros.services;
 
+import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.entities.Libro;
-import com.hiberlibros.HiberLibros.interfaces.LibroServiceI;
 import com.hiberlibros.HiberLibros.repositories.LibroRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 
 /**
  *
  * @author Usuario
  */
 @Service
-public class LibroService implements LibroServiceI{
+public class LibroService implements ILibroService{
     @Autowired
     private LibroRepository libroRep;
 
     @Override
-    public List<Libro> buscarLibro(String libro) {
+    public List<Libro> buscarLibro(String libro) {//recibe un string y busca si hay coincidencias en isbn o libro
         return libroRep.findByIsbnContainsOrTituloContainsIgnoreCase(libro, libro);
     }
 
@@ -40,6 +41,11 @@ public class LibroService implements LibroServiceI{
         long numLibros = libroRep.findAll().stream()
                                .count();
         return (int)(numLibros);
+    }
+
+    @Override
+    public List<Libro> encontrarPorAutor(Autor a) {
+        return libroRep.findByAutor(a);
     }
 
     

@@ -6,7 +6,6 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Libro;
-import com.hiberlibros.HiberLibros.interfaces.LibroServiceI;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.EditorialRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
@@ -18,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 
 @Controller
 @RequestMapping("/libros")
@@ -32,7 +32,7 @@ public class LibroController {
     @Autowired
     private AutorRepository AutRepo;
     @Autowired
-    private LibroServiceI libroService;
+    private ILibroService libroService;
 
     @GetMapping
     public String mostrarFormulario(Model m) {
@@ -40,7 +40,6 @@ public class LibroController {
         m.addAttribute("generos", genRepo.findAll());
         m.addAttribute("editoriales", editRepo.findAll());
         m.addAttribute("autores", AutRepo.findAll());
-        System.out.println("autor " + AutRepo.findAll());
         return "libros/VistaLibro";
     }
 
@@ -86,7 +85,7 @@ public class LibroController {
         libro.setEditorial(editRepo.getById(id_genero));
         libro.setAutor(AutRepo.getById(id_autor));
         librepo.save(libro);
-        return "redirect:/admin";
+        return "/administrador/vistaAdministrador";
     }
     
       @GetMapping("/eliminarAdmin")
@@ -95,7 +94,7 @@ public class LibroController {
         if (l.isPresent()) {
             librepo.deleteById(id);
         }
-        return "redirect:/admin";
+        return "/administrador/vistaAdministrador";
     }
 
 }

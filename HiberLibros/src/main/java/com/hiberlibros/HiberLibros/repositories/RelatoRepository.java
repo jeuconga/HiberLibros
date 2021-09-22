@@ -12,6 +12,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RelatoRepository extends JpaRepository<Relato, Integer> {
+
+    public List<Relato> findByUsuario(Usuario u);
+
+    public List<Relato> findByTituloContainingIgnoreCase(String titulo);
     
-    public List<Relato> findByUsuario (Usuario u);
+    
+
 }

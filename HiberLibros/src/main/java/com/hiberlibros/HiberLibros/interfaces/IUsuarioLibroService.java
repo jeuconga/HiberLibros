@@ -14,13 +14,16 @@ import java.util.List;
  *
  * @author Usuario
  */
-public interface UsuarioLibroServiceI {
+public interface IUsuarioLibroService {
     
     public UsuarioLibro encontrarId(Integer id);
     public List<UsuarioLibro> buscarContiene(String buscador);
     public List<UsuarioLibro> buscarUsuario (Usuario u);
+    public List<UsuarioLibro> buscarUsuarioDisponibilidad(Usuario u, String tengo, String disponibilidad);
     public List<UsuarioLibro> todos();
     public void guardar(UsuarioLibro ul, Libro l, Usuario u);
     public void borrar(Integer id);
-    
+    public void editar(UsuarioLibro ul);
+    public List<UsuarioLibro> buscarUsuariotiene(Usuario u);
+    public List<UsuarioLibro> buscarDisponibles(Usuario u);
 }

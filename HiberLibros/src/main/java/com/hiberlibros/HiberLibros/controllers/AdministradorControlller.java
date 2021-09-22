@@ -5,7 +5,8 @@
  */
 package com.hiberlibros.HiberLibros.controllers;
 
-import com.hiberlibros.HiberLibros.interfaces.UsuarioServiceI;
+import com.hiberlibros.HiberLibros.interfaces.ILibroService;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.EditorialRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Mohamad
  */
 @Controller
+@RequestMapping("hiberlibros/paneladmin")
 public class AdministradorControlller {
 
     @Autowired
@@ -42,12 +44,12 @@ public class AdministradorControlller {
     @Autowired
     private UsuarioService usuService;
     @Autowired
-    private LibroService libserv;
+    private ILibroService libserv;
 
-    @GetMapping("/admin")
+    @GetMapping
     public String adminHub(Model m) {
            m.addAttribute("numUsuarios",usuService.contarUsuarios());
            m.addAttribute("numLibros",libserv.contarLibros());
         return "administrador/vistaAdministrador";
-    }
+    } 
 }
