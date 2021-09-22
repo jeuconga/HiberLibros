@@ -35,5 +35,10 @@ public class ForoLibroService implements IForoLibroService{
     public void altaForoLibro(ForoLibro l) {
             repoForoLibro.save(l);
     }
+
+    @Override
+    public void bajaForoLibro(Integer id) {
+            repoForoLibro.deleteById(id);
+    }
     
 }
