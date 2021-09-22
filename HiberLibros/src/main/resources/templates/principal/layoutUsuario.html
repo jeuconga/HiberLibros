@@ -15,8 +15,7 @@
     <body>
         <header class="bg-primary">
             <img src="../logoHiberlibros.jpg" alt="logo" width="450" height="100"/>
-        </header>  
-        <nav class="bg-primary">
+            <nav class="bg-primary">
             <div class="row">
                 <div class="col-10">
                     <ul class="nav">
@@ -25,6 +24,7 @@
                         <li class="nav-item"><a href="/hiberlibros/buscarLibro" class="btn btn-primary">Buscar Libro</a></li>
                         <li class="nav-item"><a href="/relato/listaRelatos" class="btn btn-primary">Buscar Relatos</a></li>             
                         <li class="nav-item"><a href="/preferencia" class="btn btn-primary">Preferencias</a></li>
+                        <li class="nav-item"><a href="/foros/libro" class="btn btn-primary">Foro</a></li>   
 
                     </ul>
                 </div> 
@@ -34,6 +34,8 @@
             </div>
 
         </nav>
+        </header>  
+        
         <div>
             <th:block th:include="${htmlcuerpo}"/>
         </div>

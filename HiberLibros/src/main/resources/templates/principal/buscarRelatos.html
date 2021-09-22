@@ -11,25 +11,22 @@
     <body>
         <header class="">
             <div class="container">
+
+
+                <form action="/relato/buscarRelato" method="get">
+                    <input type="hidden" name="id" th:value="${usuario.id}"/>
+                    <input type="text" name="busqueda" placeholder="Buscar por título"/>
+                    <input type="submit" value="Buscar" class="btn btn-primary"/>
+                </form>
                 <div class="testbox">
-                    <h1 class="addrelato">Lista de relatos</h1>
-
-
-                    <form action="/relato/buscarRelato" method="get">
-                        <input type="hidden" name="id" th:value="${usuario.id}"/>
-                        <input type="text" name="busqueda" placeholder="Buscar por título"/>
-                        <input type="submit" value="Buscar" class="btn btn-primary"/>
-                    </form> </br>
-
+                    <h1 class="addrelato mb-4">Lista de relatos</h1>                    
                     <div class="row">
                         <div class="col-2">
                             <form action="/relato/listaRelatos" method="get">
                                 <input type="hidden" name="id" th:value="${usuario.id}"/>                  
                                 <input type="submit" value="Todos los relatos" class="btn btn-primary"/>
                             </form> 
-
                         </div>
-
                         <div class="col-2">
 
                             <form action="/relato/buscarPorValoracionMayor" method="get">
@@ -46,7 +43,6 @@
                         </div>
                     </div>
                     <table class="table table-striped">
-
                         <tr>
                             <th class="thbuscarrelatos">Tí­tulo</th>
                             <th class="thbuscarrelatos">Valoración usuarios</th>
@@ -55,13 +51,11 @@
                             <th class="thbuscarrelatos">Valoración (0-5)</th>
                         </tr>             
                         <tr th:each="rel:${relatos}">     
-                         
+
                             <td>
                                 <a th:href="@{/relato/download(descargar=${rel.fichero})}">
                                     <span th:text="${rel.titulo}"></span>
                                 </a>
-
-
                             </td>  
                             <td class="text-center"> 
                                 <span th:text="${rel.valoracionUsuarios}" ></span>
@@ -75,7 +69,6 @@
                                     <input type="hidden" name="idUsuario" th:value="${usuario.id}"/>           
                                     <input type="hidden" name="id"  th:value="${rel.id}" />  
                                     <p class="clasificacion">
-
                                         <input class="puntuacion" th:id="${rel.id + 'radio5'}" type="radio" name="valoracion" value="5">
                                         <label th:for="${rel.id + 'radio5'}" class="estrella">★</label>
 
@@ -90,25 +83,14 @@
 
                                         <input class="puntuacion"  th:id="${rel.id + 'radio1'}" type="radio" name="valoracion" value="1">
                                         <label th:for="${rel.id + 'radio1'}"  class="estrella">★</label>
-
-
-
                                     </p>
                                     <button type="submit" class="btn btn-primary">Añadir valoracion</button>
                                 </form>
-
                             </td>
-
                         </tr>
                     </table>
-
                 </div>
-
             </div>
-
         </header>
-
-
     </body>
-
 </html>

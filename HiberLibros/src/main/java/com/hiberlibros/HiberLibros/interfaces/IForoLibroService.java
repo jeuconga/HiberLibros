@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface IForoLibroService {
     public List<ForoLibro> recuperarForosDeLibro(Integer idLibro);
+    public List<ForoLibro> recuperarTodosLosForos();
+    public void altaForoLibro(ForoLibro l);
 }
