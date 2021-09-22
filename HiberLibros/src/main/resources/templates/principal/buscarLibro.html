@@ -37,25 +37,31 @@
                     <td>
                         <form action="/addValoracionLibro" method="post">
                             <input type="hidden" name="id"  th:value="${l.libro.id}" />  
-                            <p class="clasificacion">
+                            <div class="row">
+                                <div class="col-7">
+                                    <p class="clasificacion">
 
-                                <input class="puntuacion" th:id="${l.libro.id + 'radio5'}" type="radio" name="valoracion" value="5">
-                                <label th:for="${l.libro.id + 'radio5'}" class="estrella">★</label>
+                                        <input class="puntuacion" th:id="${l.libro.id + 'radio5'}" type="radio" name="valoracion" value="5">
+                                        <label th:for="${l.libro.id + 'radio5'}" class="estrella">★</label>
 
-                                <input class="puntuacion" th:id="${l.libro.id + 'radio4'}" type="radio" name="valoracion" value="4">
-                                <label th:for="${l.libro.id + 'radio4'}" class="estrella">★</label>
+                                        <input class="puntuacion" th:id="${l.libro.id + 'radio4'}" type="radio" name="valoracion" value="4">
+                                        <label th:for="${l.libro.id + 'radio4'}" class="estrella">★</label>
 
-                                <input class="puntuacion" th:id="${l.libro.id + 'radio3'}" type="radio" name="valoracion" value="3">
-                                <label th:for="${l.libro.id + 'radio3'}"  class="estrella">★</label>
+                                        <input class="puntuacion" th:id="${l.libro.id + 'radio3'}" type="radio" name="valoracion" value="3">
+                                        <label th:for="${l.libro.id + 'radio3'}"  class="estrella">★</label>
 
-                                <input class="puntuacion" th:id="${l.libro.id + 'radio2'}" type="radio" name="valoracion" value="2">
-                                <label th:for="${l.libro.id + 'radio2'}"  class="estrella">★</label>
+                                        <input class="puntuacion" th:id="${l.libro.id + 'radio2'}" type="radio" name="valoracion" value="2">
+                                        <label th:for="${l.libro.id + 'radio2'}"  class="estrella">★</label>
 
-                                <input class="puntuacion"  th:id="${l.libro.id + 'radio1'}" type="radio" name="valoracion" value="1">
-                                <label th:for="${l.libro.id + 'radio1'}"  class="estrella">★</label>
+                                        <input class="puntuacion"  th:id="${l.libro.id + 'radio1'}" type="radio" name="valoracion" value="1">
+                                        <label th:for="${l.libro.id + 'radio1'}"  class="estrella">★</label>
 
-                            </p>
-                            <button type="submit" class="btn btn-primary">Añadir valoracion</button>
+                                    </p>
+                                </div>
+                                <div class="col-3">
+                                    <button type="submit" class="btn btn-sm btn-primary">Valorar</button>
+                                </div>
+                            </div>
                         </form>
                     </td>
                 </tr>
