@@ -26,4 +26,14 @@ public class ForoLibroService implements IForoLibroService{
     public List<ForoLibro> recuperarForosDeLibro(Integer idLibro) {
         return repoForoLibro.findByIdLibro(idLibro);
     }
+    
+    public List<ForoLibro> recuperarTodosLosForos(){
+        return repoForoLibro.findAll();
+    }
+
+    @Override
+    public void altaForoLibro(ForoLibro l) {
+            repoForoLibro.save(l);
+    }
+    
 }
