@@ -1,11 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.controllers;
 
+import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Preferencia;
+import com.hiberlibros.HiberLibros.entities.Usuario;
+import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.PreferenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,43 +23,48 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 @RequestMapping("preferencia")
 public class PreferenciaController {
-    
+
     @Autowired
-    private PreferenciaService prefService;    
+    private PreferenciaService prefService;
     @Autowired
-    private PreferenciaRepository prefRepo;  
+    private PreferenciaRepository prefRepo;
     @Autowired
     private GeneroRepository genRepo;
-    
-    
+    @Autowired
+    private IUsuarioService usuServ;
+    @Autowired
+    private ISeguridadService serviceSeguridad;
+
     @GetMapping
-    public String verPreferencias(Model model){
-        model.addAttribute("preferencias", prefService.findAll());
+    public String verPreferencias(Model model) {
+        Usuario u = usuServ.usuarioRegistrado(serviceSeguridad.getMailFromContext());
+        model.addAttribute("preferencias", prefService.findByUsuario(u));
         model.addAttribute("generos", genRepo.findAll());;
         model.addAttribute("formulario", new Preferencia());
-        
+
         return "/preferencias/preferencia";
     }
-    
-    @PostMapping("/anadir")
-    public String anadirPreferencia(Model model, Preferencia preferencia){
-    prefService.addPreferencia(preferencia);
-    
-    return "redirect:/preferencia";
-    }
-    
-    @GetMapping("/borrar/{id}")
-    public String borrarPreferencia(@PathVariable Integer id){
-        prefService.borrarPreferencia(id);
+
+    @PostMapping("/guardar")
+    public String anadirPreferencia(Integer id_genero) {
         
+        Usuario u = usuServ.usuarioRegistrado(serviceSeguridad.getMailFromContext());
+        Genero gen = genRepo.findById(id_genero).get();
+        Preferencia pref = new Preferencia();
+        pref.setGenero(gen);
+        pref.setUsuario(u);
+       
+        prefService.addPreferencia(pref);
+
         return "redirect:/preferencia";
     }
-    
-    @GetMapping("/editar/{id}")
-    public String editarPreferencia(Model model, @PathVariable Integer id){
-        Preferencia editPreferencia = prefRepo.getById(id);
-        model.addAttribute("preferencia", editPreferencia);
-       
-        return "/generos/editar";
+
+    @GetMapping("/borrar/{id}")
+    public String borrarPreferencia(@PathVariable Integer id) {
+        
+        
+        prefService.borrarPreferencia(id);
+
+        return "redirect:/preferencia";
     }
 }

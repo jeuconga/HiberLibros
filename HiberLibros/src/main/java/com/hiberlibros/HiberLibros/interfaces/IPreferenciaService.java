@@ -16,10 +16,10 @@ public interface IPreferenciaService {
     List<Preferencia> findAll();
     
     //Preferencias por usuario
-    public List<Preferencia> findByUsuario(Integer usuario);
+    public List<Preferencia> findByUsuario(Usuario usuario);
     
     //Añadir preferencia
-    Preferencia addPreferencia (Preferencia preferencia);
+    public void addPreferencia (Preferencia preferencia);
     
      //Borrar preferencia
     public void borrarPreferencia(Integer id);
