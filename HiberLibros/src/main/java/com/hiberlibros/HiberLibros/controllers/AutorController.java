@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hiberlibros.HiberLibros.dtos.LibroDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.entities.Libro;
-import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 import com.hiberlibros.HiberLibros.interfaces.IAutorService;
+import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 import com.hiberlibros.HiberLibros.repositories.AutorLibroRepository;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.services.AutorService;
@@ -31,12 +31,8 @@ public class AutorController {
 
 	@Autowired
 	private AutorRepository autorRepo;
-	
 	@Autowired
 	private AutorLibroRepository repo;
-	
-	@Autowired
-	private AutorService autorService;
         @Autowired
         private AutorLibroRepository alrepo;
         @Autowired
@@ -95,19 +91,7 @@ public class AutorController {
 
         
         
-=======
-
->>>>>>> origin/master
-	@GetMapping("/buscarAutor")
-	public String buscarAutores(Model m,String buscador){
-		m.addAttribute("buscador", buscador);
-		if (buscador == null) {
-			m.addAttribute("autores", autorService.consultarAutores());
-		} else {
-			m.addAttribute("autores", autorService.buscarAutores(buscador));
-		}
-		return "autores/lista";
-	}
+	
         
         @GetMapping("/autores/listarAdmin")
 	public String listaAdmin(Model m){

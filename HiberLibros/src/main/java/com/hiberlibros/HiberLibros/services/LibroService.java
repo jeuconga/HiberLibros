@@ -37,8 +37,19 @@ public class LibroService implements ILibroService {
     public void guardarLibro(Libro l) {
         libroRep.save(l);
     }
-<<<<<<< HEAD
-    
+
+
+    @Override
+    public void valorarLibro(Libro l, Integer valoracion) {
+        l.setNumeroValoraciones(l.getNumeroValoraciones() + 1);
+        double operacion = (l.getValoracionLibro() * (l.getNumeroValoraciones() - 1) + valoracion) / l.getNumeroValoraciones();
+        double redondeo = Math.round(operacion * 100) / 100.0;
+        l.setValoracionLibro(redondeo);
+        guardarLibro(l);
+    }
+
+    @Override
+
     public Integer contarLibros() {
         long numLibros = libroRep.findAll().stream()
                                .count();
@@ -50,18 +61,5 @@ public class LibroService implements ILibroService {
         return libroRep.findByAutor(a);
     }
 
-    
-=======
-
-    @Override
-    public void valorarLibro(Libro l, Integer valoracion) {
-        l.setNumeroValoraciones(l.getNumeroValoraciones() + 1);
-        double operacion = (l.getValoracionLibro() * (l.getNumeroValoraciones() - 1) + valoracion) / l.getNumeroValoraciones();
-        double redondeo = Math.round(operacion * 100) / 100.0;
-        l.setValoracionLibro(redondeo);
-        guardarLibro(l);
-    }
-
->>>>>>> origin/master
 }
  

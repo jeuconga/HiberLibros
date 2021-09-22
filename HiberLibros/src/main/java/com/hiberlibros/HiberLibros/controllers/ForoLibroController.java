@@ -23,8 +23,8 @@ public class ForoLibroController {
     private IForoLibroService serviceForoLibro;
 
     @GetMapping("/libro")
-    public String recuperarForos(Integer idLibro) {
-
-        return "/foros/libro";
+    public String recuperarForos (Integer idLibro){
+    
+        return "/principal/foro";
     }
 }

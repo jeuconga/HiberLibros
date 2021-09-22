@@ -21,7 +21,5 @@ public interface ILibroService {
 
     public Integer contarLibros();
     public List<Libro> encontrarPorAutor(Autor a);
-
     public void valorarLibro(Libro l,Integer valoracion);
-
 }
