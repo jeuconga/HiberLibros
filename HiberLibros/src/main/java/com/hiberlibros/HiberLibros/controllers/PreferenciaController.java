@@ -6,6 +6,10 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Preferencia;
+import com.hiberlibros.HiberLibros.entities.Usuario;
+import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
+import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.PreferenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.hiberlibros.HiberLibros.services.PreferenciaService;
+import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /**
@@ -31,11 +36,15 @@ public class PreferenciaController {
     private PreferenciaRepository prefRepo;  
     @Autowired
     private GeneroRepository genRepo;
-    
+    @Autowired
+    private IUsuarioService usuServ;
+    @Autowired
+    private ISeguridadService serviceSeguridad;
     
     @GetMapping
     public String verPreferencias(Model model){
-        model.addAttribute("preferencias", prefService.findAll());
+        Usuario u = usuServ.usuarioRegistrado(serviceSeguridad.getMailFromContext());
+        model.addAttribute("preferencias", prefService.findByUsuario(u));
         model.addAttribute("generos", genRepo.findAll());;
         model.addAttribute("formulario", new Preferencia());
         

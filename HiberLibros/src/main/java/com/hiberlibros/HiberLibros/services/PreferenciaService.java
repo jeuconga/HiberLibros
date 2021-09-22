@@ -2,6 +2,7 @@
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Preferencia;
+import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.repositories.PreferenciaRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class PreferenciaService implements IPreferenciaService {
     private UsuarioRepository usuRepo;
 
     @Override
-    public List<Preferencia> findByUsuario(Integer idUsuario) {
-        return prefRepo.findByUsuario(usuRepo.findById(idUsuario).get());   
+    public List<Preferencia> findByUsuario(Usuario usuario) {
+        return prefRepo.findByUsuario(usuario);
     } 
 
     @Override
