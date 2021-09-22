@@ -1,0 +1,35 @@
+<html xmlns:th="https://www.thymeleaf.org" 
+      th:replace="principal/layoutUsuario::layout(~{::body})">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Buscar relatos</title>
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+    </head>    
+    <body>
+
+        <div class="container">
+            <table class="testbox table">
+                <thead>
+                    <tr>
+                        <th>Titulo</th>
+                        <th>Creado por </th>
+                        <th>Libro</th>                       
+
+                    </tr>
+                </thead>
+
+                <!--                <tr th:each='hilo:${foros}'>
+                                    <td th:text="${hilo.tituloForo}"></td>
+                                    <td th:text="${hilo.id_usuarioCreador}"></td>
+                                    <td th:text="${hilo.idLibro }"></td>                                  
+                                </tr>-->
+            </table>
+
+
+        </div>
+
+    </body>
+</html>
