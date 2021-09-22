@@ -178,7 +178,7 @@ public class InicioController {
     }
 
     @PostMapping("/saveAutor")//Guarda un autor y vuelve a la página de registrar libro
-    public String insertarAutor(Autor autor) {
+    public String insertarAutor(Autor autor) {   
         autorRepo.save(autor);
         return "redirect:/hiberlibros/guardarLibro?buscador=XXX";
     }

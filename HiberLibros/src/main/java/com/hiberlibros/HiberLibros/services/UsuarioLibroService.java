@@ -67,8 +67,7 @@ public class UsuarioLibroService implements IUsuarioLibroService {
     }
 
     @Override
-    public void borrar(Integer id) {
-        
+    public void borrar(Integer id) {        
         ulRepo.deleteById(id);
     }
 
@@ -90,6 +89,16 @@ public class UsuarioLibroService implements IUsuarioLibroService {
     @Override
     public List<UsuarioLibro> buscarDisponibles(Usuario u) {
         return ulRepo.findByUsuarioNotAndQuieroTengoAndEstadoPrestamo(u, "Tengo", "Libre");
+    }
+
+    @Override
+    public void usuarioBorrado(Usuario u) {
+        List<UsuarioLibro> ul=ulRepo.findByUsuarioAndQuieroTengoNotOrderByQuieroTengoAsc(u, "no");
+        ul.forEach(x->{
+            x.setQuieroTengo("no");
+            ulRepo.save(x);
+        });
+        
     }
     
     

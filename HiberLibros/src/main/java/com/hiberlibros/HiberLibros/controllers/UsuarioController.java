@@ -24,10 +24,7 @@ public class UsuarioController {
 
     @Autowired
     private IUsuarioService serviceUsuario;
-    
-    @Autowired
 
-    private UsuarioRepository usurepo;
     
 //    @Autowired
 //    private UsuarioSeguridad serviceUsuarioSeguridad;
@@ -64,8 +61,8 @@ public class UsuarioController {
 
     @GetMapping("/borrar")
     public String borrar(Integer id) {//borra usuario por ID en administrador
-        serviceUsuario.borrarUsuario(id);
-        return "redirect:/usuarios";
+        serviceUsuario.borrarUsuario(id); 
+        return "redirect:/hiberlibros/paneladmin";
     }
 
     @GetMapping("/borrarUsuario")//borra usuario por ID en HIBERLIBRO
@@ -76,7 +73,7 @@ public class UsuarioController {
     
     @GetMapping("/listarAdmin")
         private String listarTodo(Model m){
-            m.addAttribute("usuarios",usurepo.findAll() );
+            m.addAttribute("usuarios",serviceUsuario.usuariosList());
             return "/administrador/usuarios";
         }
         

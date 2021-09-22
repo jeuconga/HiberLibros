@@ -26,4 +26,5 @@ public interface IUsuarioLibroService {
     public void editar(UsuarioLibro ul);
     public List<UsuarioLibro> buscarUsuariotiene(Usuario u);
     public List<UsuarioLibro> buscarDisponibles(Usuario u);
+    public void usuarioBorrado(Usuario u);
 }
