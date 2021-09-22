@@ -138,9 +138,9 @@ label {
 }
 
 .puntuacion{
-       color: orange;
-        display: none;
-    
+    color: orange;
+    display: none;
+
 }
 
 
@@ -189,8 +189,9 @@ input[type="radio"]:checked ~ label {
 }
 
 
-/*.cabecera{
-    background-color:rgba(45,62,80,255);
-    filter:alpha(opacity=08); 
-    opacity:.8;
-}*/
+.cabecera{
+    background-image: url(../fondoGeneral.jpg) ;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
