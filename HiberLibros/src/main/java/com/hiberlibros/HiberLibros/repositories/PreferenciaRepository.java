@@ -19,4 +19,6 @@ public interface PreferenciaRepository extends JpaRepository<Preferencia, Intege
     
     //Listado de preferencias por usuario
     List<Preferencia> findByUsuario(Usuario idUsuario);
+    
+    
 }

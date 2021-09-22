@@ -20,4 +20,8 @@ public interface IPreferenciaService {
     
     //Añadir preferencia
     Preferencia addPreferencia (Preferencia preferencia);
+    
+     //Borrar preferencia
+    public void borrarPreferencia(Integer id);
+    
 }

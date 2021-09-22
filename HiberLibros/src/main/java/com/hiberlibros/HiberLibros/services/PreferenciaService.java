@@ -35,9 +35,14 @@ public class PreferenciaService implements IPreferenciaService {
     public Preferencia addPreferencia(Preferencia preferencia) {
         Preferencia nuevaPref = new Preferencia();
         nuevaPref.setGenero(preferencia.getGenero());
-        nuevaPref.setAutor(preferencia.getAutor());
         nuevaPref.setUsuario(preferencia.getUsuario());
         
         return prefRepo.save(nuevaPref);
     }
+
+    @Override
+    public void borrarPreferencia(Integer id) {
+        prefRepo.deleteById(id);
+    }
+
 }
