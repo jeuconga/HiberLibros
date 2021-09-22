@@ -3,7 +3,7 @@ package com.hiberlibros.HiberLibros.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
+import org.modelmapper.ModelMapper; 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hiberlibros.HiberLibros.dtos.LibroDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
+import com.hiberlibros.HiberLibros.entities.Libro;
 import com.hiberlibros.HiberLibros.interfaces.IAutorService;
+import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 import com.hiberlibros.HiberLibros.repositories.AutorLibroRepository;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.services.AutorService;
@@ -26,8 +28,22 @@ import lombok.Setter;
 @RequestMapping
 public class AutorController {
 
+
+	@Autowired
+	private AutorRepository autorRepo;
+	@Autowired
+	private AutorLibroRepository repo;
+        @Autowired
+        private AutorLibroRepository alrepo;
+        @Autowired
+        private ILibroService ilibroservice;
+	
+    @Autowired
+    private ModelMapper obj;
+
 	@Autowired(required = false)
 	private IAutorService autorService;
+
 
 	@GetMapping("/autorLista")
 	public String lista(Model m){
@@ -60,18 +76,51 @@ public class AutorController {
 
 	@GetMapping("/getLibrosAutor")
 	@ResponseBody
+	public List<LibroDto> getLibros(Integer id){
+        return (List<LibroDto>) repo.findAll()
+                .stream()
+                .filter(z -> z.getAutor().getIdAutor() == id)
+                .map(x-> obj.map(x.getLibro(), LibroDto.class))
+                .collect(Collectors.toList());
+        }
+
 	public List<LibroDto> consultarLibros(Integer id){
 		return autorService.getLibros(id);
+
 	}
 
-	@GetMapping("/buscarAutor")
-	public String buscarAutores(Model m,String buscador){
-		m.addAttribute("buscador", buscador);
-		if (buscador == null) {
-			m.addAttribute("autores", autorService.consultarAutores());
-		} else {
-			m.addAttribute("autores", autorService.buscarAutores(buscador));
-		}
-		return "autores/lista";
+        
+        
+	
+        
+        @GetMapping("/autores/listarAdmin")
+	public String listaAdmin(Model m){
+		m.addAttribute("autores", autorRepo.findAll());
+		return "administrador/autores";
+	}
+        
+        @GetMapping("/librosAutor")
+	public String LibrosDeAutor(Model m,Integer id){
+            Autor a=autorRepo.findById(id).get();
+            
+            m.addAttribute("libros",ilibroservice.encontrarPorAutor(a));  
+            return "administrador/librosAutor"; 
+	}
+        
+        @GetMapping("/editarAutor")
+        public String editarAutor(Model m,Integer id){
+            m.addAttribute("autor", autorRepo.findById(id));
+            return "administrador/editAutor";
+        }
+        
+        @PostMapping("/guardarAutor")
+	public String guardarAutor(Model m,Autor autor){
+		autorRepo.save(autor);
+		return "administrador/vistaAdministrador";
+	}
+        @GetMapping("/eliminarAutor")
+	public String eliminarAutorAdmin(Integer id){
+		autorRepo.deleteById(id);
+		return "administrador/vistaAdministrador";
 	}
 }

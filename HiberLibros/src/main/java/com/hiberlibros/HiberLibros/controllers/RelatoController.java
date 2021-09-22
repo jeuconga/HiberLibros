@@ -2,6 +2,7 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Relato;
 import com.hiberlibros.HiberLibros.entities.Usuario;
+
 import com.hiberlibros.HiberLibros.interfaces.IRelatoService;
 import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
@@ -53,7 +54,6 @@ public class RelatoController {
 
         model.addAttribute("generos", repoGenero.findAll());
         model.addAttribute("relatos", repoRelato.findAll());
-
         return "/principal/relato";
     }
 
@@ -151,6 +151,14 @@ public class RelatoController {
 
         return "redirect:/relato";
     }
+    
+    
+    
+    @GetMapping("/listarAdmin")
+        private String listarTodo(Model m){
+            m.addAttribute("relatos",repoRelato.findAll() );
+            return "/administrador/relatos";
+        }
 
     @GetMapping("/buscarRelato")
     public String buscarRelato(Model m, Integer id, String busqueda) {
@@ -181,6 +189,16 @@ public class RelatoController {
         model.addAttribute("usuario", usuService.usuarioId(id));
         return "/principal/buscarRelatos";
     }
+    
+     @GetMapping("/eliminarAdmin")
+    public String eliminarRelatoAdmin(Model m, Integer id
+    ) {
+        Optional<Relato> rel = repoRelato.findById(id);
+        if (rel.isPresent()) {
+            repoRelato.deleteById(id);
+        }
+        return "/administrador/vistaAdministrador";
+    }
 
     @GetMapping("/download")
     public ResponseEntity<Resource> descargar(String descargar) throws IOException {
@@ -209,5 +227,7 @@ public class RelatoController {
             return null;
         }
     }
+
+ 
 
 }

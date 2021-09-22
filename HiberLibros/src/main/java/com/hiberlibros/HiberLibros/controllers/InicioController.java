@@ -100,11 +100,11 @@ public class InicioController {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
         Authentication auth = manager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
-        List<String> roles = auth.getAuthorities().stream().map(x -> x.getAuthority()).collect(Collectors.toList());
+        List<String> roles = auth.getAuthorities().stream().map(x -> x.getAuthority()).collect(Collectors.toList()); 
         for (String rol : roles) {
             if ("ROLE_Administrador".equals(rol)) {
                 //return "redirect:/hiberlibros/panelAdministrador?mail=" + username;
-                return "redirect:/hiberlibros/vistaAdministrador";
+                return "redirect:/hiberlibros/paneladmin";
             } else {
                 if ("ROLE_Usuario".equals(rol)) {
                     // return "redirect:/hiberlibros/panelUsuario?mail=" + username;

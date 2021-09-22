@@ -85,7 +85,7 @@ function gestionarPeticion(pId) {
         error: function (err) {
             alert('Error 404, page not found')
         }
-    })
+    });
 
 }
 

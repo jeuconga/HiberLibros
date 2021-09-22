@@ -5,6 +5,7 @@
  */
 package com.hiberlibros.HiberLibros.services;
 
+import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.entities.Libro;
 import com.hiberlibros.HiberLibros.repositories.LibroRepository;
 import java.util.List;
@@ -37,6 +38,7 @@ public class LibroService implements ILibroService {
         libroRep.save(l);
     }
 
+
     @Override
     public void valorarLibro(Libro l, Integer valoracion) {
         l.setNumeroValoraciones(l.getNumeroValoraciones() + 1);
@@ -44,6 +46,19 @@ public class LibroService implements ILibroService {
         double redondeo = Math.round(operacion * 100) / 100.0;
         l.setValoracionLibro(redondeo);
         guardarLibro(l);
+    }
+
+    @Override
+
+    public Integer contarLibros() {
+        long numLibros = libroRep.findAll().stream()
+                               .count();
+        return (int)(numLibros);
+    }
+
+    @Override
+    public List<Libro> encontrarPorAutor(Autor a) {
+        return libroRep.findByAutor(a);
     }
 
 }
