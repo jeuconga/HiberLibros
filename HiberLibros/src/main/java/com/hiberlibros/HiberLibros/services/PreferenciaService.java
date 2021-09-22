@@ -1,4 +1,3 @@
-
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Preferencia;
@@ -33,17 +32,12 @@ public class PreferenciaService implements IPreferenciaService {
     }
 
     @Override
-    public Preferencia addPreferencia(Preferencia preferencia) {
-        Preferencia nuevaPref = new Preferencia();
-        nuevaPref.setGenero(preferencia.getGenero());
-        nuevaPref.setUsuario(preferencia.getUsuario());
-        
-        return prefRepo.save(nuevaPref);
+    public void addPreferencia(Preferencia preferencia) {
+            prefRepo.save(preferencia);
     }
 
     @Override
     public void borrarPreferencia(Integer id) {
         prefRepo.deleteById(id);
     }
-
 }
