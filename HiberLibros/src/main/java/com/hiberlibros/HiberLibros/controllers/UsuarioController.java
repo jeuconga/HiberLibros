@@ -13,7 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.hiberlibros.HiberLibros.repositories.UsuarioRepository;
+
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
+
 
 @Controller
 @RequestMapping("/usuarios")
@@ -23,7 +26,14 @@ public class UsuarioController {
     private IUsuarioService serviceUsuario;
     
     @Autowired
+
+    private UsuarioRepository usurepo;
+    
+//    @Autowired
+//    private UsuarioSeguridad serviceUsuarioSeguridad;
+
     private ISeguridadService serviceUsuarioSeguridad;
+
 
     @GetMapping
     public String usuarioFormulario(Model m, String registro) { //devuelve una lista con todos los usuarios, parte administrador
@@ -62,6 +72,18 @@ public class UsuarioController {
     public String borrarUsuario(Integer id) {
         serviceUsuarioSeguridad.bajaUsuarioSeguridadPorMail(serviceUsuario.usuarioId(id).getMail());
         return "redirect:/hiberlibros";
+    }
+    
+    @GetMapping("/listarAdmin")
+        private String listarTodo(Model m){
+            m.addAttribute("usuarios",usurepo.findAll() );
+            return "/administrador/usuarios";
+        }
+        
+        @PostMapping("/altaAdmin")
+    public String altaAdmin(Usuario u, String password) {
+        String resultado = serviceUsuario.guardarUsuarioYSeguridadAdmin(u,password);     
+            return "/administrador/vistaAdministrador";
     }
 
 }

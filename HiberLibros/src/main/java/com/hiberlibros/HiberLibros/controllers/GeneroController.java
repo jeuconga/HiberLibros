@@ -51,4 +51,13 @@ public class GeneroController {
         
         return "/generos/editar";
     }
+    
+    @GetMapping("/listarAdmin")
+    private String listarTodo(Model m) {    
+        m.addAttribute("generos", generoRepository.findAll());
+        m.addAttribute("generoForm", new Genero());
+        return "/administrador/generos";
+    }
+    
+    
 }

@@ -32,6 +32,17 @@ public class UsuarioService implements IUsuarioService{
 
         return resultado;
     }
+    
+
+    public String guardarUsuarioYSeguridadAdmin(Usuario u, String password) {
+        String resultado = guardarUsuario(u);
+        Optional<Usuario> usu = urService.findByMail(u.getMail());
+        if (usu.isPresent()) {
+            serviceUsuarioSeguridad.altaUsuarioSeguridad(u.getMail(), u.getId(), password, "Administrador");
+        }
+
+        return resultado;
+    }
 
     @Override
     public String guardarUsuario(Usuario u) {
@@ -66,6 +77,7 @@ public class UsuarioService implements IUsuarioService{
     public List<Usuario> usuariosList() {
         return urService.findAll();
     }
+    
 
     @Override
     public boolean registrado(String mail) { //comprueba si existe ese usuario por mail
@@ -91,5 +103,14 @@ public class UsuarioService implements IUsuarioService{
     public Usuario usuarioId(Integer id) {
         return urService.findById(id).get();
     }
+    
+    
+   
+    public Integer contarUsuarios() {
+        long numUsuario = urService.findAll().stream()
+                               .count();
+        return (int)(numUsuario);
+    }
 
+    
 }

@@ -19,7 +19,15 @@
                     <input type="submit" value="Buscar" class="btn btn-primary"/>
                 </form>
                 <div class="testbox">
-                    <h1 class="addrelato mb-4">Lista de relatos</h1>                    
+                    <h1 class="addrelato">Lista de relatos</h1>
+
+
+                    <form action="/relato/buscarRelato" method="get">
+                        <input type="hidden" name="id" th:value="${usuario.id}"/>
+                        <input type="text" name="busqueda" placeholder="Buscar por título"/>
+                        <input type="submit" value="Buscar" class="btn btn-primary"/>
+                    </form> </br>
+
                     <div class="row">
                         <div class="col-2">
                             <form action="/relato/listaRelatos" method="get">
@@ -51,6 +59,11 @@
                             <th class="thbuscarrelatos">Valoración (0-5)</th>
                         </tr>             
                         <tr th:each="rel:${relatos}">     
+                         
+                            <td>
+                                <a th:href="@{/relato/download(descargar=${rel.fichero})}">
+                                    <span th:text="${rel.titulo}"></span>
+                                </a>
 
                             <td>
                                 <a th:href="@{/relato/download(descargar=${rel.fichero})}">
