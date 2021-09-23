@@ -1,9 +1,7 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hiberlibros.HiberLibros.dtos.LibroDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.interfaces.IAutorService;
-import com.hiberlibros.HiberLibros.repositories.AutorLibroRepository;
-import com.hiberlibros.HiberLibros.repositories.AutorRepository;
-import com.hiberlibros.HiberLibros.services.AutorService;
 
 import lombok.Setter;
 

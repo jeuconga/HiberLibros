@@ -45,7 +45,6 @@ public class Libro {
     @ManyToOne             
     @JoinColumn(name = "id_editorial")
     private Editorial  editorial;
-      
     
     @ManyToOne             
     @JoinColumn(name = "id_genero")
