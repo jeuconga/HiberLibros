@@ -16,10 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 
 @Controller
-//@RequestMapping("/libros")
+@RequestMapping("/libros")
 public class LibroController {
 
     @Autowired
@@ -33,13 +34,17 @@ public class LibroController {
     @Autowired
     private ILibroService libroService;
 
+
     @GetMapping("/libros")
+
     public String mostrarFormulario(Model m) {
         m.addAttribute("libros", librepo.findAll());
         m.addAttribute("generos", genRepo.findAll());
         m.addAttribute("editoriales", editRepo.findAll());
         m.addAttribute("autores", AutRepo.findAll());
+
         System.out.println("autor " + AutRepo.findAll());
+
         return "libros/VistaLibro";
     }
 
@@ -49,7 +54,7 @@ public class LibroController {
         libro.setEditorial(editRepo.getById(id_genero));
         libro.setAutor(AutRepo.getById(id_autor));
         librepo.save(libro);
-        return "redirect:libros";
+        return "redirect:/libros";
     }
 
     @GetMapping("/eliminar")
@@ -68,7 +73,39 @@ public class LibroController {
         m.addAttribute("editoriales", editRepo.findAll());
         m.addAttribute("autores", AutRepo.findAll());
         return "libros/modificar";
+
     }
+
+    @GetMapping("/listarAdmin")
+    private String listarTodo(Model m) {
+        m.addAttribute("libros", librepo.findAll());
+        m.addAttribute("generos", genRepo.findAll());
+        m.addAttribute("editoriales", editRepo.findAll());
+        m.addAttribute("autores", AutRepo.findAll());
+        return "/administrador/libros";
+    }
+
+    @PostMapping("/guardarAdmin")
+    public String guardarAdmin(Model m, Libro libro, Integer id_genero, Integer id_editorial, Integer id_autor) {
+        libro.setGenero(genRepo.getById(id_genero));
+        libro.setEditorial(editRepo.getById(id_genero));
+        libro.setAutor(AutRepo.getById(id_autor));
+        librepo.save(libro);
+        return "/administrador/vistaAdministrador";
+
+    }
+
+    
+      @GetMapping("/eliminarAdmin")
+    public String eliminarAdmin(Model m, Integer id) {
+        Optional<Libro> l = librepo.findById(id);
+        if (l.isPresent()) {
+            librepo.deleteById(id);
+        }
+        return "/administrador/vistaAdministrador";
+    }
+
+
 
     @PostMapping("/addValoracionLibro")
     public String addValoracionLibro(Model m, Integer id, Integer valoracion) {
@@ -78,5 +115,6 @@ public class LibroController {
         }
         return "redirect:/hiberlibros/buscarLibro";
     }
+
 }
  

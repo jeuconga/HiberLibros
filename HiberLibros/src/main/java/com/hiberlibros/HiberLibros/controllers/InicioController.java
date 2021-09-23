@@ -5,6 +5,7 @@
  */
 package com.hiberlibros.HiberLibros.controllers;
 
+import com.hiberlibros.HiberLibros.dtos.TablaLibrosDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.entities.Libro;
 import com.hiberlibros.HiberLibros.entities.Peticion;
@@ -41,7 +42,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
-import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -100,11 +100,11 @@ public class InicioController {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
         Authentication auth = manager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
-        List<String> roles = auth.getAuthorities().stream().map(x -> x.getAuthority()).collect(Collectors.toList());
+        List<String> roles = auth.getAuthorities().stream().map(x -> x.getAuthority()).collect(Collectors.toList()); 
         for (String rol : roles) {
             if ("ROLE_Administrador".equals(rol)) {
                 //return "redirect:/hiberlibros/panelAdministrador?mail=" + username;
-                return "redirect:/hiberlibros/vistaAdministrador";
+                return "redirect:/hiberlibros/paneladmin";
             } else {
                 if ("ROLE_Usuario".equals(rol)) {
                     // return "redirect:/hiberlibros/panelUsuario?mail=" + username;
@@ -178,7 +178,7 @@ public class InicioController {
     }
 
     @PostMapping("/saveAutor")//Guarda un autor y vuelve a la página de registrar libro
-    public String insertarAutor(Autor autor) {
+    public String insertarAutor(Autor autor) {   
         autorRepo.save(autor);
         return "redirect:/hiberlibros/guardarLibro?buscador=XXX";
     }
@@ -188,6 +188,7 @@ public class InicioController {
         l.setGenero(generoRepo.getById(id_genero));
         l.setEditorial(editoService.consultaPorIdEditorial(id_editorial));
         l.setAutor(autorRepo.findById(id_autor).get());
+        l.setNumeroValoraciones(1);
         liService.guardarLibro(l);
         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         ulService.guardar(ul, l, u);
@@ -287,6 +288,27 @@ public class InicioController {
     @ResponseBody
     public Usuario editar() {
         return usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
+    }
+    
+    @GetMapping("/tablaBuscarLibro")
+    @ResponseBody
+    public List<TablaLibrosDto> tablaBuscarLibro(){
+        Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
+        List<UsuarioLibro> ul=ulService.buscarDisponibles(u);
+        List<TablaLibrosDto> tld=ul.stream().map(x->new TablaLibrosDto(
+                                        x.getId(),
+                                        x.getLibro().getId(),
+                                        x.getLibro().getIsbn(),
+                                        x.getLibro().getTitulo(),
+                                        x.getLibro().getAutor().getNombre()+" "+ x.getLibro().getAutor().getApellidos(),
+                                        x.getLibro().getIdioma(),
+                                        x.getLibro().getEditorial().getNombreEditorial(),
+                                        x.getLibro().getValoracionLibro(),
+                                        x.getEstadoConservacion(),
+                                        x.getUsuario().getNombre()))
+                                    .collect(Collectors.toList());
+        
+        return tld;
     }
 
 }

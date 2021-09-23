@@ -75,6 +75,11 @@ public class SeguridadService implements ISeguridadService {
     public long bajaUsuarioSeguridadPorMail (String mailUsuarioSeguridad){
         Optional<UsuarioSeguridad> usuarioSeguridad = repoUsuSeg.findByMail(mailUsuarioSeguridad);
         if (usuarioSeguridad.isPresent()){
+           Optional<Rol> r=repoRol.findByIdUsuario(usuarioSeguridad.get());
+           if(r.isPresent()){
+               repoRol.deleteById(r.get().getId());
+               
+           }
            return bajaUsuarioSeguridad(usuarioSeguridad.get().getId());
         }
         return 0;

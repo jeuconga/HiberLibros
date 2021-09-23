@@ -2,6 +2,7 @@ package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
+import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +16,16 @@ import javax.transaction.Transactional;
  * @author Usuario
  */
 @Service
-public class UsuarioService implements IUsuarioService{
+public class UsuarioService implements IUsuarioService {
+
     @Autowired
     private UsuarioRepository urService;
 
     @Autowired
     private ISeguridadService serviceUsuarioSeguridad;
+    
+    @Autowired
+    private IUsuarioLibroService serviceUsuLi;
 
     @Override
     public String guardarUsuarioYSeguridad(Usuario u, String password) {
@@ -28,6 +33,16 @@ public class UsuarioService implements IUsuarioService{
         Optional<Usuario> usu = urService.findByMail(u.getMail());
         if (usu.isPresent()) {
             serviceUsuarioSeguridad.altaUsuarioSeguridad(u.getMail(), u.getId(), password, "Usuario");
+        }
+
+        return resultado;
+    }
+
+    public String guardarUsuarioYSeguridadAdmin(Usuario u, String password) {
+        String resultado = guardarUsuario(u);
+        Optional<Usuario> usu = urService.findByMail(u.getMail());
+        if (usu.isPresent()) {
+            serviceUsuarioSeguridad.altaUsuarioSeguridad(u.getMail(), u.getId(), password, "Administrador");
         }
 
         return resultado;
@@ -43,8 +58,16 @@ public class UsuarioService implements IUsuarioService{
         } else if (!mailSubstring.contains(".")) { //@blabla. si no punto consideramos que no esta bien
             resultado = "Error: e-mail incorrecto";
         } else if (urService.findByMailContainsIgnoreCase(u.getMail()).isPresent()) {//su ya existe ese mail
-            resultado = "Error: Ya existe un usuario registrado con ese e-mail";
+            Usuario uAux = urService.findByMailContainsIgnoreCase(u.getMail()).get();
+            if (uAux.getDesactivado()) {
+                uAux.setDesactivado(Boolean.FALSE);
+                urService.save(uAux);
+                resultado = "Usuario registrado con éxito";
+            } else {
+                resultado = "Error: Ya existe un usuario registrado con ese e-mail";
+            }
         } else {
+            u.setDesactivado(Boolean.FALSE);
             urService.save(u);
             resultado = "Usuario registrado con éxito";
         }
@@ -57,14 +80,16 @@ public class UsuarioService implements IUsuarioService{
     public void borrarUsuario(Integer id) {
         Optional<Usuario> usuario = urService.findById(id);
         if (usuario.isPresent()) {
-            urService.deleteById(id);
+            usuario.get().setDesactivado(Boolean.TRUE);
+            urService.save(usuario.get());
+            serviceUsuLi.usuarioBorrado(usuario.get());
             serviceUsuarioSeguridad.bajaUsuarioSeguridadPorMail(usuario.get().getMail());
         }
     }
 
     @Override
     public List<Usuario> usuariosList() {
-        return urService.findAll();
+        return urService.findByDesactivado(Boolean.FALSE);
     }
 
     @Override
@@ -90,6 +115,12 @@ public class UsuarioService implements IUsuarioService{
     @Override
     public Usuario usuarioId(Integer id) {
         return urService.findById(id).get();
+    }
+
+    public Integer contarUsuarios() {
+        long numUsuario = urService.findByDesactivado(Boolean.FALSE).stream()
+                .count();
+        return (int) (numUsuario);
     }
 
 }

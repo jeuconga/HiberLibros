@@ -1,0 +1,15 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+    <body>
+        <div class="container">
+            <table  class="table table-striped mt-5"><th>Género</th><tr th:each="genero:${generos}"><td th:text="${genero.nombre}"></td></tr></table>
+           <form action="/genero/guardarAdmin" th:object="${generoForm}" method="post">
+                <label>Añadir género</label>
+                <input type="hidden" th:field="*{id}"/>
+                <input type="text" th:field="*{nombre}"/>
+                <input type="submit" value="Añadir" class="btn btn-outline-dark"/>   
+            </form>
+        </div>
+        </div>
+    </body>
+</html>
