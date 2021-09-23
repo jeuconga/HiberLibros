@@ -16,17 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hiberlibros.HiberLibros.dtos.LibroDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
-import com.hiberlibros.HiberLibros.entities.Libro;
 import com.hiberlibros.HiberLibros.interfaces.IAutorService;
 
 
 import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 import com.hiberlibros.HiberLibros.repositories.AutorLibroRepository;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
-import com.hiberlibros.HiberLibros.services.AutorService;
 import java.util.stream.Collectors;
 
-import lombok.Setter;
 
 @Controller
 @RequestMapping

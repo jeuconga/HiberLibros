@@ -15,7 +15,7 @@ import com.hiberlibros.HiberLibros.repositories.UsuarioRepository;
  */
 @Service
 public class PreferenciaService implements IPreferenciaService {
-    
+
     @Autowired
     private PreferenciaRepository prefRepo;
     @Autowired
@@ -24,16 +24,16 @@ public class PreferenciaService implements IPreferenciaService {
     @Override
     public List<Preferencia> findByUsuario(Usuario usuario) {
         return prefRepo.findByUsuario(usuario);
-    } 
+    }
 
     @Override
     public List<Preferencia> findAll() {
-        return prefRepo.findAll();       
+        return prefRepo.findAll();
     }
 
     @Override
     public void addPreferencia(Preferencia preferencia) {
-            prefRepo.save(preferencia);
+        prefRepo.save(preferencia);
     }
 
     @Override

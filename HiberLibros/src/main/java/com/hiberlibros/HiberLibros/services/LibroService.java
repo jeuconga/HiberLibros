@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Autor;
@@ -38,7 +33,6 @@ public class LibroService implements ILibroService {
         libroRep.save(l);
     }
 
-
     @Override
     public void valorarLibro(Libro l, Integer valoracion) {
         l.setNumeroValoraciones(l.getNumeroValoraciones() + 1);
@@ -52,8 +46,8 @@ public class LibroService implements ILibroService {
 
     public Integer contarLibros() {
         long numLibros = libroRep.findAll().stream()
-                               .count();
-        return (int)(numLibros);
+                .count();
+        return (int) (numLibros);
     }
 
     @Override
@@ -62,4 +56,3 @@ public class LibroService implements ILibroService {
     }
 
 }
- 
