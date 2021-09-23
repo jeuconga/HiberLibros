@@ -10,33 +10,33 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/united/bootstrap.min.css"/>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/flatly/bootstrap.min.css" rel="stylesheet" media="all">
         <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">
-        
+
     </head>
     <body>
         <header class="bg-primary">
             <img src="../logoHiberlibros.jpg" alt="logo" width="450" height="100"/>
             <nav class="bg-primary">
-            <div class="row">
-                <div class="col-10">
-                    <ul class="nav">
-                        <li class="nav-item"><a href="/hiberlibros/panelUsuario" class="btn btn-primary"><i class="fas fa-home"></i>&nbsp;Mi Perfil</a></li>
-                        <li class="nav-item"><a onclick="editarUsuario()" class="btn btn-primary">Editar</a></li>
-                        <li class="nav-item"><a href="/hiberlibros/buscarLibro" class="btn btn-primary">Buscar Libro</a></li>
-                        <li class="nav-item"><a href="/relato/listaRelatos" class="btn btn-primary">Buscar Relatos</a></li>             
-                        <li class="nav-item"><a href="/preferencia" class="btn btn-primary">Preferencias</a></li>
-                        <li class="nav-item"><a href="/foros/libro" class="btn btn-primary">Foro</a></li>   
-              
+                <div class="row">
+                    <div class="col-10">
+                        <ul class="nav">
+                            <li class="nav-item"><a href="/hiberlibros/panelUsuario" class="btn btn-primary"><i class="fas fa-home"></i>&nbsp;Mi Perfil</a></li>
+                            <li class="nav-item"><a onclick="editarUsuario()" class="btn btn-primary">Editar</a></li>
+                            <li class="nav-item"><a href="/hiberlibros/buscarLibro" class="btn btn-primary">Buscar Libro</a></li>
+                            <li class="nav-item"><a href="/relato/listaRelatos" class="btn btn-primary">Buscar Relatos</a></li>             
+                            <li class="nav-item"><a href="/preferencia" class="btn btn-primary">Preferencias</a></li>
+                            <li class="nav-item"><a href="/foros/libro" class="btn btn-primary">Foro</a></li>   
 
-                    </ul>
-                </div> 
-                <div class="col-2 text-right">
-                    <a href="/hiberlibros/logout" class="btn btn-primary">Salir</a>   
+
+                        </ul>
+                    </div> 
+                    <div class="col-2 text-right">
+                        <a href="/hiberlibros/logout" class="btn btn-primary">Salir</a>   
+                    </div>
                 </div>
-            </div>
 
-        </nav>
+            </nav>
         </header>  
-        
+
         <div>
             <th:block th:include="${htmlcuerpo}"/>
         </div>

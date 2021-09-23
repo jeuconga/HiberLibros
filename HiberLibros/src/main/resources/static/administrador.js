@@ -46,7 +46,7 @@ function mostrarLibros(pId) {
         },
         success: function (pHtml) {
             bootbox.dialog({
-                
+
                 size: "large",
                 message: pHtml
             })
@@ -65,7 +65,7 @@ function editarAutor(pId) {
         },
         success: function (pHtml) {
             bootbox.dialog({
-                
+
                 size: "large",
                 message: pHtml
             })
@@ -77,13 +77,13 @@ function editarAutor(pId) {
 }
 
 function altaUsuario() {
-       
-            bootbox.dialog({
-                
-                size: "large",
-                message: $('#altaUsuario').html()
-            });
-        
+
+    bootbox.dialog({
+
+        size: "large",
+        message: $('#altaUsuario').html()
+    });
+
 
 }
 
@@ -134,12 +134,30 @@ function eliminarAutor(pID) {
         message: "¿Estás seguro?",
         callback: function (result) {
             if (result) {
-                window.location.href = "/eliminarAutor?id=" +pID;
+                window.location.href = "/eliminarAutor?id=" + pID;
             }
         }
     });
 }
 
+function editarGenero(pID) {
+    $.ajax({
+        url: '/genero/editar',
+        data: {id: pID},
+        datatype: 'json',
+        success: function (pJson) {
+            bootbox.dialog({
+                title: 'Editar',
+                size: 'large',
+                message: "<div id='editar'>" + $("#editarGenero").html() + "</div>"
+            });
+            $("#editar form").deserialize(pJson);
+        }
+
+    });
+
+
+}
 
 ///////////////////////////////////////////////////////////////////
 $(document).ready(function () {
@@ -150,41 +168,33 @@ $(document).ready(function () {
         $("#capa").load("/usuarios/listarAdmin");
     });
 });
-
 $(document).ready(function () {
     $("#boton2").click(function (event) {
         $("#capa").load("/libros/listarAdmin");
     });
 });
-
-
 $(document).ready(function () {
     $("#boton3").click(function (event) {
         $("#capa").load("/relato/listarAdmin");
     });
 });
-
 $(document).ready(function () {
     $("#boton4").click(function (event) {
         $("#capa").load("/autores/listarAdmin");
     });
 });
-
 $(document).ready(function () {
     $("#boton5").click(function (event) {
         $("#capa").load("/genero/listarAdmin");
     });
 });
-
 $(function () {
     $("#container").simpleCalendar();
 });
-
 $("#container").simpleCalendar({
 
-    // displays events
+// displays events
     displayEvent: true,
-
     // event dates
     events: [
 
@@ -200,7 +210,6 @@ $("#container").simpleCalendar({
             endDate: new Date(new Date().setHours(new Date().getHours() - new Date().getHours() - 11)).getTime(),
             summary: 'Crea un recordatorio 2'
         },
-
         //genera nuevo evento para los ultimos dos dias
         {
             startDate: new Date(new Date().setHours(new Date().getHours() - 48)).toISOString(),
@@ -210,37 +219,30 @@ $("#container").simpleCalendar({
     ],
     //Dishabilitar descripcion de evento
     disableEventDetails: false,
-
     disableEmptyDetails: false
 
 });
-
 $("#container").simpleCalendar({
 
     displayYear: true
 
 });
-
 $("#container").simpleCalendar({
 
     months: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
     days: ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'],
 });
-
 $("#container").simpleCalendar({
 
     fixedStartDay: false
 
 });
-
 $("#container").simpleCalendar({
 
-    // called after init
+// called after init
     onInit: function (calendar) {},
-
     // called on month change
     onMonthChange: function (month, year) {},
-
     // called on date selection
     onDateSelect: function (date, events) {}
 

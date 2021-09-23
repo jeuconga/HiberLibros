@@ -59,7 +59,12 @@
                             <th class="thbuscarrelatos">Valoración (0-5)</th>
                         </tr>             
                         <tr th:each="rel:${relatos}">     
-                        
+
+                            <td>
+                                <a th:href="@{/relato/download(descargar=${rel.fichero})}">
+                                    <span th:text="${rel.titulo}"></span>
+                                </a>
+                            </td>
                             <td>
                                 <a th:href="@{/relato/download(descargar=${rel.fichero})}">
                                     <span th:text="${rel.titulo}"></span>
