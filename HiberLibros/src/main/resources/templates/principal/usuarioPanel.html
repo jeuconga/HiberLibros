@@ -45,11 +45,11 @@
                                 <td th:text="${l.libro.valoracionLibro}"></td>
                                 <td th:text="${l.estadoConservacion}"></td>
                                 <td th:text="${l.quieroTengo}"></td>
-                                    <td><a th:href="@{/hiberlibros/borrarUL(id=${l.id})}" class="btn btn-sm btn-secondary">Borrar</a></td>
+                                    <td><a th:href="@{/hiberlibros/borrarUL(id=${l.id})}" class="btn btn-sm btn-danger">Borrar</a></td>
                             </tr>
                         </tbody>
                     </table>
-                    <a href="/hiberlibros/guardarLibro" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;añadir libro</a>
+                    <a href="/hiberlibros/guardarLibro" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;Añadir libro</a>
                 </div>
             </div>
             <div class="row">
@@ -72,11 +72,11 @@
                                 <i class="fas fa-star" style="color:orange"></i>     
                             </td>  
                             <td th:text="${rel.numeroValoraciones}" style="text-align: center"></td> 
-                             <td><a th:href="@{/relato/eliminarRelato(id=${rel.id})}" class="btn btn-sm btn-secondary">Borrar</a></td>
+                             <td><a th:href="@{/relato/eliminarRelato(id=${rel.id})}" class="btn btn-sm btn-danger">Borrar</a></td>
 
                         </tr>
                     </table>
-                    <a th:href="@{/hiberlibros/relato(id=${usuario.id})}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;añadir relato</a>
+                    <a th:href="@{/hiberlibros/relato(id=${usuario.id})}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;Añadir relato</a>
 
                 </div>
             </div>
