@@ -77,9 +77,8 @@ function editarAutor(pId) {
 }
 
 function altaUsuario() {
-
     bootbox.dialog({
-
+        Title: "Alta usuario",
         size: "large",
         message: $('#altaUsuario').html()
     });
