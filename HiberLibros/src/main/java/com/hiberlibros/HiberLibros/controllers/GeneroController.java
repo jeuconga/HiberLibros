@@ -17,47 +17,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/genero")
 public class GeneroController {
-    
+
     @Autowired
     private GeneroRepository generoRepository;
-    
-    
+
     @GetMapping
-    public String verGeneros(Model model){
+    public String verGeneros(Model model) {
         model.addAttribute("generos", generoRepository.findAll());
         model.addAttribute("generoForm", new Genero());
-        
+
         return "/generos/genero";
     }
-    
+
     @PostMapping("/guardar")
-    public String formulario(Genero genero){
+    public String formulario(Genero genero) {
         generoRepository.save(genero);
-        
+
         return "redirect:/genero";
     }
-    
+
     @GetMapping("/borrar/{id}")
-    public String borrarGenero(@PathVariable Integer id){
+    public String borrarGenero(@PathVariable Integer id) {
         generoRepository.deleteById(id);
-        
+
         return "redirect:/genero";
     }
-    
+
     @GetMapping("/editar/{id}")
-    public String editarGenero(Model model, @PathVariable Integer id){
+    public String editarGenero(Model model, @PathVariable Integer id) {
         Genero editGenero = generoRepository.getById(id);
         model.addAttribute("genero", editGenero);
-        
+
         return "/generos/editar";
     }
-    
+
     @GetMapping("/listarAdmin")
-    private String listarTodo(Model m) {    
+    private String listarTodo(Model m) {
         m.addAttribute("generos", generoRepository.findAll());
         m.addAttribute("generoForm", new Genero());
         return "/administrador/generos";
     }
-    
-    
+
 }
