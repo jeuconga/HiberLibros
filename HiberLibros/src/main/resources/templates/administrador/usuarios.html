@@ -30,15 +30,15 @@
                         <td th:text="${usu.telef}"></td>
                         <td th:text="${usu.valoracionUsuario}"></td>
                         <td><a th:onclick="|eliminarUsuario(${usu.id})|" class="btn btn-dark btn-sm"><i class="far fa-trash-alt" ><span style="margin-left:5px">Baja</span></i></a></td>
-                        
+
                     </tr>
                 </tbody>
             </table>
-          
+
         </div>
-        
+
         <div id="altaUsuario" style="display:none">
-             <form  action="/usuarios/altaAdmin" method="post">
+            <form  action="/usuarios/altaAdmin" method="post">
                 <label for="nombre">Nombre: </label>
                 <input type="text" name="nombre" required=""/>
                 <label for="apellido">Apellido: </label>
@@ -56,10 +56,10 @@
                 <label for="rep_password">Repetir password: </label>
                 <input class="form-control" type="password" name="rep_password" required=""/>
                 <input type="submit" value="Guardar Administrador"/>
-        </form>
-        <div th:if='${registro!=null}'>
-            <p th:text="${registro}" th:class="${registro.contains('Error')?'rojo':'verde'}"></p>
-        </div>
+            </form>
+            <div th:if='${registro!=null}'>
+                <p th:text="${registro}" th:class="${registro.contains('Error')?'rojo':'verde'}"></p>
+            </div>
         </div>
     </body>
 </html>

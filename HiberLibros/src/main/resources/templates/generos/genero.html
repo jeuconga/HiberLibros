@@ -5,7 +5,7 @@
         <title>HiberLibros</title>
         <meta charset="UTF-8">
     </head>
-    
+
     <body>
         <div class="container">
             <form action="/genero/guardar" th:object="${generoForm}" method="post">
@@ -20,10 +20,10 @@
             <h1>Listado de Géneros</h1>
             <table class="table table-light">
                 <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                </tr>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                    </tr>
                 </thead>
                 <tr th:each='genero: ${generos}'>
                     <td th:text='${genero.id}' type="hidden"></td>

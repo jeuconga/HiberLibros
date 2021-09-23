@@ -10,12 +10,12 @@
                         <li class="nav-item"><a  href="#tusRelatos" class="btn btn-secondary">Tus Relatos</a></li>
                         <li class="nav-item"><a  href="#tusPeticiones" class="btn btn-secondary">Tus Peticiones</a></li>
                         <li class="nav-item"><a  href="#tusIntercambios" class="btn btn-secondary">Tus Intercambios</a></li>             
-                       
+
 
                     </ul>
                 </div> 
             </div>
-            
+
         </nav>
         <div class="container">
             <div class="row">
@@ -45,7 +45,7 @@
                                 <td th:text="${l.libro.valoracionLibro}"></td>
                                 <td th:text="${l.estadoConservacion}"></td>
                                 <td th:text="${l.quieroTengo}"></td>
-                                    <td><a th:href="@{/hiberlibros/borrarUL(id=${l.id})}" class="btn btn-sm btn-secondary">Borrar</a></td>
+                                <td><a th:href="@{/hiberlibros/borrarUL(id=${l.id})}" class="btn btn-sm btn-secondary">Borrar</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -72,7 +72,7 @@
                                 <i class="fas fa-star" style="color:orange"></i>     
                             </td>  
                             <td th:text="${rel.numeroValoraciones}" style="text-align: center"></td> 
-                             <td><a th:href="@{/relato/eliminarRelato(id=${rel.id})}" class="btn btn-sm btn-secondary">Borrar</a></td>
+                            <td><a th:href="@{/relato/eliminarRelato(id=${rel.id})}" class="btn btn-sm btn-secondary">Borrar</a></td>
 
                         </tr>
                     </table>
