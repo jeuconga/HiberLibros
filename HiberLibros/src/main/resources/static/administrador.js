@@ -46,7 +46,7 @@ function mostrarLibros(pId) {
         },
         success: function (pHtml) {
             bootbox.dialog({
-                
+
                 size: "large",
                 message: pHtml
             })
@@ -65,7 +65,7 @@ function editarAutor(pId) {
         },
         success: function (pHtml) {
             bootbox.dialog({
-                
+
                 size: "large",
                 message: pHtml
             })
@@ -77,13 +77,12 @@ function editarAutor(pId) {
 }
 
 function altaUsuario() {
-       
-            bootbox.dialog({
-                
-                size: "large",
-                message: $('#altaUsuario').html()
-            });
-        
+    bootbox.dialog({
+        Title: "Alta usuario",
+        size: "large",
+        message: $('#altaUsuario').html()
+    });
+
 
 }
 
@@ -134,7 +133,7 @@ function eliminarAutor(pID) {
         message: "¿Estás seguro?",
         callback: function (result) {
             if (result) {
-                window.location.href = "/eliminarAutor?id=" +pID;
+                window.location.href = "/eliminarAutor?id=" + pID;
             }
         }
     });
