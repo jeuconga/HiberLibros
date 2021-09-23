@@ -38,11 +38,8 @@ public class Autor {
     @OneToMany(mappedBy = "autor", cascade = CascadeType.REMOVE)//si  se borra autor, se borra relacion de autor_libro
     private List<AutorLibro> autorLibros;
 
-
-
 //    @Override
 //    public String toString() {
 //        return ""+nombre + " " + apellidos;
 //    }
 }
-

@@ -50,7 +50,7 @@ public class GeneroController {
     public GeneroDto editarGenero(Integer id) {
         Genero editGenero = generoRepository.getById(id);
         GeneroDto genDto = new GeneroDto(editGenero.getId(), editGenero.getNombre());
-        System.err.println("DEBUGGGGGGGGGGGGGGGG" + editGenero.getId());
+   
 //        model.addAttribute("genero", editGenero);
 
         return genDto;

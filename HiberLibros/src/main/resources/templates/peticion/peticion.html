@@ -7,10 +7,10 @@
     <body>
         <form th:object="${peticion}" method="post">
             <input type="hidden" th:field="*{id}" />
-           idUsuarioLibro <input type="text" th:field="*{idUsuarioLibro}" />
-           idUsuarioSolicitante <input type="text" th:field="*{idUsuarioSolicitante}" />
-           boolen aceptacion <input type="text" th:field="*{aceptacion}" />
-           boolean pendiente tratar <input type="text" th:field="*{pendienteTratar}" />
+            idUsuarioLibro <input type="text" th:field="*{idUsuarioLibro}" />
+            idUsuarioSolicitante <input type="text" th:field="*{idUsuarioSolicitante}" />
+            boolen aceptacion <input type="text" th:field="*{aceptacion}" />
+            boolean pendiente tratar <input type="text" th:field="*{pendienteTratar}" />
             <input type="submit" value="Alta" formaction="/peticion/alta">
             <input type="submit" value="Modificar" formaction="/peticion/modificacion">
         </form>
@@ -31,8 +31,8 @@
                 <td><span th:text="${petic.pendienteTratar}"></span></td>
                 <td><form  method="post">
                         <input type="hidden" name="id" th:value="${petic.id}"/> 
-                         <input type="hidden" name="idUsuarioSolicitante" th:value="${petic.idUsuarioSolicitante}"/> 
-                          <input type="hidden" name="idUsuarioLibro" th:value="${petic.idUsuarioLibro}"/> 
+                        <input type="hidden" name="idUsuarioSolicitante" th:value="${petic.idUsuarioSolicitante}"/> 
+                        <input type="hidden" name="idUsuarioLibro" th:value="${petic.idUsuarioLibro}"/> 
                         <input type="submit" value="Borrar" formaction="/peticion/baja"/>
                         <input type="submit" value="Consultar elemento" formaction="/peticion/peticion"/>
                         <input type="submit" value="Consultar Pendientes Tratar" formaction="/peticion/peticionesPendientes"/>
@@ -41,37 +41,37 @@
                 </td>
             </tr>
             <div th:if="${peticionesPendientes != null}">
-            peticiones pendientes
-            <tr th:each="petic:${peticionesPendientes}">
-                <td><span th:text="${petic.id}"></span></td>
-                <td><span th:text="${petic.idUsuarioLibro}"></span></td>
-                <td><span th:text="${petic.idUsuarioSolicitante}"></span></td>
-                <td><span th:text="${petic.aceptacion}"></span></td>
-                <td><span th:text="${petic.pendienteTratar}"></span></td>
+                peticiones pendientes
+                <tr th:each="petic:${peticionesPendientes}">
+                    <td><span th:text="${petic.id}"></span></td>
+                    <td><span th:text="${petic.idUsuarioLibro}"></span></td>
+                    <td><span th:text="${petic.idUsuarioSolicitante}"></span></td>
+                    <td><span th:text="${petic.aceptacion}"></span></td>
+                    <td><span th:text="${petic.pendienteTratar}"></span></td>
 
-            </tr>
+                </tr>
             </div>
             <div th:if="${peticionesAceptadas != null}">
-            peticiones Aceptadas 
-            <tr th:each="petic:${peticionesAceptadas}">
-                <td><span th:text="${petic.id}"></span></td>
-                <td><span th:text="${petic.idUsuarioLibro}"></span></td>
-                <td><span th:text="${petic.idUsuarioSolicitante}"></span></td>
-                <td><span th:text="${petic.aceptacion}"></span></td>
-                <td><span th:text="${petic.pendienteTratar}"></span></td>
+                peticiones Aceptadas 
+                <tr th:each="petic:${peticionesAceptadas}">
+                    <td><span th:text="${petic.id}"></span></td>
+                    <td><span th:text="${petic.idUsuarioLibro}"></span></td>
+                    <td><span th:text="${petic.idUsuarioSolicitante}"></span></td>
+                    <td><span th:text="${petic.aceptacion}"></span></td>
+                    <td><span th:text="${petic.pendienteTratar}"></span></td>
 
-            </tr>
+                </tr>
             </div>
             <div th:if="${peticionesRechazadas != null}">
-            peticiones rechazadas
-            <tr th:each="petic:${peticionesRechazadas}">
-                <td><span th:text="${petic.id}"></span></td>
-                <td><span th:text="${petic.idUsuarioLibro}"></span></td>
-                <td><span th:text="${petic.idUsuarioSolicitante}"></span></td>
-                <td><span th:text="${petic.aceptacion}"></span></td>
-                <td><span th:text="${petic.pendienteTratar}"></span></td>
+                peticiones rechazadas
+                <tr th:each="petic:${peticionesRechazadas}">
+                    <td><span th:text="${petic.id}"></span></td>
+                    <td><span th:text="${petic.idUsuarioLibro}"></span></td>
+                    <td><span th:text="${petic.idUsuarioSolicitante}"></span></td>
+                    <td><span th:text="${petic.aceptacion}"></span></td>
+                    <td><span th:text="${petic.pendienteTratar}"></span></td>
 
-            </tr>
+                </tr>
             </div>
         </table>
     </body>

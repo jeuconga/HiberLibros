@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Intercambio;
@@ -23,30 +18,31 @@ import org.springframework.stereotype.Service;
  * @author Usuario
  */
 @Service
-public class IntercambioService implements IIntercambioService{
+public class IntercambioService implements IIntercambioService {
+
     @Autowired
     private IntercambioRepository repoInter;
-    
+
     @Autowired
     private IUsuarioLibroService serviceUL;
 
     @Override
     public void guardarIntercambio(UsuarioLibro ul_prestatario, UsuarioLibro ul_prestador) {
-        Intercambio i=new Intercambio();
+        Intercambio i = new Intercambio();
         Date date = Date.from(Instant.now());
         i.setFechaPrestamo(date);
         i.setUsuarioPrestador(ul_prestador);
-        i.setUsuarioPrestatario(ul_prestatario);             
+        i.setUsuarioPrestatario(ul_prestatario);
         repoInter.save(i);
     }
 
     @Override
     public List<Intercambio> encontrarULPrestador(List<UsuarioLibro> ul) {
-        List<Intercambio> iList=new ArrayList<>();
-        ul.forEach(x->{
-            List<Intercambio> i=repoInter.findByUsuarioPrestador(x);
-            if(i.size()!=0){
-                i.forEach(y->iList.add(y));
+        List<Intercambio> iList = new ArrayList<>();
+        ul.forEach(x -> {
+            List<Intercambio> i = repoInter.findByUsuarioPrestador(x);
+            if (i.size() != 0) {
+                i.forEach(y -> iList.add(y));
             }
         });
         return iList;
@@ -54,11 +50,11 @@ public class IntercambioService implements IIntercambioService{
 
     @Override
     public List<Intercambio> encontrarULPrestatario(List<UsuarioLibro> ul) {
-        List<Intercambio> iList=new ArrayList<>();
-        ul.forEach(x->{
-            List<Intercambio> i=repoInter.findByUsuarioPrestatario(x);
-            if(i.size()!=0){
-                i.forEach(y->iList.add(y));
+        List<Intercambio> iList = new ArrayList<>();
+        ul.forEach(x -> {
+            List<Intercambio> i = repoInter.findByUsuarioPrestatario(x);
+            if (i.size() != 0) {
+                i.forEach(y -> iList.add(y));
             }
         });
         return iList;
@@ -66,21 +62,17 @@ public class IntercambioService implements IIntercambioService{
 
     @Override
     public void finIntercambio(Integer id) {
-        Intercambio i=repoInter.findById(id).get();
+        Intercambio i = repoInter.findById(id).get();
         Date date = Date.from(Instant.now());
         i.setFechaDevolucion(date);
         repoInter.save(i);
-        UsuarioLibro ulPrestador=i.getUsuarioPrestador();
+        UsuarioLibro ulPrestador = i.getUsuarioPrestador();
         ulPrestador.setEstadoPrestamo("Libre");
         serviceUL.editar(ulPrestador);
-        UsuarioLibro ulPrestatario=i.getUsuarioPrestatario();
+        UsuarioLibro ulPrestatario = i.getUsuarioPrestatario();
         ulPrestatario.setEstadoPrestamo("Libre");
         serviceUL.editar(ulPrestatario);
-       
+
     }
 
-
-    
-    
-    
 }

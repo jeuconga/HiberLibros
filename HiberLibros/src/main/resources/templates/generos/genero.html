@@ -1,33 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="principal/layoutUsuario::layout(~{::body})">
     <head>
         <title>HiberLibros</title>
         <meta charset="UTF-8">
-        <link href="../estilo.css" rel="stylesheet"/>
-
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
-        <style>
-            .contenedor{
-                margin: 15px;
-                margin-left: 40px;
-            }
-            .contenedorlista{
-                margin: 15px;
-            }
-            h1{
-                margin-left: 40px;
-            }
-            .btn-outline-primary{
-                margin-left: 50px;
-            }
-            .btn-outline-danger{
-                margin-left: 50px;
-            }
-        </style>
     </head>
+
     <body>
-        <div class="contenedor">
+        <div class="container">
             <form action="/genero/guardar" th:object="${generoForm}" method="post">
                 <label>Añadir género</label>
                 <input type="hidden" th:field="*{id}"/>
@@ -38,17 +18,19 @@
         <hr>
         <div class="contenedorlista row col-4">
             <h1>Listado de Géneros</h1>
-            <table class="table table-bordered">
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                </tr>
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
                 <tr th:each='genero: ${generos}'>
                     <td th:text='${genero.id}' type="hidden"></td>
                     <td th:text='${genero.nombre}'></td>
                     <td>
-                        <a class="btn btn-outline-danger" th:href="@{/genero/borrar/{id} (id=${genero.id})}">Eliminar</a>
-                        <a class="btn btn-outline-primary" th:href="@{/genero/editar/{id} (id=${genero.id})}">Editar</a>
+                        <a class="btn btn-danger" th:href="@{/genero/borrar/{id} (id=${genero.id})}">Eliminar</a>
+                        <a class="btn btn-primary" th:href="@{/genero/editar/{id} (id=${genero.id})}">Editar</a>
                     </td>
                 </tr>
             </table>

@@ -8,24 +8,34 @@
  * Created: 16 sept. 2021
  */
 
-insert into editoriales values (1,"alfaguara");
-insert into editoriales values (2,"anaya");
-insert into editoriales values (3,"barco de vapor");
-insert into editoriales values (4,"titum mas");
+insert into editoriales values (1,"Alfaguara");
+insert into editoriales values (2,"Anaya");
+insert into editoriales values (3,"Barco de vapor");
+insert into editoriales values (4,"Titum mas");
 
 
-insert into generos values (1, "terror");
+insert into generos values (1, "Terror");
 insert into generos values (2, "Sci-Fi");
 insert into generos values (3, "Manuales Tecnicos");
 insert into generos values (4, "Diccionarios/Enciclopedias");
 insert into generos values (5, "Cuentos infantiles");
+insert into generos values (6, "Comedia");
+insert into generos values (7, "Misterio");
+insert into generos values (8, "Ciencia Ficción");
+insert into generos values (9, "Informática");
+insert into generos values (10, "Romántica");
+insert into generos values (11, "Relatos");
+insert into generos values (12, "Novela Negra");
+insert into generos values (13, "Historia");
 
-
-insert into autores values (1,"Perez Reverte","un autor muy chulo","Arturo");
-insert into autores values (2,"Dahl","un autor de cuentos","Ronalh");
-insert into autores values (3,"hemanos Green","un autor de cuentos","");
-insert into autores values (4,"ojuelos gomez","autor de tratados derecho descanso","Francisco jose");
-insert into autores values (5,"Rosselló i Boeres","autor de tratados derecho descanso"," Bartomeu ");
+insert into autores values (1,"Perez Reverte","Autor muy chulo","Arturo");
+insert into autores values (2,"Dahl","Autor de cuentos","Ronalh");
+insert into autores values (3,"Hemanos Green","Autor de cuentos","");
+insert into autores values (4,"Ojuelos gomez","Autor de tratados derecho descanso","Francisco jose");
+insert into autores values (5,"Rosselló i Boeres","Autor de tratados derecho descanso","Bartomeu");
+insert into autores values (6,"García Virto","Autora muy buena en el género terror y misterio","Gemma");
+insert into autores values (7,"Gómez Jurado","Autor de la famosa trilogía Reina Roja","Juan");
+insert into autores values (8,"King","Gran autor de libros de misterio","Stephen");
 
 insert into libros (id, idioma, isbn,titulo, uri_portada,id_genero, id_editorial, valoracion_libro) values(1, "espanyol", "444441", "El capitan alatriste", "http://www.google.com",2,1, 4.6);
 insert into libros (id, idioma, isbn,titulo, uri_portada,id_genero, id_editorial, valoracion_libro) values(2, "espanyol", "111112", "la reina del sur", "http://www.google.com",2,3, 3.2);

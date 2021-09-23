@@ -6,7 +6,6 @@ import com.hiberlibros.HiberLibros.entities.Autor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-public interface AutorRepository extends JpaRepository<Autor, Integer >{
-    
-    
+public interface AutorRepository extends JpaRepository<Autor, Integer> {
+
 }

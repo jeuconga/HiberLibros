@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Editorial;
@@ -22,51 +17,52 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/editoriales")
 public class EditorialController {
+
     @Autowired
     private EditorialService serviceEditorial;
-    
-    @RequestMapping(value = "/editoriales", method = {RequestMethod.POST,RequestMethod.GET})
-    public String editoriales(Model m, Editorial editorial){
-        if (editorial.getId() == null){
+
+    @RequestMapping(value = "/editoriales", method = {RequestMethod.POST, RequestMethod.GET})
+    public String editoriales(Model m, Editorial editorial) {
+        if (editorial.getId() == null) {
             editorial = new Editorial();
         } else {
-            editorial =serviceEditorial.consultaPorIdEditorial(editorial.getId());
+            editorial = serviceEditorial.consultaPorIdEditorial(editorial.getId());
         }
         m.addAttribute("editorial", editorial);
-        m.addAttribute("editoriales",serviceEditorial.consultaTodas());
+        m.addAttribute("editoriales", serviceEditorial.consultaTodas());
         return "/editoriales/editoriales";
     }
-    
+
     @PostMapping("alta")
-    public String editorialesAlta(Model m, Editorial ed){
+    public String editorialesAlta(Model m, Editorial ed) {
         List<Editorial> editoriales = serviceEditorial.consultaPorNombreEditorial(ed);
-        String errMensaje=null;
-        if (editoriales.size()>0){
-          errMensaje="editorial existente";
-        }else {
-          serviceEditorial.altaModificacionEditorial(ed);
-          m.addAttribute("editorial", serviceEditorial.consultaPorIdEditorial(ed.getId()));
+        String errMensaje = null;
+        if (editoriales.size() > 0) {
+            errMensaje = "editorial existente";
+        } else {
+            serviceEditorial.altaModificacionEditorial(ed);
+            m.addAttribute("editorial", serviceEditorial.consultaPorIdEditorial(ed.getId()));
         }
         m.addAttribute("errMensaje", errMensaje);
         return "redirect:/editoriales/editoriales";
     }
+
     @PostMapping("baja")
-    public String editorialesBaja(Model m, int id){
+    public String editorialesBaja(Model m, int id) {
         serviceEditorial.bajaEditorial(id);
         return "redirect:/editoriales/editoriales";
     }
-    
+
     @PostMapping("modificacion")
-    public String editorialesModificacion(Model m, Editorial ed){
+    public String editorialesModificacion(Model m, Editorial ed) {
         serviceEditorial.altaModificacionEditorial(ed);
         return "redirect:/editoriales/editoriales";
     }
-    
+
     @PostMapping("consulta")
-    public String editorialesConsulta(Model m, String id){
+    public String editorialesConsulta(Model m, String id) {
         m.addAttribute("editorial", serviceEditorial.consultaPorIdEditorial(Integer.parseInt(id)));
-        
+
         return "forward:/editoriales/editoriales";
     }
-            
 }
