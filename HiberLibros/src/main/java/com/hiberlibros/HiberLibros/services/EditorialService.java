@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Editorial;
@@ -18,32 +13,33 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class EditorialService {
+
     @Autowired
     private EditorialRepository repoEditorial;
-    
-    public List<Editorial> consultaTodas(){
+
+    public List<Editorial> consultaTodas() {
         return repoEditorial.findAll();
     }
-    
-    public void altaModificacionEditorial(Editorial editorial){
+
+    public void altaModificacionEditorial(Editorial editorial) {
         repoEditorial.save(editorial);
     }
-    
-    public void bajaEditorial(int idEditorial){
+
+    public void bajaEditorial(int idEditorial) {
         repoEditorial.deleteById(idEditorial);
     }
-    
-    public Editorial consultaPorIdEditorial(int idEditorial){
+
+    public Editorial consultaPorIdEditorial(int idEditorial) {
         Optional<Editorial> editorial = repoEditorial.findById(idEditorial);
-        if (editorial.isPresent()){
+        if (editorial.isPresent()) {
             return editorial.get();
-        }
-        else {
+        } else {
             return null;
         }
-    }  
-    public List<Editorial> consultaPorNombreEditorial(Editorial editorial) {
-        return  repoEditorial.findByNombreEditorialIgnoreCase(editorial.getNombreEditorial());
     }
-    
+
+    public List<Editorial> consultaPorNombreEditorial(Editorial editorial) {
+        return repoEditorial.findByNombreEditorialIgnoreCase(editorial.getNombreEditorial());
+    }
+
 }

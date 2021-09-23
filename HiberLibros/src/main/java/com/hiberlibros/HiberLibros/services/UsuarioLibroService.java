@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Libro;
@@ -22,6 +17,7 @@ import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
  */
 @Service
 public class UsuarioLibroService implements IUsuarioLibroService {
+
     @Autowired
     private UsuarioLibroRepository ulRepo;
     @Autowired
@@ -34,17 +30,17 @@ public class UsuarioLibroService implements IUsuarioLibroService {
 
     @Override
     public List<UsuarioLibro> buscarContiene(String buscador, Integer id) {
-        List<UsuarioLibro> ul=new ArrayList<>();
-        List<Libro> l=libService.buscarLibro(buscador); //busca libros que contentan ese parámetro       
-        l.forEach(x->{
-            List<UsuarioLibro> ulAux=ulRepo.findByLibroAndQuieroTengoAndEstadoPrestamo(x,"Tengo","Libre");//Encuentra los libros que coiniciden dentro de usuarioLibros
-            ulAux.forEach(y->{
-                if(y.getUsuario().getId()!=id){
-                ul.add(y);
+        List<UsuarioLibro> ul = new ArrayList<>();
+        List<Libro> l = libService.buscarLibro(buscador); //busca libros que contentan ese parámetro       
+        l.forEach(x -> {
+            List<UsuarioLibro> ulAux = ulRepo.findByLibroAndQuieroTengoAndEstadoPrestamo(x, "Tengo", "Libre");//Encuentra los libros que coiniciden dentro de usuarioLibros
+            ulAux.forEach(y -> {
+                if (y.getUsuario().getId() != id) {
+                    ul.add(y);
                 }
             });
         });
-        
+
         return ul;
     }
 
@@ -55,7 +51,7 @@ public class UsuarioLibroService implements IUsuarioLibroService {
 
     @Override
     public List<UsuarioLibro> todos() {
-       return ulRepo.findAll();
+        return ulRepo.findAll();
     }
 
     @Override
@@ -63,11 +59,11 @@ public class UsuarioLibroService implements IUsuarioLibroService {
         ul.setLibro(l);
         ul.setUsuario(u);
         ulRepo.save(ul);
-        
+
     }
 
     @Override
-    public void borrar(Integer id) {        
+    public void borrar(Integer id) {
         ulRepo.deleteById(id);
     }
 
@@ -93,14 +89,12 @@ public class UsuarioLibroService implements IUsuarioLibroService {
 
     @Override
     public void usuarioBorrado(Usuario u) {
-        List<UsuarioLibro> ul=ulRepo.findByUsuarioAndQuieroTengoNotOrderByQuieroTengoAsc(u, "no");
-        ul.forEach(x->{
+        List<UsuarioLibro> ul = ulRepo.findByUsuarioAndQuieroTengoNotOrderByQuieroTengoAsc(u, "no");
+        ul.forEach(x -> {
             x.setQuieroTengo("no");
             ulRepo.save(x);
         });
-        
+
     }
-    
-    
-    
+
 }

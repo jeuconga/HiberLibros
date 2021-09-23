@@ -23,7 +23,7 @@ public class UsuarioService implements IUsuarioService {
 
     @Autowired
     private ISeguridadService serviceUsuarioSeguridad;
-    
+
     @Autowired
     private IUsuarioLibroService serviceUsuLi;
 

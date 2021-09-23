@@ -77,7 +77,7 @@ public class RelatoController {
             relato.setFichero(subir);
             relato.setValoracionUsuarios(new Double(0));
             relato.setNumeroValoraciones(0);
-            repoRelato.save(relato);
+            repoRelato.save(relato); 
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,14 +86,14 @@ public class RelatoController {
         return "redirect:/relato";
     }
 
-    @GetMapping("/eliminarRelato") 
+    @GetMapping("/eliminarRelato")
     public String eliminarRelato(Model m, Integer id) {
         Optional<Relato> rel = repoRelato.findById(id);
         if (rel.isPresent()) {
             repoRelato.deleteById(id);
         }
         String rutarchivo = rel.get().getFichero();
-        try {  
+        try {
             Files.delete(Path.of(rutarchivo));
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -151,14 +151,12 @@ public class RelatoController {
 
         return "redirect:/relato";
     }
-    
-    
-    
+
     @GetMapping("/listarAdmin")
-        private String listarTodo(Model m){
-            m.addAttribute("relatos",repoRelato.findAll() );
-            return "/administrador/relatos";
-        }
+    private String listarTodo(Model m) {
+        m.addAttribute("relatos", repoRelato.findAll());
+        return "/administrador/relatos";
+    }
 
     @GetMapping("/buscarRelato")
     public String buscarRelato(Model m, Integer id, String busqueda) {
@@ -189,8 +187,8 @@ public class RelatoController {
         model.addAttribute("usuario", usuService.usuarioId(id));
         return "/principal/buscarRelatos";
     }
-    
-     @GetMapping("/eliminarAdmin")
+
+    @GetMapping("/eliminarAdmin")
     public String eliminarRelatoAdmin(Model m, Integer id
     ) {
         Optional<Relato> rel = repoRelato.findById(id);
@@ -227,7 +225,5 @@ public class RelatoController {
             return null;
         }
     }
-
- 
 
 }

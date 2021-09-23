@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Peticion;
@@ -32,8 +27,8 @@ public class PeticionService {
     public List<Peticion> consultaTodasPeticiones() {
         return repoPeticion.findAll();
     }
-    
-    public Peticion consultarPeticionId(Integer id){
+
+    public Peticion consultarPeticionId(Integer id) {
         return repoPeticion.findById(id).get();
     }
 
@@ -54,8 +49,9 @@ public class PeticionService {
     public void eliminaPeticion(Peticion p) {
         repoPeticion.deleteById(p.getId());
     }
+
     public void eliminarId(Integer id) {
-        Peticion p=repoPeticion.findById(id).get();
+        Peticion p = repoPeticion.findById(id).get();
         p.setPendienteTratar(Boolean.FALSE);
         repoPeticion.save(p);
     }
@@ -67,7 +63,7 @@ public class PeticionService {
     }
 
     public void rechazarPeticion(Integer id) {
-        Peticion p=repoPeticion.findById(id).get();
+        Peticion p = repoPeticion.findById(id).get();
         p.setAceptacion(Boolean.FALSE);
         p.setPendienteTratar(Boolean.FALSE);
         repoPeticion.save(p);
@@ -82,9 +78,9 @@ public class PeticionService {
     }
 
     public List<Peticion> consultarPeticionesRechazadas(Usuario u) {
-        return repoPeticion.findByAceptacion(Boolean.FALSE).stream().filter(x -> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());                
+        return repoPeticion.findByAceptacion(Boolean.FALSE).stream().filter(x -> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());
     }
-        
+
     public List<Peticion> consutarPeticionesUsuarioPendientes(Usuario u) {
         return repoPeticion.findByPendienteTratarAndIdUsuarioSolicitante(Boolean.TRUE, u);
     }

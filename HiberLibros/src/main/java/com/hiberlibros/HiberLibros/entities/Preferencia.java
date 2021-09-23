@@ -1,4 +1,3 @@
-
 package com.hiberlibros.HiberLibros.entities;
 
 import javax.persistence.Entity;

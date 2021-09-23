@@ -1,4 +1,3 @@
-
 package com.hiberlibros.HiberLibros.interfaces;
 
 import com.hiberlibros.HiberLibros.entities.Preferencia;
@@ -14,14 +13,14 @@ public interface IPreferenciaService {
 
     //Todas las preferencias
     List<Preferencia> findAll();
-    
+
     //Preferencias por usuario
     public List<Preferencia> findByUsuario(Usuario usuario);
-    
+
     //Añadir preferencia
-    public void addPreferencia (Preferencia preferencia);
-    
-     //Borrar preferencia
+    public void addPreferencia(Preferencia preferencia);
+
+    //Borrar preferencia
     public void borrarPreferencia(Integer id);
-    
+
 }
