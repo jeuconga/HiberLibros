@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -37,14 +38,18 @@ public class Usuario {
     private Double longitud;
     private Double latitud;
     private String uriFoto;
+    private Boolean desactivado;
     
-    /*@OneToMany(mappedBy = "usuarioLibro",fetch=FetchType.EAGER)
+   /* @OneToMany(mappedBy = "usuarioLibro",fetch=FetchType.EAGER)
+    @JoinColumn(name="id_usuario_libro")
     private List<UsuarioLibro> usuarioLibro;
     
     @OneToMany(mappedBy = "usuario",fetch=FetchType.EAGER)
+    @JoinColumn(name="id_relato")
     private List<Relato> relato;
     
     @OneToMany(mappedBy = "usuarioPreferencia",fetch=FetchType.EAGER)
+    @JoinColumn(name="id_preferencia")
     private List<Preferencia> preferencia;*/
     
     

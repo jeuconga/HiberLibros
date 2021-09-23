@@ -108,7 +108,7 @@ function eliminarUsuario(pID) {
         message: "¿Estás seguro?",
         callback: function (result) {
             if (result) {
-                window.location.href = "/usuarios/borrarUsuario?id=" + pID;
+                window.location.href = "/usuarios/borrar?id=" + pID;
             }
         }
     });
