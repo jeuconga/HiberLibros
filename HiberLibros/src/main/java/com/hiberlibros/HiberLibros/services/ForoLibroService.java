@@ -32,4 +32,9 @@ public class ForoLibroService implements IForoLibroService {
         repoForoLibro.save(l);
     }
 
+    @Override
+    public void bajaForoLibro(Integer id) {
+            repoForoLibro.deleteById(id);
+    }
+    
 }
