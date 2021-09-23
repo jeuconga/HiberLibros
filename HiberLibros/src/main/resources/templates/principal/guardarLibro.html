@@ -5,7 +5,7 @@
         <div class="container-fluid"> 
             <div th:if="${!#strings.equals(noLibros,'Ningun libro encontrado')}">
                 <form action="/hiberlibros/guardarLibro">
-                    
+
                     <input type="text" name="buscador" placeholder="Buscar por título o ISBN"/>
                     <input type="submit" value="buscar" class="btn btn-primary"/>
                 </form>
@@ -13,7 +13,7 @@
 
             <div th:if="${#strings.equals(noLibros,'encontrado')}">
                 <form action='/hiberlibros/guardarLibro' method="post">
-                    
+
                     <label for='estadoConservacion'>Estado:</label>
                     <select name='estadoConservacion'>
                         <option value='Mal'>Mal</option>
@@ -88,7 +88,7 @@
                     </div>
                     <hr/>
                     <div class="row">
-                        
+
                         <div class="col-2">
                             <label for="isbn">ISBN</label>
                             <input class="form-control" th:field="*{isbn}" aria-describedby="isbnHelp" placeholder="ISBN" required=""/>
@@ -158,7 +158,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <textarea form="formulario" th:field="*{biografia}" class="form-control" placeholder="Biografia" style="width: 100%; height: 150px;"></textarea>
+                            <input type='text' th:field="*{biografia}" class="form-control" placeholder="Biografia" style="width: 100%; height: 150px;"/>
                         </div>
                     </div>
                 </div>

@@ -1,23 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.controllers;
 
-import com.hiberlibros.HiberLibros.entities.UsuarioSeguridad;
-import com.hiberlibros.HiberLibros.entities.Rol;
 import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
 import com.hiberlibros.HiberLibros.repositories.UsuarioSeguridadRepository;
 import com.hiberlibros.HiberLibros.repositories.RolRepository;
 import com.hiberlibros.HiberLibros.services.UsuarioService;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;

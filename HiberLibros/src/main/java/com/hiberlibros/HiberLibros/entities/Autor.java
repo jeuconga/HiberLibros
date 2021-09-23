@@ -31,6 +31,10 @@ public class Autor {
     private String apellidos;
     @Column
     private String biografia;
+
+    @OneToMany(mappedBy = "autor")
+    private List<Libro> libros;
+
     @OneToMany(mappedBy = "autor", cascade = CascadeType.REMOVE)//si  se borra autor, se borra relacion de autor_libro
     private List<AutorLibro> autorLibros;
 
@@ -39,4 +43,3 @@ public class Autor {
 //        return ""+nombre + " " + apellidos;
 //    }
 }
-

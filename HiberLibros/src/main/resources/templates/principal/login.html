@@ -1,6 +1,4 @@
-
 <!DOCTYPE html>
-
 <html xmlns:th="https://www.thymeleaf.org" lang='es'>
     <head>
         <title>HiberLibros</title>
@@ -13,7 +11,10 @@
     </head>
 
     <body class="login">
-      
+        <header class="bg-primary">
+            <img src="../logoHiberlibros.jpg" alt="alt" width="450" height="100"/>
+        </header>  
+
         <p th:if="${error!=null}" ><span th:text="${error}" class="text-secondary"></span></p>
         <div class="register-photo">
             <div class="form-container">

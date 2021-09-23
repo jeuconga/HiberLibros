@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.repositories.UsuarioSeguridadRepository;
@@ -31,19 +26,17 @@ public class ValidacionService implements UserDetailsService {
     @Autowired
     private UsuarioRepository repoUsu;
 
-
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Usuario> usuario = repoUsu.findByMail(username);
         if (usuario.isPresent()) {
 
             Optional<UsuarioSeguridad> usuarioSeguridad = repoUsuSeg.findByIdUsuario(usuario.get().getId());
-            
+
             if (usuario.isPresent()) {
 
                 UsuarioSeguridadDto obj = new UsuarioSeguridadDto();
-                obj.setUsername(usuarioSeguridad.get().getMail()); 
+                obj.setUsername(usuarioSeguridad.get().getMail());
                 obj.setPassword(usuarioSeguridad.get().getPassword());
                 List<SimpleGrantedAuthority> roles = usuarioSeguridad.get().getRoles()
                         .stream()
@@ -54,9 +47,8 @@ public class ValidacionService implements UserDetailsService {
             } else {
                 throw new UsernameNotFoundException("Usuario/Password incorrecto");
             }
-            
-        }
-        else{
+
+        } else {
             throw new UsernameNotFoundException("Usuario/Password incorrecto");
         }
     }

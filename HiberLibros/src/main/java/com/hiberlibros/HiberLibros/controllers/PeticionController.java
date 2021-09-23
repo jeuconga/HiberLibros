@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Peticion;
 import com.hiberlibros.HiberLibros.entities.Usuario;
+import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
 import com.hiberlibros.HiberLibros.services.PeticionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +23,8 @@ public class PeticionController {
     private PeticionService servicePeticion;
     @Autowired
     private IUsuarioService uService;
+    @Autowired
+    private ISeguridadService serviceSeguridad;
     
     @GetMapping(value = "/peticion")
     public String peticion(Model m, Peticion p){
@@ -38,9 +36,10 @@ public class PeticionController {
     }
     
     @GetMapping(value = "/alta") //Recibe los integer y crea una nueva petición, vuelve al panel de usuario
-    public String peticionAlta(Model m, Integer id_ul, Integer id_solicitante){
+    public String peticionAlta(Model m, Integer id_ul){
+        Usuario u = uService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         Peticion p=new Peticion();
-        servicePeticion.insertaPeticion(p, id_ul, id_solicitante); 
+        servicePeticion.insertaPeticion(p, id_ul, u); 
         return "redirect:/hiberlibros/panelUsuario";
     }
     

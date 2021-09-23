@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Relato;
@@ -14,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hiberlibros.HiberLibros.interfaces.IRelatoService;
+import java.util.Comparator;
 
 @Service
 public class RelatoService implements IRelatoService {
@@ -38,8 +34,7 @@ public class RelatoService implements IRelatoService {
     @Override
     public List<Relato> buscarPorValoracionMayorAMenor() {
         List<Relato> rel = relatoRepository.findAll();
-        List<Relato> relato = rel.stream().sorted((x, y)
-                -> (int) x.getValoracionUsuarios().doubleValue() - (int) y.getValoracionUsuarios().doubleValue()).collect(Collectors.toList());
+        List<Relato> relato = rel.stream().sorted(Comparator.comparingDouble(Relato::getValoracionUsuarios)).collect(Collectors.toList());
 
         return relato;
     }
@@ -47,8 +42,7 @@ public class RelatoService implements IRelatoService {
     @Override
     public List<Relato> buscarPorValoracionMenorAMayor() {
         List<Relato> rel = relatoRepository.findAll();
-        List<Relato> relato = rel.stream().sorted((x, y)
-                -> (int) y.getValoracionUsuarios().doubleValue() - (int) x.getValoracionUsuarios().doubleValue()).collect(Collectors.toList());
+        List<Relato> relato = rel.stream().sorted(Comparator.comparingDouble(Relato::getValoracionUsuarios).reversed()).collect(Collectors.toList());
 
         return relato;
     }

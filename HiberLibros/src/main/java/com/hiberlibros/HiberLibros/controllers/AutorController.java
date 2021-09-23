@@ -1,9 +1,9 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,62 +16,105 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hiberlibros.HiberLibros.dtos.LibroDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.interfaces.IAutorService;
+
+import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 import com.hiberlibros.HiberLibros.repositories.AutorLibroRepository;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
-import com.hiberlibros.HiberLibros.services.AutorService;
-
-import lombok.Setter;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping
 public class AutorController {
 
-	@Autowired(required = false)
-	private IAutorService autorService;
+    @Autowired
+    private AutorRepository autorRepo;
+    @Autowired
+    private AutorLibroRepository repo;
+    @Autowired
+    private AutorLibroRepository alrepo;
+    @Autowired
+    private ILibroService ilibroservice;
 
-	@GetMapping("/autorLista")
-	public String lista(Model m){
-		m.addAttribute("autores", autorService.consultarAutores());
-		return "autores/lista";
-	}
+    @Autowired
+    private ModelMapper obj;
 
-	@GetMapping("/autorForm")
-	public String read(Model m){
-		m.addAttribute("autor", new Autor());
-		return "autores/autorForm";
-	}
+    @Autowired(required = false)
+    private IAutorService autorService;
 
-	@GetMapping("/autorForm/{id}")
-	public String find(Model m,@PathVariable Integer id){
-		m.addAttribute("autor", autorService.encontrarAutor(id));
-		return "autores/autorForm";
-	}
-	@PostMapping("/saveAutor")
-	public String insertarAutor(Autor autor){
-		autorService.guardarAutor(autor);
-		return "redirect:autorLista";
-	}
+    @GetMapping("/autorLista")
+    public String lista(Model m) {
+        m.addAttribute("autores", autorService.consultarAutores());
+        return "autores/lista";
+    }
 
-	@GetMapping("/deleteAutor/{id}")
-	public String delete(@PathVariable Integer id){
-		autorService.borrarAutor(id);
-		return "redirect:/autorLista";
-	}
+    @GetMapping("/autorForm")
+    public String read(Model m) {
+        m.addAttribute("autor", new Autor());
+        return "autores/autorForm";
+    }
 
-	@GetMapping("/getLibrosAutor")
-	@ResponseBody
-	public List<LibroDto> consultarLibros(Integer id){
-		return autorService.getLibros(id);
-	}
+    @GetMapping("/autorForm/{id}")
+    public String find(Model m, @PathVariable Integer id) {
+        m.addAttribute("autor", autorService.encontrarAutor(id));
+        return "autores/autorForm";
+    }
 
-	@GetMapping("/buscarAutor")
-	public String buscarAutores(Model m,String buscador){
-		m.addAttribute("buscador", buscador);
-		if (buscador == null) {
-			m.addAttribute("autores", autorService.consultarAutores());
-		} else {
-			m.addAttribute("autores", autorService.buscarAutores(buscador));
-		}
-		return "autores/lista";
-	}
+    @PostMapping("/saveAutor")
+    public String insertarAutor(Autor autor) {
+        autorService.guardarAutor(autor);
+        return "redirect:hiberlibros/paneladmin";
+    }
+
+    @GetMapping("/deleteAutor/{id}")
+    public String delete(@PathVariable Integer id) {
+        autorService.borrarAutor(id);
+        return "redirect:/autorLista";
+    }
+
+    @GetMapping("/getLibrosAutor")
+    @ResponseBody
+    public List<LibroDto> getLibros(Integer id) {
+        return (List<LibroDto>) repo.findAll()
+                .stream()
+                .filter(z -> z.getAutor().getIdAutor() == id)
+                .map(x -> obj.map(x.getLibro(), LibroDto.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<LibroDto> consultarLibros(Integer id) {
+        return autorService.getLibros(id);
+
+    }
+
+    @GetMapping("/autores/listarAdmin")
+    public String listaAdmin(Model m) {
+        m.addAttribute("autores", autorRepo.findAll());
+        return "administrador/autores";
+    }
+
+    @GetMapping("/librosAutor")
+    public String LibrosDeAutor(Model m, Integer id) {
+        Autor a = autorRepo.findById(id).get();
+
+        m.addAttribute("libros", ilibroservice.encontrarPorAutor(a));
+        return "administrador/librosAutor";
+    }
+
+    @GetMapping("/editarAutor")
+    public String editarAutor(Model m, Integer id) {
+        m.addAttribute("autor", autorRepo.findById(id));
+        return "administrador/editAutor";
+    }
+
+    @PostMapping("/guardarAutor")
+    public String guardarAutor(Model m, Autor autor) {
+        autorRepo.save(autor);
+        return "administrador/vistaAdministrador";
+    }
+
+    @GetMapping("/eliminarAutor")
+    public String eliminarAutorAdmin(Integer id) {
+        autorRepo.deleteById(id);
+        return "administrador/vistaAdministrador";
+    }
 }

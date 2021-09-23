@@ -5,9 +5,7 @@
 .verde{
     color:green
 }
-header{
-    padding:2% !important ;
-}
+
 .container, .container-fluid{
     margin-top:2%;
     margin-bottom: 2%;
@@ -138,9 +136,9 @@ label {
 }
 
 .puntuacion{
-       color: orange;
-        display: none;
-    
+    color: orange;
+    display: none;
+
 }
 
 
@@ -188,3 +186,10 @@ input[type="radio"]:checked ~ label {
     text-align: center;
 }
 
+
+/*.cabecera{
+    background-image: url(../fondoGeneral.jpg) ;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}*/

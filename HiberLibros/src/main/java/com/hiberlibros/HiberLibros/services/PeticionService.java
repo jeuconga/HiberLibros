@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Peticion;
@@ -32,14 +27,14 @@ public class PeticionService {
     public List<Peticion> consultaTodasPeticiones() {
         return repoPeticion.findAll();
     }
-    
-    public Peticion consultarPeticionId(Integer id){
+
+    public Peticion consultarPeticionId(Integer id) {
         return repoPeticion.findById(id).get();
     }
 
-    public void insertaPeticion(Peticion p, Integer id_ul, Integer id_solicitante) { //guarda la petición y obtiene aquí los objetos UL y Usuario
+    public void insertaPeticion(Peticion p, Integer id_ul, Usuario u) { //guarda la petición y obtiene aquí los objetos UL y Usuario
         p.setIdUsuarioLibro(ulService.encontrarId(id_ul));
-        p.setIdUsuarioSolicitante(uService.usuarioId(id_solicitante));
+        p.setIdUsuarioSolicitante(u);
         p.setAceptacion(false);
         p.setPendienteTratar(true);
 
@@ -54,8 +49,9 @@ public class PeticionService {
     public void eliminaPeticion(Peticion p) {
         repoPeticion.deleteById(p.getId());
     }
+
     public void eliminarId(Integer id) {
-        Peticion p=repoPeticion.findById(id).get();
+        Peticion p = repoPeticion.findById(id).get();
         p.setPendienteTratar(Boolean.FALSE);
         repoPeticion.save(p);
     }
@@ -67,7 +63,7 @@ public class PeticionService {
     }
 
     public void rechazarPeticion(Integer id) {
-        Peticion p=repoPeticion.findById(id).get();
+        Peticion p = repoPeticion.findById(id).get();
         p.setAceptacion(Boolean.FALSE);
         p.setPendienteTratar(Boolean.FALSE);
         repoPeticion.save(p);
@@ -82,21 +78,23 @@ public class PeticionService {
     }
 
     public List<Peticion> consultarPeticionesRechazadas(Usuario u) {
-        return repoPeticion.findByAceptacion(Boolean.FALSE).stream().filter(x -> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());                
+        return repoPeticion.findByAceptacion(Boolean.FALSE).stream().filter(x -> x.getIdUsuarioSolicitante().equals(u.getId())).collect(Collectors.toList());
     }
-        
+
     public List<Peticion> consutarPeticionesUsuarioPendientes(Usuario u) {
         return repoPeticion.findByPendienteTratarAndIdUsuarioSolicitante(Boolean.TRUE, u);
     }
-//    public List<Peticion> consultarPeticonesRecibidas(Usuario u){ //Jesús
-//        List<Peticion> p=new ArrayList<>();
-//        List<UsuarioLibro> ul=ulService.buscarUsuario(u);//busca la lista de libros de un usuario
-//        ul.forEach(x->{
-//            List<Peticion> pAux=repoPeticion.findByIdUsuarioLibroAndPendienteTratar(x, Boolean.TRUE); //busca por UsuarioLibro y que este pendiente de tratar
-//            pAux.forEach(y->{
-//                p.add(y);//lo va almacenando hasta tener todos. 
-//            });
-//        });
-//        return p;
-//    }
+
+    public List<Peticion> consultarPeticonesRecibidas(Usuario u) { //Jesús
+        List<Peticion> p = new ArrayList<>();
+        List<UsuarioLibro> ul = ulService.buscarUsuario(u);//busca la lista de libros de un usuario
+        ul.forEach(x -> {
+            List<Peticion> pAux = repoPeticion.findByIdUsuarioLibroAndPendienteTratar(x, Boolean.TRUE); //busca por UsuarioLibro y que este pendiente de tratar
+            pAux.forEach(y -> {
+                p.add(y);//lo va almacenando hasta tener todos. 
+            });
+        });
+        return p;
+    }
+
 }

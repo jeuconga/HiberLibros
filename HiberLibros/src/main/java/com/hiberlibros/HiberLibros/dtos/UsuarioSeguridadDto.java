@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.dtos;
 
 import java.util.Collection;
@@ -23,10 +18,10 @@ public class UsuarioSeguridadDto implements UserDetails {
     private String username;
     private String password;
     private List<SimpleGrantedAuthority> roles;
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles; 
+        return roles;
     }
 
     @Override
@@ -58,5 +53,5 @@ public class UsuarioSeguridadDto implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    
+
 }
