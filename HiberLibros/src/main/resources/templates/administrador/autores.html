@@ -3,11 +3,13 @@
     <body>
         <div class="container">
             <table class="table table-striped mt-5">
+            <thead class="text-white bg-primary">
                 <tr>
                     <th>Nombre</th>
                     <th>Biografia</th>
                     <th>Libros</th>
                 </tr>
+            </thead>
                 <tr th:each="autor:${autores}">
                     <td class="list-group-item-heading" th:text="${autor.nombre} + ' ' + ${autor.apellidos}"></td>
                     <td><p class="list-group-item-text lead" th:text="${autor.biografia}"></p></td>

@@ -38,7 +38,10 @@ public class ForoLibroController {
     }
     
     
-    
-    
+    @GetMapping("/baja")
+    public String bajaForo (Integer id){
+        serviceForoLibro.bajaForoLibro(id);
+        return "/principal/altaForo";
+    }
     
 }
