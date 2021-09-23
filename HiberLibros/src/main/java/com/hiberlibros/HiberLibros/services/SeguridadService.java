@@ -84,4 +84,8 @@ public class SeguridadService implements ISeguridadService {
     public String getMailFromContext() {
         return ((UsuarioSeguridadDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
     }
+    
+    public Integer getIdUsuarioFromContext(){
+        return ((UsuarioSeguridadDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId();
+    }
 }

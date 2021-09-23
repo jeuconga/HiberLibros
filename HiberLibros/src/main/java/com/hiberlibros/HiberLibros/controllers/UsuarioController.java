@@ -57,7 +57,7 @@ public class UsuarioController {
 
     @GetMapping("/borrarUsuario")//borra usuario por ID en HIBERLIBRO
     public String borrarUsuario(Integer id) {
-        serviceUsuarioSeguridad.bajaUsuarioSeguridadPorMail(serviceUsuario.usuarioId(id).getMail());
+        serviceUsuario.borrarUsuario(id);
         return "redirect:/hiberlibros";
     }
 
