@@ -62,5 +62,4 @@ public class GeneroController {
         m.addAttribute("generoForm", new Genero());
         return "/administrador/generos";
     }
-
 }
