@@ -98,7 +98,7 @@ function btnReservar(value,row) {
     return "<a href='/peticion/alta?id_ul="+value+"' class='btn btn-secondary'>Pedir</a>";
 }
 function btnValoracion(value,row){
-    return "<form action='/addValoracionLibro' method='post'>"+
+    return "<form action='/libros/addValoracionLibro' method='post'>"+
                                 "<input type='hidden' name='id'  value='"+value+"' />"+  
                                 "<span class='clasificacion'>"+
                                     "<input class='puntuacion' id='"+value+"radio5' type='radio' name='valoracion' value='5'>"+

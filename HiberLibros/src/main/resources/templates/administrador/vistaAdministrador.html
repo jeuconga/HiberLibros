@@ -7,27 +7,37 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
         <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.0/flatly/bootstrap.min.css" rel="stylesheet" media="all">
+
         <link rel="stylesheet" href="../simple-calendar.css">
 
     </head>
 
-    <header class="container-fluid">
+
+    <header class="bg-primary container-fluid">
+
         <div class="row">
             <div class="col-9">
-                <h1 class="text-secondary">HiberLibros <i class="fas fa-book-open text-secondary"></i></h1>
+                <img src="../logoHiberlibros.jpg" alt="logo" width="450" height="100"/>
             </div>
             <div class="col-3 float-right">
-                <nav class="main-header navbar navbar-expand-lg navbar-light bg-light " >
+                <nav class="main-header navbar navbar-expand-lg navbar-light bg-primary " >
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="/hiberlibros" class="nav-link"><i class="bi bi-book fs-1"><span class="ml-1">Hiberlibros</span></a></i>
+                        <a href="/hiberlibros" class="btn btn-primary"><i class="bi bi-book fs-1"><span class="ml-1 ">Hiberlibros</span></a></i>
                     </li>
 
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="#" class="nav-link"><i class="bi bi-chat-left"><span class="ml-1">Contacto</span></a></i>
+                        <a href="#" class="btn btn-primary"><i class="bi bi-chat-left"><span class="ml-1">Contacto</span></a></i>
                     </li>
 
-                    </ul>
+                 <!--   </ul> -->
+                 
+                 <div class="col-2 text-right">
+                        <a href="/hiberlibros/logout" class="btn btn-primary">Salir</a>   
+                 </div>
+                 
                 </nav>
 
             </div>
@@ -37,64 +47,65 @@
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-auto bg-light sticky-top">
-                    <div class="d-flex flex-sm-column flex-row flex-nowrap bg-light align-items-center sticky-top">
-                        <a href="/hiberlibros/paneladmin" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
+                <div class="col-sm-auto  bg-primary sticky-top">
+                    <div class="d-flex flex-sm-column flex-row flex-nowrap bg-primary align-items-center sticky-top">
+                        <a href="/hiberlibros/paneladmin" class="btn btn-primary" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
                             <i class="bi-house fs-1"><span class="ml-1">Panel de Control</span></i>
                         </a>
                         <ul class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center">
                             <li class="nav-item">
-                                <a  id="boton" href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                                    <i class="bi bi-people fs-1"><span class="ml-1">Gestion de Usuarios </span></i>
+                                <a  id="boton" href="#" class="btn btn-primary nav-link py-3 px-2 " title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                                    <i class="bi bi-people fs-1 "><span class="ml-1">Gestion de Usuarios </span></i>
                                 </a>
                             </li>
                             <li>
-                                <a id="boton2" href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
+                                <a id="boton2" href="#" class="btn btn-primary py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
                                     <i class="bi bi-book fs-1"><span class="ml-1">Gestion de Libros</span></i>
                                 </a>
                             </li>
                             <li>
-                                <a  id="boton3" href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                                <a  id="boton3" href="#" class="btn btn-primary py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                                     <i class="bi bi-file-text"><span class="ml-1">Gestion de Relatos</span></i>
                                 </a>
                             </li>
 
                             <li>
-                                <a  id="boton4" href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                                <a  id="boton4" href="#" class="btn btn-primary  py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                                     <i class="bi bi-pen"><span class="ml-1">Gestion de Autores</span></i>
                                 </a>
                             </li>
 
                             <li>
-                                <a  id="boton5" href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                                <a  id="boton5" href="#" class="btn btn-primary py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                                     <i class="bi bi-pen"><span class="ml-1">Gestion de Generos</span></i>
                                 </a>
                             </li>
 
                     </div>
                 </div>
-                <div id="capa" class="col-sm p-3 min-vh-100">
+                <div id="capa" class="fondo col-sm p-3 min-vh-100">
                     <div id="inicio" class="row">
                         <div id="container" class="col card inline-block card text-white bg-light mb-3">
                         </div>
                         <div  class="col card inline card text-white bg-dark mb-3">
                             <h4 class="display-4 text-center mt-5" >Usuarios Actuales</h4>
                             <h2 class="display-4 text-center" th:text=${#numbers.formatInteger(numUsuarios,3,'POINT')}></h2> 
-                      
+
                             <h4 class="display-4 text-center" >Libros Actuales</h4>
                             <h2 class="display-4 text-center" th:text=${#numbers.formatInteger(numLibros,3,'POINT')}></h2>
-                    
+
                         </div>
                         <!--<img src="../fondoAdmin.png" alt="fondo" width="50%" height="50%"/>-->
                     </div>
-                        
+
                 </div>
             </div>
-        </div>
+        </div>   
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="../jquery.simple-calendar.js"></script>  
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.js"></script>         
+        <script src="https://cdn.jsdelivr.net/npm/jquery-deserialize@2.0.0-rc1/src/jquery.deserialize.min.js"></script> 
         <script src="../administrador.js"></script>
     </body>
 

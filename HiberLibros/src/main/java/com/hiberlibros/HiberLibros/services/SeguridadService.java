@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.dtos.UsuarioSeguridadDto;
@@ -26,6 +21,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SeguridadService implements ISeguridadService {
+
     @Autowired
     private UsuarioSeguridadRepository repoUsuSeg;
 
@@ -34,10 +30,10 @@ public class SeguridadService implements ISeguridadService {
 
     @Autowired
     private RolRepository repoRol;
-    
+
     @Autowired
     private PasswordEncoder passEncoder;
-    
+
     @Transactional
     public String altaUsuarioSeguridad(String mail, Integer idUsuario, String password, String nombre_rol) {
         Optional<UsuarioSeguridad> usuAplic = repoUsuSeg.findByIdUsuario(idUsuario);
@@ -45,7 +41,7 @@ public class SeguridadService implements ISeguridadService {
             List<Rol> roles = usuAplic.get().getRoles();
             List<Rol> rolesFiltrados = roles.stream().filter(x -> x.getNombre_rol().equals(nombre_rol)).collect(Collectors.toList());
             if (rolesFiltrados.size() > 0) {
-                  return "error: alta no realizada: usuario con este Rol activado previamente";
+                return "error: alta no realizada: usuario con este Rol activado previamente";
             }
         }
 
@@ -63,29 +59,33 @@ public class SeguridadService implements ISeguridadService {
         return "ok";
 
     }
-    
+
     @Transactional
-    public long bajaUsuarioSeguridad (Integer idUsuarioSeguridad){
+    public long bajaUsuarioSeguridad(Integer idUsuarioSeguridad) {
         repoUsuSeg.deleteById(idUsuarioSeguridad);
         Long elementosBorrados = new Long(0);
-       // Long elementosBorrados = repoRol.deleteByIdUsuarioSeguridad(idUsuarioSeguridad);
+        // Long elementosBorrados = repoRol.deleteByIdUsuarioSeguridad(idUsuarioSeguridad);
         return elementosBorrados;
     }
-    
-    public long bajaUsuarioSeguridadPorMail (String mailUsuarioSeguridad){
+
+    public long bajaUsuarioSeguridadPorMail(String mailUsuarioSeguridad) {
         Optional<UsuarioSeguridad> usuarioSeguridad = repoUsuSeg.findByMail(mailUsuarioSeguridad);
-        if (usuarioSeguridad.isPresent()){
-           Optional<Rol> r=repoRol.findByIdUsuario(usuarioSeguridad.get());
-           if(r.isPresent()){
-               repoRol.deleteById(r.get().getId());
-               
-           }
-           return bajaUsuarioSeguridad(usuarioSeguridad.get().getId());
+        if (usuarioSeguridad.isPresent()) {
+            Optional<Rol> r = repoRol.findByIdUsuario(usuarioSeguridad.get());
+            if (r.isPresent()) {
+                repoRol.deleteById(r.get().getId());
+
+            }
+            return bajaUsuarioSeguridad(usuarioSeguridad.get().getId());
         }
         return 0;
     }
-    
-    public String getMailFromContext(){
+
+    public String getMailFromContext() {
         return ((UsuarioSeguridadDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+    }
+    
+    public Integer getIdUsuarioFromContext(){
+        return ((UsuarioSeguridadDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId();
     }
 }

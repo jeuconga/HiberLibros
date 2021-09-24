@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Libro;
@@ -34,9 +29,7 @@ public class LibroController {
     @Autowired
     private ILibroService libroService;
 
-
     @GetMapping("/libros")
-
     public String mostrarFormulario(Model m) {
         m.addAttribute("libros", librepo.findAll());
         m.addAttribute("generos", genRepo.findAll());
@@ -54,6 +47,7 @@ public class LibroController {
         libro.setEditorial(editRepo.getById(id_genero));
         libro.setAutor(AutRepo.getById(id_autor));
         librepo.save(libro);
+
         return "redirect:/libros";
     }
 
@@ -72,8 +66,8 @@ public class LibroController {
         m.addAttribute("generos", genRepo.findAll());
         m.addAttribute("editoriales", editRepo.findAll());
         m.addAttribute("autores", AutRepo.findAll());
-        return "libros/modificar";
 
+        return "libros/modificar";
     }
 
     @GetMapping("/listarAdmin")
@@ -82,6 +76,7 @@ public class LibroController {
         m.addAttribute("generos", genRepo.findAll());
         m.addAttribute("editoriales", editRepo.findAll());
         m.addAttribute("autores", AutRepo.findAll());
+        
         return "/administrador/libros";
     }
 
@@ -91,12 +86,11 @@ public class LibroController {
         libro.setEditorial(editRepo.getById(id_genero));
         libro.setAutor(AutRepo.getById(id_autor));
         librepo.save(libro);
+        
         return "/administrador/vistaAdministrador";
-
     }
 
-    
-      @GetMapping("/eliminarAdmin")
+    @GetMapping("/eliminarAdmin")
     public String eliminarAdmin(Model m, Integer id) {
         Optional<Libro> l = librepo.findById(id);
         if (l.isPresent()) {
@@ -104,8 +98,6 @@ public class LibroController {
         }
         return "/administrador/vistaAdministrador";
     }
-
-
 
     @PostMapping("/addValoracionLibro")
     public String addValoracionLibro(Model m, Integer id, Integer valoracion) {
@@ -115,6 +107,4 @@ public class LibroController {
         }
         return "redirect:/hiberlibros/buscarLibro";
     }
-
 }
- 

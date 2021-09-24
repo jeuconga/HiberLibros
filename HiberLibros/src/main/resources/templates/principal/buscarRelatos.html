@@ -13,11 +13,11 @@
             <div class="container">
 
 
-                <form action="/relato/buscarRelato" method="get">
+                <!--<form action="/relato/buscarRelato" method="get">
                     <input type="hidden" name="id" th:value="${usuario.id}"/>
                     <input type="text" name="busqueda" placeholder="Buscar por título"/>
                     <input type="submit" value="Buscar" class="btn btn-primary"/>
-                </form>
+                </form>-->
                 <div class="testbox">
                     <h1 class="addrelato">Lista de relatos</h1>
 
@@ -54,17 +54,17 @@
                         <tr>
                             <th class="thbuscarrelatos">Tí­tulo</th>
                             <th class="thbuscarrelatos">Valoración usuarios</th>
-                            <th class="thbuscarrelatos">Género</th>
                             <th class="thbuscarrelatos">Número de valoraciones</th>
+                            <th class="thbuscarrelatos">Género</th>
                             <th class="thbuscarrelatos">Valoración (0-5)</th>
                         </tr>             
                         <tr th:each="rel:${relatos}">     
-                         
+
                             <td>
                                 <a th:href="@{/relato/download(descargar=${rel.fichero})}">
                                     <span th:text="${rel.titulo}"></span>
                                 </a>
-
+                            </td>
                             <td>
                                 <a th:href="@{/relato/download(descargar=${rel.fichero})}">
                                     <span th:text="${rel.titulo}"></span>

@@ -18,10 +18,10 @@ public class UsuarioSeguridadDto implements UserDetails {
     private String username;
     private String password;
     private List<SimpleGrantedAuthority> roles;
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles; 
+        return roles;
     }
 
     @Override
@@ -53,5 +53,5 @@ public class UsuarioSeguridadDto implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    
+
 }
