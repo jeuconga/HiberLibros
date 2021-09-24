@@ -11,10 +11,6 @@ import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 import java.util.Optional;
 import javax.transaction.Transactional;
 
-/**
- *
- * @author Usuario
- */
 @Service
 public class UsuarioService implements IUsuarioService {
 
