@@ -18,6 +18,72 @@
 
         </nav>
         <div class="container ">
+
+
+
+            <div class="card" > 
+                <tr th:each='u:${usuario}'> 
+                <div class="card-header">
+                    <h2>Mi Perfil</h2>
+                </div>
+
+                <img class="card-img-top mt-4" src="../perfil.png " alt="Card image cap" style="width: 200px;height: 200px">
+                <div class="card-body">
+
+                    <div class="row ">
+                        <div  class='col-6'>
+                            <h4 class="card-title">Nombre </h4>
+                            <p class="card-text" th:text="${u.nombre}"></p>
+                        </div>
+                        <div  class='col-6'>
+                            <h4 class="card-title">Apellido </h4>
+                            <p class="card-text" th:text="${u.apellido}"></p>
+                        </div>
+                    </div></br>
+
+                    <h4 class="card-title">Email </h4>
+                    <p class="card-text" th:text="${u.mail}"></p>
+
+
+                    <h4 class="card-title">Ciudad </h4>
+                    <p class="card-text" th:text="${u.ciudad}"></p>
+
+                    <h4 class="card-title">Valoración</h4>
+
+                    <span class="card-text" th:text="${u.valoracionUsuario}"> 
+                        <i class="fas fa-star" style="color:orange">        </i>   
+                    </span> 
+
+
+
+
+
+
+
+                    <!--                    <a href="#" class="btn btn-primary">Go somewhere</a>-->
+
+                </div>
+                </tr>
+
+            </div>
+            </br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <div class="row ">
                 <div id="tusLibros" class='col-12'>
                     <h2>Tus libros</h2>
@@ -52,6 +118,7 @@
                     <a href="/hiberlibros/guardarLibro" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;Añadir libro</a>
                 </div>
             </div>
+
             <div class="row">
                 <div id="tusRelatos" class='col-12'>
                     <h2>Tus relatos</h2>
