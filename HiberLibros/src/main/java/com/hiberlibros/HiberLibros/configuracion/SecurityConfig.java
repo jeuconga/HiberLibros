@@ -23,6 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+
 //              inicio nuevas seguridades
                .antMatchers("*.js").permitAll()
                .antMatchers("*.css").permitAll()
@@ -34,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                .antMatchers("/hiberlibros/editoriales/**").hasRole("Usuario")
                .antMatchers("/hiberlibros/principal/**").hasRole("Usuario")
                .antMatchers("/hiberlibros/paneladmin/**").hasRole("Administrador")
+
                .antMatchers("/admin/info").permitAll() 
                .antMatchers("/admin/url1").hasAnyRole("Administrador", "Usuario")
           .and()

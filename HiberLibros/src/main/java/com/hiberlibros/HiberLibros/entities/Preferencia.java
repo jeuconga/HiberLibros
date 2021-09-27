@@ -1,5 +1,6 @@
 package com.hiberlibros.HiberLibros.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,11 +27,11 @@ public class Preferencia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_genero")
     private Genero genero;
     
-    @ManyToOne 
+    @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario")
     private Usuario usuario; 
 }

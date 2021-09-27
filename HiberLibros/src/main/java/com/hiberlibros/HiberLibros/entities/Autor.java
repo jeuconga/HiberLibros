@@ -32,10 +32,10 @@ public class Autor {
     @Column
     private String biografia;
 
-    @OneToMany(mappedBy = "autor")
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)
     private List<Libro> libros;
 
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.REMOVE)//si  se borra autor, se borra relacion de autor_libro
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)//si  se borra autor, se borra relacion de autor_libro
     private List<AutorLibro> autorLibros;
 
 //    @Override

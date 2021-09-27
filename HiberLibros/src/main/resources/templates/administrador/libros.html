@@ -4,7 +4,7 @@
         <div class="container">
 
             <table class="table table-striped mt-5">
-                <thead>
+            <thead class="text-white bg-primary">
                     <tr>
                         <th>ISBN</th>
                         <th>Titulo</th>
@@ -27,9 +27,9 @@
                         <td th:text="${libro.genero.nombre}"></td>
                         <td th:text="${libro.valoracionLibro}"></td>
 
-                        <td>                   
+<!--                        <td>                   
                             <a type="button" class="btn btn-dark btn-sm" th:onclick="|eliminarLibro(${libro.id})|"><i class="far fa-trash-alt" ><span style="margin-left:5px">Borrar</span></i></a>
-                        </td>
+                        </td>-->
                         <td>
                             <a type="button" class="btn btn-dark btn-sm" th:onclick="|modificarLibros(${libro.id})|"><i class="far fa-edit"><span style="margin-left:5px">Modificar</span></i></a>
                         </td>

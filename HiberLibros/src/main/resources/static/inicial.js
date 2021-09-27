@@ -98,7 +98,7 @@ function btnReservar(value,row) {
     return "<a href='/peticion/alta?id_ul="+value+"' class='btn btn-secondary'>Pedir</a>";
 }
 function btnValoracion(value,row){
-    return "<form action='/addValoracionLibro' method='post'>"+
+    return "<form action='/libros/addValoracionLibro' method='post'>"+
                                 "<input type='hidden' name='id'  value='"+value+"' />"+  
                                 "<span class='clasificacion'>"+
                                     "<input class='puntuacion' id='"+value+"radio5' type='radio' name='valoracion' value='5'>"+
@@ -114,7 +114,7 @@ function btnValoracion(value,row){
                                 "</span>"+
                                 '<div class="row"><div class="col-3"> <button type="submit" class="btn btn-sm btn-warning">Valorar</button></div>'+
                             "</form>"+
-                "<div class='col-6'> <a href='/foros/libro?id="+value+"' class='btn btn-sm btn-secondary'>Ir a foro</a></div></div>";
+                "<div class='col-6'> <a href='/foros/libro' class='btn btn-sm btn-secondary'>Ir a foro</a></div></div>";
     
 }
 
