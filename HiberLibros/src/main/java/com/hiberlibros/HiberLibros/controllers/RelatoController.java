@@ -77,7 +77,7 @@ public class RelatoController {
             relato.setFichero(subir);
             relato.setValoracionUsuarios(new Double(0));
             relato.setNumeroValoraciones(0);
-            repoRelato.save(relato); 
+            repoRelato.save(relato);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -189,8 +189,7 @@ public class RelatoController {
     }
 
     @GetMapping("/eliminarAdmin")
-    public String eliminarRelatoAdmin(Model m, Integer id
-    ) {
+    public String eliminarRelatoAdmin(Model m, Integer id) {
         Optional<Relato> rel = repoRelato.findById(id);
         if (rel.isPresent()) {
             repoRelato.deleteById(id);

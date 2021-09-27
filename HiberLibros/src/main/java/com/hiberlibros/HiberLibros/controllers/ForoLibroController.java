@@ -2,6 +2,7 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.ForoLibro;
 import com.hiberlibros.HiberLibros.interfaces.IForoLibroService;
+import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ public class ForoLibroController {
     @Autowired
     private IForoLibroService serviceForoLibro;
 
+    @Autowired 
+    private ISeguridadService serviceSeguridad;
+    
     @GetMapping("/libro")
     public String recuperarForosPorLibro(Model m, Integer id) {
         m.addAttribute("foros",serviceForoLibro.recuperarForosDeLibro(id));
@@ -33,6 +37,7 @@ public class ForoLibroController {
     
     @GetMapping("/alta")
     public String altaForo (ForoLibro l){
+        l.setIdUsuarioCreador(serviceSeguridad.getIdUsuarioFromContext());
         serviceForoLibro.altaForoLibro(l);
         return "/principal/altaForo";
     }
@@ -43,5 +48,8 @@ public class ForoLibroController {
         serviceForoLibro.bajaForoLibro(id);
         return "/principal/altaForo";
     }
+    
+    
+    
     
 }

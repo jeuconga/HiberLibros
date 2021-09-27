@@ -298,6 +298,7 @@ public class InicioController {
         List<TablaLibrosDto> tld=ul.stream().map(x->new TablaLibrosDto(
                                         x.getId(),
                                         x.getLibro().getId(),
+                                        x.getLibro().getUriPortada(),
                                         x.getLibro().getIsbn(),
                                         x.getLibro().getTitulo(),
                                         x.getLibro().getAutor().getNombre()+" "+ x.getLibro().getAutor().getApellidos(),
