@@ -128,4 +128,8 @@ function formForo() {
 
 }
 
+function image(value,row) {
+    return "<img src='"+value+"' style='width:100px; height:120px;'>";
+}
+
 

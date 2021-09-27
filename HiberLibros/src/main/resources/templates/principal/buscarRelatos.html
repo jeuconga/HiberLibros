@@ -60,12 +60,12 @@
                         </tr>             
                         <tr th:each="rel:${relatos}">     
 
-
                             <td>
                                 <a th:href="@{/relato/download(descargar=${rel.fichero})}">
                                     <span th:text="${rel.titulo}"></span>
                                 </a>
-                            </td>  
+                            </td>
+
                             <td class="text-center"> 
                                 <span th:text="${rel.valoracionUsuarios}" ></span>
                                 <i class="fas fa-star" style="color:orange"></i>      
