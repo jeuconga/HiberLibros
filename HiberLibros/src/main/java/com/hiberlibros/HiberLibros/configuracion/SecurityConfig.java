@@ -23,20 +23,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//               .antMatchers("/**").denyAll()
-//             .antMatchers("/**").permitAll() 
-               .antMatchers("/principal/**").hasRole("Usuario")
-               .antMatchers("/paneladmin/**").hasRole("Administrador")
 
-//               .antMatchers("/relato/**").permitAll()
+//              inicio nuevas seguridades
+               .antMatchers("*.js").permitAll()
+               .antMatchers("*.css").permitAll()
+               .antMatchers("*.jpg").permitAll()
+               .antMatchers("*.png").permitAll()
+               .antMatchers("/hiberlibros/login").permitAll()
+               .antMatchers("/hiberlibros/principal/**").hasRole("Usuario")
+               .antMatchers("/hiberlibros/autores/**").hasRole("Usuario")
+               .antMatchers("/hiberlibros/editoriales/**").hasRole("Usuario")
+               .antMatchers("/hiberlibros/principal/**").hasRole("Usuario")
+               .antMatchers("/hiberlibros/paneladmin/**").hasRole("Administrador")
+
                .antMatchers("/admin/info").permitAll() 
                .antMatchers("/admin/url1").hasAnyRole("Administrador", "Usuario")
-//             .antMatchers("/login").permitAll()
-//             .antMatchers("/altaUsuario").permitAll()
-//             .antMatchers("/url2").hasAnyRole("Administrador", "Usuario")
-//             .antMatchers("/vuelos/**").hasAnyRole("Administrador")
-//             .antMatchers("/traducir/**").hasAnyRole("Administrador", "Usuario")
-//             .antMatchers("/url3").hasRole("Administrador")
           .and()
             .formLogin()
                 .loginPage("/hiberlibros")
@@ -48,7 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
           .and()
             .csrf().disable();
 
+
     }
+    
+    
+    
 
     @Override
     @Bean
@@ -62,6 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     //Aquí se configura Usuario/Password
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        
+        
         /*auth.inMemoryAuthentication()
                  .withUser("jorge").password("{noop}1111").roles("Usuario")
                  .and()
