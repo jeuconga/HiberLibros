@@ -18,11 +18,11 @@ public class ForoLibroService implements IForoLibroService {
     private ForoLibroRepository repoForoLibro;
 
     @Override
-
     public List<ForoLibro> recuperarForosDeLibro(Integer idLibro) {
         return repoForoLibro.findByIdLibro(idLibro);
     }
 
+    @Override
     public List<ForoLibro> recuperarTodosLosForos() {
         return repoForoLibro.findAll();
     }

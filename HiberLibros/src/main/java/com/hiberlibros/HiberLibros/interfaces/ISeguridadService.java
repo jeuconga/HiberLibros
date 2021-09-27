@@ -13,4 +13,6 @@ public interface ISeguridadService {
     public long bajaUsuarioSeguridadPorMail(String mailUsuarioSeguridad);
 
     public String getMailFromContext();
+    
+    public Integer getIdUsuarioFromContext();
 }
