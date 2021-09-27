@@ -31,12 +31,14 @@ public class Autor {
     private String apellidos;
     @Column
     private String biografia;
+    
+    private Boolean desactivado;
 
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "autor")
     private List<Libro> libros;
 
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)//si  se borra autor, se borra relacion de autor_libro
-    private List<AutorLibro> autorLibros;
+//    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)//si  se borra autor, se borra relacion de autor_libro
+//    private List<AutorLibro> autorLibros;
 
 //    @Override
 //    public String toString() {

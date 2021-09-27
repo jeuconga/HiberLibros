@@ -1,6 +1,7 @@
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.ForoLibro;
+import com.hiberlibros.HiberLibros.entities.Libro;
 import com.hiberlibros.HiberLibros.interfaces.IForoLibroService;
 import com.hiberlibros.HiberLibros.repositories.ForoLibroRepository;
 import java.util.List;
@@ -18,13 +19,13 @@ public class ForoLibroService implements IForoLibroService {
     private ForoLibroRepository repoForoLibro;
 
     @Override
-    public List<ForoLibro> recuperarForosDeLibro(Integer idLibro) {
-        return repoForoLibro.findByIdLibro(idLibro);
+    public List<ForoLibro> recuperarForosDeLibro(Libro idLibro) {
+        return repoForoLibro.findByIdLibroAndDesactivado(idLibro,Boolean.FALSE);
     }
 
     @Override
     public List<ForoLibro> recuperarTodosLosForos() {
-        return repoForoLibro.findAll();
+        return repoForoLibro.findByDesactivado(Boolean.FALSE);
     }
 
     @Override

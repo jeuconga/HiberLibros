@@ -27,14 +27,15 @@ public class Genero {
     private Integer id;
 
     private String nombre;
+    private Boolean desactivado;
     
-   @OneToMany(mappedBy = "id",cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "id")
    private List<Relato> listaRelatos;
     
-   @OneToMany(mappedBy = "id",cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "id")
     private List<Libro> listaLibros;
    
-   @OneToMany(mappedBy = "id",cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "id")
    private List<Preferencia> listaPreferencias;
     
     

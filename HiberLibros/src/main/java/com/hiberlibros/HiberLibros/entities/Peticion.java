@@ -22,11 +22,11 @@ public class Peticion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @OneToOne(cascade=CascadeType.REMOVE)
+    @OneToOne
     @JoinColumn(name = "id_usuario_libro")
     private UsuarioLibro idUsuarioLibro;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "id_usuario_solicitante")
     private Usuario idUsuarioSolicitante;
     private Boolean aceptacion;

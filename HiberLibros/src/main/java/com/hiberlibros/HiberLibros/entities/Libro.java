@@ -30,17 +30,17 @@ public class Libro {
     private String uriPortada;
     private Double valoracionLibro;
     private Integer numeroValoraciones;
+    private Boolean desactivado;
 
     @ManyToOne(fetch = FetchType.EAGER)
-
     @JoinColumn(name = "id_autor")
     private Autor autor;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_editorial")
     private Editorial editorial;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_genero")
     private Genero genero;
 
