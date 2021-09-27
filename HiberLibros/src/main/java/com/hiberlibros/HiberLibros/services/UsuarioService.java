@@ -30,18 +30,19 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public String guardarUsuarioYSeguridad(Usuario u, String password) {
         String resultado = guardarUsuario(u);
-        Optional<Usuario> usu = urService.findByMail(u.getMail());
-        if (usu.isPresent()) {
+        //Optional<Usuario> usu = urService.findByMail(u.getMail());
+        if (resultado.equals("Usuario registrado con éxito")) {
             serviceUsuarioSeguridad.altaUsuarioSeguridad(u.getMail(), u.getId(), password, "Usuario");
         }
 
         return resultado;
     }
-
+    
+    @Override
     public String guardarUsuarioYSeguridadAdmin(Usuario u, String password) {
         String resultado = guardarUsuario(u);        
-        Optional<Usuario> usu = urService.findByMail(u.getMail());
-        if (usu.isPresent()) {
+        //Optional<Usuario> usu = urService.findByMail(u.getMail());
+        if (resultado.equals("Usuario registrado con éxito")) {
             serviceUsuarioSeguridad.altaUsuarioSeguridad(u.getMail(), u.getId(), password, "Administrador");
         }
 
