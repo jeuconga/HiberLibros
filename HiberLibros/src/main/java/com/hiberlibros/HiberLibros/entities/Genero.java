@@ -1,6 +1,7 @@
 package com.hiberlibros.HiberLibros.entities;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,13 +28,13 @@ public class Genero {
 
     private String nombre;
     
-   @OneToMany(mappedBy = "id")
+   @OneToMany(mappedBy = "id",cascade = CascadeType.ALL)
    private List<Relato> listaRelatos;
     
-   @OneToMany(mappedBy = "id")
+   @OneToMany(mappedBy = "id",cascade = CascadeType.ALL)
     private List<Libro> listaLibros;
    
-   @OneToMany(mappedBy = "id")
+   @OneToMany(mappedBy = "id",cascade = CascadeType.ALL)
    private List<Preferencia> listaPreferencias;
     
     

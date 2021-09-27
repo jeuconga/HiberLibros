@@ -114,7 +114,7 @@ function btnValoracion(value,row){
                                 "</span>"+
                                 '<div class="row"><div class="col-3"> <button type="submit" class="btn btn-sm btn-warning">Valorar</button></div>'+
                             "</form>"+
-                "<div class='col-6'> <a href='/foros/libro?id="+value+"' class='btn btn-sm btn-secondary'>Ir a foro</a></div></div>";
+                "<div class='col-6'> <a href='/foros/libro' class='btn btn-sm btn-secondary'>Ir a foro</a></div></div>";
     
 }
 

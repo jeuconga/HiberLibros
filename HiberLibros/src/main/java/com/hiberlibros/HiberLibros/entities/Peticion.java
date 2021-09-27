@@ -26,7 +26,7 @@ public class Peticion {
     @JoinColumn(name = "id_usuario_libro")
     private UsuarioLibro idUsuarioLibro;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario_solicitante")
     private Usuario idUsuarioSolicitante;
     private Boolean aceptacion;
