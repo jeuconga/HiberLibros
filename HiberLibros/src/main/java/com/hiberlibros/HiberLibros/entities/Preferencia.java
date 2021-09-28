@@ -27,11 +27,11 @@ public class Preferencia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="id_genero")
     private Genero genero;
     
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne 
     @JoinColumn(name = "id_usuario")
     private Usuario usuario; 
 }

@@ -27,12 +27,16 @@ public class IntercambioService implements IIntercambioService {
     private IUsuarioLibroService serviceUL;
 
     @Override
-    public void guardarIntercambio(UsuarioLibro ul_prestatario, UsuarioLibro ul_prestador) {
+    public void guardarIntercambio(UsuarioLibro ulPrestatario, UsuarioLibro ulPrestador) {
         Intercambio i = new Intercambio();
         Date date = Date.from(Instant.now());
         i.setFechaPrestamo(date);
-        i.setUsuarioPrestador(ul_prestador);
-        i.setUsuarioPrestatario(ul_prestatario);
+        i.setUsuarioPrestador(ulPrestador);
+        i.setUsuarioPrestatario(ulPrestatario);
+        ulPrestatario.setEstadoPrestamo("ocupado");
+        serviceUL.editar(ulPrestatario);
+        ulPrestador.setEstadoPrestamo("ocupado");
+        serviceUL.editar(ulPrestador);
         repoInter.save(i);
     }
 
@@ -73,6 +77,22 @@ public class IntercambioService implements IIntercambioService {
         ulPrestatario.setEstadoPrestamo("Libre");
         serviceUL.editar(ulPrestatario);
 
+    }
+
+    @Override
+    public Boolean intercambioPendienteFinalizar(UsuarioLibro ul) {//metodo para comprobar si queda algún intercambio por finalizar
+        List<Intercambio> i = new ArrayList<>();
+        i = repoInter.findByUsuarioPrestadorAndFechaDevolucion(ul, null);
+        if (i.size() != 0 || i != null) {
+            return false;
+        } else {
+            i = repoInter.findByUsuarioPrestatarioAndFechaDevolucion(ul, null);
+            if (i.size() != 0 || i != null) {
+                return false;
+            } else {
+                return true;
+            }
+        }
     }
 
 }

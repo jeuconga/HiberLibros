@@ -1,16 +1,10 @@
 <html xmlns:th="https://www.thymeleaf.org" 
       th:replace="principal/layoutUsuario::layout(~{::body})">
 
-    <head>
-        <meta charset="utf-8">
-        <title>Buscar relatos</title>
-        <link rel="stylesheet"
-              href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
-
-    </head>    
     <body>
 
         <div class="container">
+            <button onclick="formForo()" class="btn btn-secondary">Añadir relato</button>
             <table class="testbox table">
                 <thead>
                     <tr>
@@ -20,15 +14,32 @@
 
                     </tr>
                 </thead>
-                
-                <!--                <tr th:each='hilo:${foros}'>
-                                    <td th:text="${hilo.tituloForo}"></td>
-                                    <td th:text="${hilo.id_usuarioCreador}"></td>
-                                    <td th:text="${hilo.idLibro }"></td>                                  
-                                </tr>-->
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+
+                <tr th:each='hilo:${foros}'>
+                    <td th:text="${hilo.tituloForo}"></td>
+                    <td th:text="${hilo.usuarioCreador.nombre}"></td>
+                    <td th:text="${hilo.idLibro.titulo}"></td>                                  
+                </tr>
             </table>
 
 
+        </div>
+        <div id="formularioForo" style="display:none">
+            <form>
+                <label for="tituloForo">Título del foro: </label>
+                <input type="text" class="form-control" name="tituloForo" />
+                <label for="libro"> Libro</label>
+                <select class="form-control" name="libro">
+                    <option></option>
+                </select>
+            </form>
         </div>
 
     </body>

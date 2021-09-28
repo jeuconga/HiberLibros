@@ -6,7 +6,9 @@
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.ComentarioForo;
+import com.hiberlibros.HiberLibros.entities.ForoLibro;
 import com.hiberlibros.HiberLibros.interfaces.IComentarioForoService;
+import com.hiberlibros.HiberLibros.repositories.ComentarioForoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +20,21 @@ import org.springframework.stereotype.Service;
 public class ComentarioForoSerice implements IComentarioForoService{
 
     @Autowired
-    private IComentarioForoService serviceComentarioForoService;
+    private ComentarioForoRepository repoComen;
     
     @Override
     public void altaComentario(ComentarioForo c) {
-        serviceComentarioForoService.altaComentario(c);
+        repoComen.save(c);
     }
 
     @Override
     public void bajaComentario(Integer idComentario) {
-        serviceComentarioForoService.bajaComentario(idComentario);
+        repoComen.deleteById(idComentario);
+    }
+
+    @Override
+    public void eliminarComentariosForo(ForoLibro fl) {
+       repoComen.deleteByForoLibro(fl);
     }
     
 }

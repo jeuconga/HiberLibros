@@ -44,8 +44,4 @@ public class Relato {
     @JoinColumn(name = "id_genero")
     private Genero genero;
 
-    /*
-    @ManyToOne             
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;*/
 }
