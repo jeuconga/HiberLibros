@@ -70,7 +70,6 @@
                             </div>
                         </div>
                         </tr>
-<<<<<<< HEAD (a4fe31c) - Commit format
                         <tr th:each="rel:${relatos}">    
                                                         <td th:text="${rel.id}"></td>  
                             <td th:text="${rel.titulo}"></td>
@@ -81,13 +80,13 @@
                             </td>  
                             <td th:text="${rel.numeroValoraciones}" style="text-align: center"></td> 
                             <td><a th:href="@{/relato/eliminarRelato(id=${rel.id})}" class="btn btn-sm btn-secondary">Borrar</a></td>
-=======
+
                         <div class="py-4 px-4">
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <h3 class="mb-0">Mis libros</h3>
                                 <a href="/hiberlibros/guardarLibro" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;Añadir libro</a>
                             </div>
->>>>>>> origin/master (9981cbf) - Merge branch '
+
 
 
 
@@ -152,19 +151,19 @@
 
 
 
-                            <div class="row">
+<!--                            <div class="row">
                                 <div id="tusRelatos" class='col-12'>
                                     <h2>Tus relatos</h2>
                                     <table class="testbox table"  >
                                         <tr>
-                                            <!--                            <th>id</th>-->
+                                                                        <th>id</th>
                                             <th>titulo</th>
                                             <th>Género</th>
                                             <th>Valoraciones</th>
                                             <th>NºValoraciones</th>
                                         </tr>
                                         <tr th:each="rel:${relatos}">    
-                                            <!--                            <td th:text="${rel.id}"></td>  -->
+                                                                        <td th:text="${rel.id}"></td>  
                                             <td th:text="${rel.titulo}"></td>
                                             <td th:text="${rel.genero.nombre}"></td>   
                                             <td class="text-center"> 
@@ -179,8 +178,8 @@
                                     <a th:href="@{/hiberlibros/relato(id=${usuario.id})}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;Añadir relato</a>
 
                                 </div>
-                            </div>
-                            <div id="tusPeticiones" class="row">
+                            </div>-->
+<!--                            <div id="tusPeticiones" class="row">
                                 <div class='col-6'>
                                     <h2>Nuevas Peticiones</h2>
                                     <table class="testbox table ">
@@ -260,11 +259,11 @@
                         </div>
                         <a th:onclick="|eliminarU(${usuario.id})|" class="btn btn-outline-danger" title='Borrar usuario'>Borrar Usuario</a>
                         </body>
-
                         </html>
-<<<<<<< HEAD (a4fe31c) - Commit format
                 </div>
-            </div>-->
+            </div>
+            
+            -->
             <div id="tusPeticiones" class="row">
                 <div class='col-6'>
                     <h2>Nuevas Peticiones</h2>
@@ -345,11 +344,11 @@
         </div>
         <a th:onclick="|eliminarU(${usuario.id})|" class="btn btn-outline-danger" title='Borrar usuario'>Borrar</a>
     </body>
-=======
+
                             <div class="row">
                             <div class="col-lg-4 mb-4 " th:each='l:${libros}'>
                                 <div class="card ">        
                                     <img th:src="${l.libro.uriPortada}" alt="" class=" imagenLibros">
                                     <div class="card-body ">                                               
                                         <h5 class="tituloLibro" th:text="${l.libro.titulo}"></h5>
->>>>>>> origin/master (9981cbf) - Merge branch '
+
