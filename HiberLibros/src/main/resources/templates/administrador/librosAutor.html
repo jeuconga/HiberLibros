@@ -8,6 +8,7 @@
             <h2>Listado de libros</h2>
 
             <table class="table table-striped mt-5">
+            <thead class="text-white bg-primary">
                 <tr>
                     <th>ISBN</th>
                     <th>Titulo</th>
@@ -18,6 +19,7 @@
                     <th>Valoracion</th>
 
                 </tr>
+                </thead>
                 <tr th:each="libro:${libros}">
                     <td th:text="${libro.isbn}"></td>
                     <td th:text="${libro.titulo}"></td>
