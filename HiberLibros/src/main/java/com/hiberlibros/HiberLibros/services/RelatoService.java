@@ -28,9 +28,8 @@ public class RelatoService implements IRelatoService {
     @Override
     public List<Relato> todos() {
         return relatoRepository.findAll();
-
     }
-
+    
     @Override
     public List<Relato> buscarPorValoracionMayorAMenor() {
         List<Relato> rel = relatoRepository.findAll();
@@ -46,5 +45,4 @@ public class RelatoService implements IRelatoService {
 
         return relato;
     }
-
 }
