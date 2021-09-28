@@ -20,13 +20,13 @@
         <div class="container">
 
             <div class="row py-5 px-4 w-100 ">
-                <div class="w-100 mx-auto">
+                <div class="w-100 mx-auto ">
                     <!-- Profile widget -->
-                    <div class="bg-white shadow rounded overflow-hidden ">
+                    <div class="bg-white shadow rounded overflow-hidden  ">
 
-                        <div class="px-4  float-right">
+                        <div class="px-4  float-right ">
 
-                            <div class="p-4 rounded shadow-sm bg-light mt-2">      
+                            <div class="p-4 rounded shadow-sm bg-light mt-2 ">      
                                 <h3 class="">Datos Personales</h3>
                                 <div class="row">
                                     <p class="font mb-0 font-weight-bold ">Nombre : </p>
@@ -59,11 +59,23 @@
 
 
 
-                        <div class="px-4 pt-0 pb-4 cover ">
+                        <div class="px-4 pt-0 pb-4 cover bannerPerfil">
                             <div class="media align-items-end profile-head">
                                 <div class="profile mr-3 mt-2">
                                     <img th:src="${usuario.uriFoto}" alt="..." width="130" class="imgRedonda">
-                                    <a onclick="editarUsuario()" class=" btn btn-outline-dark btn-sm btn-block mt-4">Editar perfil</a>
+                                    
+<!--                                    <img src="file://C:/zzzzImagenPerfiles\3d06df12-dede-476b-acc5-c6cd5eefe01d.png" alt="alt"/>-->
+                                    
+                                    
+                                    <a onclick="editarUsuario()" class=" btn btn-outline-dark btn-sm btn-block mt-4 col-6">Editar perfil</a></br>
+
+                                    <form action="/usuarios/imagenPerfil" method="post" enctype="multipart/form-data" >
+                                        <input  type="hidden" name="id" th:value="${usuario.id}"/>                                        
+                                        <div class="form-group">
+                                            <input class="form-control-file "  type="file" name="ficheroImagen" required/>
+                                            <input type="submit" class="btn btn-dark btn-sm btn-block mt-4 col-6" value="Subir foto de perfil" />
+                                        </div>
+                                    </form>  
 
 
                                 </div>
@@ -76,10 +88,10 @@
                                     <h5 class="font-weight-bold mb-0 d-block" th:text="${librosUsuario}"></h5><i class="fas fa-book " style="color:black"> </i>   Mis libros
                                 </li>
                                 <li class="list-inline-item">
-                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${numIntercambioPendiente}"></h5><i class="far fa-handshake" style="color:black"></i>Intercambios pendientes
+                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${numIntercambioPendiente}"></h5><i class="far fa-handshake" style="color:black"></i>     Intercambios pendientes
                                 </li>
                                 <li class="list-inline-item"> 
-                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${usuario.valoracionUsuario}"></h5> <i class="fas fa-star" style="color:orange"> </i>  Mi valoración
+                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${usuario.valoracionUsuario}"></h5> <i class="fas fa-star" style="color:orange"> </i>    Mi valoración
 
 
                                 </li>
@@ -109,7 +121,7 @@
                                             <p class="font mb-0 font-weight-bold">Idioma : <td th:text="${l.libro.idioma}"></td>
                                             <p class="font mb-0 font-weight-bold">Editorial :  <td th:text="${l.libro.editorial.nombreEditorial}"></td>
                                             <p class="font mb-0 font-weight-bold">Género :  <td th:text="${l.libro.genero.nombre}"></td>
-                                            <p class="font mb-0 font-weight-bold">Valoración : <td th:text="${l.libro.valoracionLibro}"> </td>  <i class="fas fa-star" style="color:orange"> </i> 
+                                            <p class="font mb-0 font-weight-bold">Valoración : <td th:text="${l.libro.valoracionLibro}"></td>  <i class="fas fa-star" style="color:orange"> </i> 
                                             <p class="font mb-0 font-weight-bold">Estado :   <td th:text="${l.estadoConservacion}"></td>
 
 
@@ -123,6 +135,34 @@
 
                             </div>
 
+                            <div class="row">
+                                <div id="tusRelatos" class='col-12'>
+                                    <h2>Tus relatos</h2>
+                                    <table class="testbox table"  >
+                                        <tr>
+                                            <th>id</th>
+                                            <th>titulo</th>
+                                            <th>Género</th>
+                                            <th>Valoraciones</th>
+                                            <th>NºValoraciones</th>
+                                        </tr>
+                                        <tr th:each="rel:${relatos}">    
+                                            <td th:text="${rel.id}"></td>  
+                                            <td th:text="${rel.titulo}"></td>
+                                            <td th:text="${rel.genero.nombre}"></td>   
+                                            <td class="text-center"> 
+                                                <span th:text="${rel.valoracionUsuarios}" ></span>
+                                                <i class="fas fa-star" style="color:orange"></i>     
+                                            </td>  
+                                            <td th:text="${rel.numeroValoraciones}" style="text-align: center"></td> 
+                                            <td><a th:href="@{/relato/eliminarRelato(id=${rel.id})}" class="btn btn-sm btn-secondary">Borrar</a></td>
+
+                                        </tr>
+                                    </table>
+                                    <a th:href="@{/hiberlibros/relato(id=${usuario.id})}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;Añadir relato</a>
+
+                                </div>
+                            </div>
 
 
 
