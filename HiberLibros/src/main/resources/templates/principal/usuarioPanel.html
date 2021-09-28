@@ -19,7 +19,6 @@
         </nav>
         <div class="container">
 
-            <tr th:each='u:${usuario}'> 
             <div class="row py-5 px-4 w-100 ">
                 <div class="w-100 mx-auto">
                     <!-- Profile widget -->
@@ -27,7 +26,7 @@
                         <div class="px-4 pt-0 pb-4 cover">
                             <div class="media align-items-end profile-head">
                                 <div class="profile mr-3 mt-2">
-                                    <img src="../perfil.png " alt="..." width="130" class="imgRedonda"></img>
+                                    <img th:src="${usuario.uriFoto}" alt="..." width="130" class="imgRedonda">
                                     <a onclick="editarUsuario()" class=" btn btn-outline-dark btn-sm btn-block mt-4">Editar perfil</a>
                                 </div>
 
@@ -36,13 +35,15 @@
                         <div class="bg-light p-4 d-flex justify-content-end text-center">
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item"> 
-                                    <h5 class="font-weight-bold mb-0 d-block">6</h5><i class="fas fa-book " style="color:black"> </i>   Mis libros
+                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${librosUsuario}"></h5><i class="fas fa-book " style="color:black"> </i>   Mis libros
                                 </li>
                                 <li class="list-inline-item">
-                                    <h5 class="font-weight-bold mb-0 d-block">3</h5><i class="far fa-handshake" style="color:black"></i>Mis peticiones
+                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${numIntercambioPendiente}"></h5><i class="far fa-handshake" style="color:black"></i>Intercambios pendientes
                                 </li>
                                 <li class="list-inline-item"> 
-                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${u.valoracionUsuario}"></h5> <i class="fas fa-star" style="color:orange"> </i>  Mi valoración
+                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${usuario.valoracionUsuario}"></h5> <i class="fas fa-star" style="color:orange"> </i>  Mi valoración
+
+
                                 </li>
                             </ul>
                         </div>
@@ -51,25 +52,33 @@
                             <div class="p-4 rounded shadow-sm bg-light mt-2">                                
                                 <div class="row">
                                     <p class="font mb-0 font-weight-bold ">Nombre : </p>
-                                    <p class="font-italic mb-0 ml-2 mb-1" th:text="${u.nombre}"></p> 
+                                    <p class="font-italic mb-0 ml-2 mb-1" th:text="${usuario.nombre}"></p> 
                                 </div>
 
                                 <div class="row">
                                     <p class="font mb-0 font-weight-bold">Apellido: </p>
-                                    <p class="font-italic mb-0 ml-2  mb-1" th:text="${u.apellido}"></p> 
+                                    <p class="font-italic mb-0 ml-2  mb-1" th:text="${usuario.apellido}"></p> 
                                 </div>
 
                                 <div class="row">
                                     <p class="font mb-0 font-weight-bold">Email :</p>
-                                    <p class="font-italic mb-0 ml-2  mb-1" th:text="${u.mail}"></p> 
+                                    <p class="font-italic mb-0 ml-2  mb-1" th:text="${usuario.mail}"></p> 
                                 </div>
                                 <div class="row">
                                     <p class="font mb-0 font-weight-bold">Ciudad :</p>
-                                    <p class="font-italic mb-0 ml-2  mb-1" th:text="${u.ciudad}"></p> 
+                                    <p class="font-italic mb-0 ml-2  mb-1" th:text="${usuario.ciudad}"></p> 
+                                </div>
+                                <div class="row">
+                                    <p class="font mb-0 font-weight-bold">Direccion :</p>
+                                    <p class="font-italic mb-0 ml-2  mb-1" th:text="${usuario.direccion}"></p> 
+                                </div>
+                                <div class="row">
+                                    <p class="font mb-0 font-weight-bold">Teléfono :</p>
+                                    <p class="font-italic mb-0 ml-2  mb-1" th:text="${usuario.telef}"></p> 
                                 </div>
                             </div>
                         </div>
-                        </tr>
+
                         <div class="py-4 px-4">
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <h3 class="mb-0">Mis libros</h3>
@@ -78,27 +87,27 @@
 
 
                             <div class="row">
-                            <div class="col-lg-4 mb-4 " th:each='l:${libros}'>
-                                <div class="card ">        
-                                    <img th:src="${l.libro.uriPortada}" alt="" class=" imagenLibros">
-                                    <div class="card-body ">                                               
-                                        <h5 class="tituloLibro" th:text="${l.libro.titulo}"></h5>
+                                <div class="col-lg-4 mb-4 " th:each='l:${libros}'>
+                                    <div class="card ">        
+                                        <img th:src="${l.libro.uriPortada}" alt="" class=" imagenLibros">
+                                        <div class="card-body ">                                               
+                                            <h5 class="tituloLibro" th:text="${l.libro.titulo}"></h5>
 
-                                        <p class="font mb-0 font-weight-bold">ISBN :<td th:text="${l.libro.isbn}"></td></p>                                      
-                                        <p class="font mb-0 font-weight-bold">Idioma : <td th:text="${l.libro.idioma}"></td>
-                                        <p class="font mb-0 font-weight-bold">Editorial :  <td th:text="${l.libro.editorial.nombreEditorial}"></td>
-                                        <p class="font mb-0 font-weight-bold">Género :  <td th:text="${l.libro.genero.nombre}"></td>
-                                        <p class="font mb-0 font-weight-bold">Valoración : <td th:text="${l.libro.valoracionLibro}"> </td>  <i class="fas fa-star" style="color:orange"> </i> 
-                                        <p class="font mb-0 font-weight-bold">Estado :   <td th:text="${l.estadoConservacion}"></td>
+                                            <p class="font mb-0 font-weight-bold">ISBN :<td th:text="${l.libro.isbn}"></td></p>                                      
+                                            <p class="font mb-0 font-weight-bold">Idioma : <td th:text="${l.libro.idioma}"></td>
+                                            <p class="font mb-0 font-weight-bold">Editorial :  <td th:text="${l.libro.editorial.nombreEditorial}"></td>
+                                            <p class="font mb-0 font-weight-bold">Género :  <td th:text="${l.libro.genero.nombre}"></td>
+                                            <p class="font mb-0 font-weight-bold">Valoración : <td th:text="${l.libro.valoracionLibro}"> </td>  <i class="fas fa-star" style="color:orange"> </i> 
+                                            <p class="font mb-0 font-weight-bold">Estado :   <td th:text="${l.estadoConservacion}"></td>
 
 
-                                        <p class="card-text"></p>
-                                        <td><a th:href="@{/hiberlibros/borrarUL(id=${l.id})}" class="btn btn-outline-danger btn-sm">Borrar <i class="fas fa-trash-alt"></i></a></td>
-                                 
+                                            <p class="card-text"></p>
+                                            <td><a th:href="@{/hiberlibros/borrarUL(id=${l.id})}" class="btn btn-outline-danger btn-sm">Borrar <i class="fas fa-trash-alt"></i></a></td>
 
-                                    </div>                                    
+
+                                        </div>                                    
+                                    </div>
                                 </div>
-                            </div>
 
                             </div>
 

@@ -21,4 +21,7 @@ public interface IntercambioRepository extends JpaRepository<Intercambio, Intege
     public List<Intercambio> findByUsuarioPrestatarioAndFechaDevolucion(UsuarioLibro ul, Date fechaDevolucion);
     
     public void deleteByUsuarioPrestadorOrUsuarioPrestatario(UsuarioLibro ul, UsuarioLibro ul2);
+    
+    public int countByFechaDevolucion(String fecha);
+  
 }
