@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * @author Usuario
  */
 @Service
-public class ComentarioForoSerice implements IComentarioForoService{
+public class ComentarioForoService implements IComentarioForoService{
 
     @Autowired
     private ComentarioForoRepository repoComen;

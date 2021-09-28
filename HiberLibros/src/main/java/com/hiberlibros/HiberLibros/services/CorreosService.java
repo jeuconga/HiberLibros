@@ -5,6 +5,7 @@
  */
 package com.hiberlibros.HiberLibros.services;
 
+import com.hiberlibros.HiberLibros.interfaces.ICorreoService;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -20,7 +21,7 @@ import org.springframework.stereotype.Service;
  * @author Usuario
  */
 @Service
-public class CorreosService {
+public class CorreosService implements ICorreoService{
     public String enviarCorreo(String destinatario,String asunto, String cuerpo ) {
     //String destinatario =  "jorgemartinms@gmail.com"; //A quien le quieres escribir.
     //String asunto = "peticion de intercambio aceptada";
