@@ -46,7 +46,7 @@ function mostrarLibros(pId) {
         },
         success: function (pHtml) {
             bootbox.dialog({
-
+				animate :true,
                 size: "large",
                 message: pHtml
             })

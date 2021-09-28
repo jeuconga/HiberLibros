@@ -41,7 +41,7 @@ public class Usuario {
     private String uriFoto;
     private Boolean desactivado;
 
-    @OneToMany(mappedBy = "usuario")
+    /*@OneToMany(mappedBy = "usuario")
     private List<UsuarioLibro> usuarioLibro;
 
     @OneToMany(mappedBy = "usuario")
@@ -51,5 +51,5 @@ public class Usuario {
     private List<Preferencia> preferencia;
 
     @OneToMany(mappedBy = "usuarioCreador")
-    private List<ForoLibro> foroLibro;
+    private List<ForoLibro> foroLibro;*/
 }

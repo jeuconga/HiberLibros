@@ -129,7 +129,13 @@ function formForo() {
 }
 
 function image(value,row) {
-    return "<img src='"+value+"' style='width:100px; height:120px;'>";
+	return "<img src='"+value+"' style='width:100px; height:120px;'>";
+}
+
+function previsualizar() {
+    var text =  document.getElementById("urlportada").value;
+	$("#previsualizacion").attr("src", text);
+	$("#mostrarImagen").show();
 }
 
 
