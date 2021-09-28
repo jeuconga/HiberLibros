@@ -6,8 +6,8 @@
             <div class="row">
                 <div class="col-12 ">
                     <ul class="nav">
-                        <li class="nav-item"><a  href="#tusLibros" class="btn btn-secondary">Tus Libros</a></li>
-                        <li class="nav-item"><a  href="#tusRelatos" class="btn btn-secondary">Tus Relatos</a></li>
+<!--                        <li class="nav-item"><a  href="#tusLibros" class="btn btn-secondary">Tus Libros</a></li>
+                        <li class="nav-item"><a  href="#tusRelatos" class="btn btn-secondary">Tus Relatos</a></li>-->
                         <li class="nav-item"><a  href="#tusPeticiones" class="btn btn-secondary">Tus Peticiones</a></li>
                         <li class="nav-item"><a  href="#tusIntercambios" class="btn btn-secondary">Tus Intercambios</a></li>             
 
@@ -18,7 +18,7 @@
 
         </nav>
         <div class="container ">
-            <div class="row ">
+<!--            <div class="row ">
                 <div id="tusLibros" class='col-12'>
                     <h2>Tus libros</h2>
                     <table class="testbox table">
@@ -57,14 +57,14 @@
                     <h2>Tus relatos</h2>
                     <table class="testbox table"  >
                         <tr>
-                            <!--                            <th>id</th>-->
+                                                        <th>id</th>
                             <th>titulo</th>
                             <th>Género</th>
                             <th>Valoraciones</th>
                             <th>NºValoraciones</th>
                         </tr>
                         <tr th:each="rel:${relatos}">    
-                            <!--                            <td th:text="${rel.id}"></td>  -->
+                                                        <td th:text="${rel.id}"></td>  
                             <td th:text="${rel.titulo}"></td>
                             <td th:text="${rel.genero.nombre}"></td>   
                             <td class="text-center"> 
@@ -79,7 +79,7 @@
                     <a th:href="@{/hiberlibros/relato(id=${usuario.id})}" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;Añadir relato</a>
 
                 </div>
-            </div>
+            </div>-->
             <div id="tusPeticiones" class="row">
                 <div class='col-6'>
                     <h2>Nuevas Peticiones</h2>
