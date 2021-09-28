@@ -39,11 +39,11 @@ public class Intercambio {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaDevolucion;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="id_usuario_libro_prestador")
     private UsuarioLibro usuarioPrestador;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="id_usuario_libro_prestatario")
     private UsuarioLibro usuarioPrestatario;
     

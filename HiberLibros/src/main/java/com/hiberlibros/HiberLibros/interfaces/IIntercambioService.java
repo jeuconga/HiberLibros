@@ -17,5 +17,8 @@ public interface IIntercambioService {
     public List<Intercambio> encontrarULPrestatario(List<UsuarioLibro> ul);
 
     public void finIntercambio(Integer id);
+    
+    public Boolean intercambioPendienteFinalizar(UsuarioLibro ul);
+    
 
 }

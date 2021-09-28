@@ -12,6 +12,7 @@ public class TablaLibrosDto implements Serializable {
 
     Integer id;
     Integer id_libro;
+    String uriPortada;
     String isbn;
     String titulo;
     String autor;

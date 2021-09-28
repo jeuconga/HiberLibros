@@ -1,6 +1,7 @@
 package com.hiberlibros.HiberLibros.entities;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +27,7 @@ public class Genero {
     private Integer id;
 
     private String nombre;
+    private Boolean desactivado;
     
    @OneToMany(mappedBy = "id")
    private List<Relato> listaRelatos;

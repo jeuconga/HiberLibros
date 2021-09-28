@@ -25,15 +25,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "foros_libros")
 public class ForoLibro {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;  
+    private Integer id;
+    
+    private Boolean desactivado;
+    
+    private String  tituloForo; // titulo del foro
     
     @ManyToOne//pk libro
     @JoinColumn(name= "id_libro")
     private Libro   idLibro;   // libro del que es el foro
-    private String  tituloForo; // titulo del foro
-    private Integer idUsuarioCreador;  //id Usuario creador del hilo
+    
+    @ManyToOne
+    @JoinColumn(name="id_usuario")
+    private Usuario usuarioCreador;  //id Usuario creador del hilo
     
     @OneToMany(mappedBy = "id" ,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ComentarioForo> comentarios; //usuario que genera el foro

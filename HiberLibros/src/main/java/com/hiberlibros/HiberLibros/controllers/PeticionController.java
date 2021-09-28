@@ -2,8 +2,8 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Peticion;
 import com.hiberlibros.HiberLibros.entities.Usuario;
+import com.hiberlibros.HiberLibros.interfaces.IPeticionService;
 import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
-import com.hiberlibros.HiberLibros.services.PeticionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 @RequestMapping("peticion")
 public class PeticionController {
     @Autowired
-    private PeticionService servicePeticion;
+    private IPeticionService servicePeticion;
     @Autowired
     private IUsuarioService uService;
     @Autowired
