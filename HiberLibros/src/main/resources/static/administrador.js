@@ -158,6 +158,21 @@ function editarGenero(pID) {
 
 }
 
+function mostrarContactos(){
+    $.ajax({
+        url: '/hiberlibros/paneladmin/contacto',
+        success: function (pHtml) {
+            bootbox.dialog({
+                size: "small",
+                message: pHtml
+            })
+        },
+        error: function (err) {
+            alert('Error 404, page not found')
+        }
+    });
+}
+
 ///////////////////////////////////////////////////////////////////
 
 $(function () {

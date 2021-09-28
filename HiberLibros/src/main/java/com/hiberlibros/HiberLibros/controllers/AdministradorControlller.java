@@ -47,5 +47,9 @@ public class AdministradorControlller {
            m.addAttribute("numUsuarios",usuService.contarUsuarios());
            m.addAttribute("numLibros",libserv.contarLibros());
         return "administrador/adminPanel";
-    } 
+    }
+    @GetMapping("/contacto")
+    public String adminContacto(Model m) {
+        return "administrador/contacto";
+    }
 }
