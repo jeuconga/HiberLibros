@@ -21,5 +21,7 @@ public interface UsuarioLibroRepository extends JpaRepository<UsuarioLibro, Inte
     public List<UsuarioLibro> findByUsuarioAndQuieroTengoNotOrderByQuieroTengoAsc(Usuario u, String quieroTengo);
 
     public List<UsuarioLibro> findByUsuarioNotAndQuieroTengoAndEstadoPrestamo(Usuario u, String quieroTengo, String estadoPrestamo);
+    
+    public Long countByUsuario(Usuario usuario );
 
 }
