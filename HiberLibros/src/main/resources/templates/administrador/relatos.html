@@ -1,11 +1,12 @@
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" 
+      th:replace="administrador/vistaAdministrador::layout(~{::body})">
     <head>
-        <title>Titulo</title>
+        <title>Relatos</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div class="container">
+        <div class="fondo col-sm p-3 min-vh-100">
             <table class="table table-striped mt-5">
             <thead class="text-white bg-primary">
                 <tr>

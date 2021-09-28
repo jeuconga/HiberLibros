@@ -159,34 +159,7 @@ function editarGenero(pID) {
 }
 
 ///////////////////////////////////////////////////////////////////
-$(document).ready(function () {
-    $("#capa").load("/vistaAdministrador #inicio");
-});
-$(document).ready(function () {
-    $("#boton").click(function (event) {
-        $("#capa").load("/usuarios/listarAdmin");
-    });
-});
-$(document).ready(function () {
-    $("#boton2").click(function (event) {
-        $("#capa").load("/libros/listarAdmin");
-    });
-});
-$(document).ready(function () {
-    $("#boton3").click(function (event) {
-        $("#capa").load("/relato/listarAdmin");
-    });
-});
-$(document).ready(function () {
-    $("#boton4").click(function (event) {
-        $("#capa").load("/autores/listarAdmin");
-    });
-});
-$(document).ready(function () {
-    $("#boton5").click(function (event) {
-        $("#capa").load("/genero/listarAdmin");
-    });
-});
+
 $(function () {
     $("#container").simpleCalendar();
 });

@@ -6,6 +6,7 @@ import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.EditorialRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.LibroRepository;
+import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
 import com.hiberlibros.HiberLibros.repositories.UsuarioRepository;
 import com.hiberlibros.HiberLibros.services.LibroService;
 import com.hiberlibros.HiberLibros.services.UsuarioService;
@@ -35,7 +36,7 @@ public class AdministradorControlller {
     @Autowired
     private GeneroRepository repoGenero;
     @Autowired
-    private AutorRepository repoRelato;
+    private RelatoRepository repoRelato;
     @Autowired
     private UsuarioService usuService;
     @Autowired
@@ -45,6 +46,6 @@ public class AdministradorControlller {
     public String adminHub(Model m) {
            m.addAttribute("numUsuarios",usuService.contarUsuarios());
            m.addAttribute("numLibros",libserv.contarLibros());
-        return "administrador/vistaAdministrador";
+        return "administrador/adminPanel";
     } 
 }
