@@ -34,8 +34,17 @@ public class ForoLibroService implements IForoLibroService {
     }
 
     @Override
-    public void bajaForoLibro(Integer id) {
+    public void eliminarForoLibro(Integer id) {
             repoForoLibro.deleteById(id);
     }
+
+    @Override
+    public void bajaForoLibro(Integer id) {
+        ForoLibro fl=repoForoLibro.findById(id).get();
+        fl.setDesactivado(Boolean.TRUE);
+        repoForoLibro.save(fl);
+    }
+    
+    
     
 }

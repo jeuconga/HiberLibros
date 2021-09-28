@@ -15,5 +15,6 @@ public interface IForoLibroService {
     public List<ForoLibro> recuperarTodosLosForos();
 
     public void altaForoLibro(ForoLibro l);
-    public void bajaForoLibro (Integer id);
+    public void eliminarForoLibro (Integer id);
+    public void bajaForoLibro(Integer id);
 }

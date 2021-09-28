@@ -6,6 +6,7 @@
 package com.hiberlibros.HiberLibros.interfaces;
 
 import com.hiberlibros.HiberLibros.entities.ComentarioForo;
+import com.hiberlibros.HiberLibros.entities.ForoLibro;
 
 /**
  *
@@ -14,4 +15,5 @@ import com.hiberlibros.HiberLibros.entities.ComentarioForo;
 public interface IComentarioForoService {
     public void altaComentario(ComentarioForo comentario);
     public void bajaComentario(Integer idComentario);
+    public void eliminarComentariosForo(ForoLibro fl);
 }
