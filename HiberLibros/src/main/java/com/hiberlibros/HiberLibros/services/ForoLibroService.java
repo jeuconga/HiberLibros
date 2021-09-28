@@ -2,6 +2,7 @@ package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.ForoLibro;
 import com.hiberlibros.HiberLibros.entities.Libro;
+import com.hiberlibros.HiberLibros.interfaces.IComentarioForoService;
 import com.hiberlibros.HiberLibros.interfaces.IForoLibroService;
 import com.hiberlibros.HiberLibros.repositories.ForoLibroRepository;
 import java.util.List;
@@ -17,10 +18,12 @@ public class ForoLibroService implements IForoLibroService {
 
     @Autowired
     private ForoLibroRepository repoForoLibro;
+    @Autowired
+    private IComentarioForoService serviceComentForo;
 
     @Override
     public List<ForoLibro> recuperarForosDeLibro(Libro idLibro) {
-        return repoForoLibro.findByIdLibroAndDesactivado(idLibro,Boolean.FALSE);
+        return repoForoLibro.findByIdLibroAndDesactivado(idLibro, Boolean.FALSE);
     }
 
     @Override
@@ -35,16 +38,16 @@ public class ForoLibroService implements IForoLibroService {
 
     @Override
     public void eliminarForoLibro(Integer id) {
-            repoForoLibro.deleteById(id);
+        ForoLibro fl = repoForoLibro.findById(id).get();
+        serviceComentForo.eliminarComentariosForo(fl);
+        repoForoLibro.deleteById(id);
     }
 
     @Override
     public void bajaForoLibro(Integer id) {
-        ForoLibro fl=repoForoLibro.findById(id).get();
+        ForoLibro fl = repoForoLibro.findById(id).get();
         fl.setDesactivado(Boolean.TRUE);
         repoForoLibro.save(fl);
     }
-    
-    
-    
+
 }

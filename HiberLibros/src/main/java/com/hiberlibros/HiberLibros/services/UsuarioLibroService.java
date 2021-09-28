@@ -88,13 +88,23 @@ public class UsuarioLibroService implements IUsuarioLibroService {
     }
 
     @Override
-    public void usuarioBorrado(Usuario u) {
-        List<UsuarioLibro> ul = ulRepo.findByUsuarioAndQuieroTengoNotOrderByQuieroTengoAsc(u, "no");
-        ul.forEach(x -> {
-            x.setQuieroTengo("no");
-            ulRepo.save(x);
-        });
+    public Boolean usuarioBorrado(Usuario u) {
+        List<UsuarioLibro> ul = ulRepo.findByUsuarioAndDesactivadoAndEstadoPrestamo(u, Boolean.FALSE, "ocupado");
+        if (ul.size() != 0 || ul == null) {
+            return false;
+        } else {
+            ul = ulRepo.findByUsuarioAndDesactivado(u, Boolean.FALSE);
+            ul.forEach(x -> {
+                x.setDesactivado(Boolean.TRUE);
+                ulRepo.save(x);
+            });
+            return true;
+        }
+    }
 
+    @Override
+    public Boolean libroBorrado(Libro l) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

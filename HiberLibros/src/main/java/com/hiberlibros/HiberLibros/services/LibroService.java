@@ -43,7 +43,6 @@ public class LibroService implements ILibroService {
     }
 
     @Override
-
     public Integer contarLibros() {
         long numLibros = libroRep.findAll().stream()
                 .count();
@@ -53,6 +52,14 @@ public class LibroService implements ILibroService {
     @Override
     public List<Libro> encontrarPorAutor(Autor a) {
         return libroRep.findByAutor(a);
+    }
+
+    @Override
+    public Boolean bajaLibroId(Integer id) {
+        Libro l=libroId(id);
+        l.setDesactivado(Boolean.TRUE);
+        libroRep.save(l);
+        return true;
     }
 
 }

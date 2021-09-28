@@ -31,5 +31,7 @@ public interface IUsuarioLibroService {
 
     public List<UsuarioLibro> buscarDisponibles(Usuario u);
 
-    public void usuarioBorrado(Usuario u);
+    public Boolean usuarioBorrado(Usuario u);
+    
+    public Boolean libroBorrado(Libro l);
 }
