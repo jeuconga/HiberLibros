@@ -10,7 +10,7 @@
                 <a href="/hiberlibros/buscarLibro" class="btn btn-warning"><i class="far fa-trash-alt"></i>&nbsp;Limpiar filtros</a>
             </form>-->
             <div class="testbox">
-                <table 
+                <table
                     class="table table-light" 
                     data-toggle="table"
                     data-pagination="true"
@@ -18,6 +18,7 @@
                     data-url="/hiberlibros/tablaBuscarLibro">
                     <thead>
                         <tr>
+                            <th data-field="uriPortada" data-formatter="image">Portada</th>
                             <th data-field="isbn" data-sortable="true">ISBN</th>
                             <th data-field="titulo" data-sortable="true">Título</th>
                             <th data-field="autor" data-sortable="true">Autor</th>

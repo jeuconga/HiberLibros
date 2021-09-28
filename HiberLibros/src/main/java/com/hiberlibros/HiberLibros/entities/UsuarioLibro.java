@@ -30,12 +30,13 @@ public class UsuarioLibro {
     private String estadoConservacion;
     private String estadoPrestamo;
     private String quieroTengo;
+    private Boolean desactivado;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_libro")
     private Libro libro;
 

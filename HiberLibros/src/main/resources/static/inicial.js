@@ -94,28 +94,48 @@ function valoracion(value, row) {
             "<i class='fas fa-star' style='color:orange'></i>";
 }
 
-function btnReservar(value,row) {
-    return "<a href='/peticion/alta?id_ul="+value+"' class='btn btn-secondary'>Pedir</a>";
+function btnReservar(value, row) {
+    return "<a href='/peticion/alta?id_ul=" + value + "' class='btn btn-secondary'>Pedir</a>";
 }
-function btnValoracion(value,row){
-    return "<form action='/addValoracionLibro' method='post'>"+
-                                "<input type='hidden' name='id'  value='"+value+"' />"+  
-                                "<span class='clasificacion'>"+
-                                    "<input class='puntuacion' id='"+value+"radio5' type='radio' name='valoracion' value='5'>"+
-                                    "<label for='"+value+"radio5' class='estrella'>★</label>"+
-                                    "<input class='puntuacion' id='"+value+ "radio4' type='radio' name='valoracion' value='4'>"+
-                                    "<label for='"+value+"radio4' class='estrella'>★</label>"+
-                                    "<input class='puntuacion' id='"+value + "radio3' type='radio' name='valoracion' value='3'>"+
-                                    "<label for='"+value+ "radio3'  class='estrella'>★</label>"+
-                                    "<input class='puntuacion' id='"+value + "radio2' type='radio' name='valoracion' value='2'>"+
-                                    "<label for='"+value +"radio2' class='estrella'>★</label>"+
-                                    "<input class='puntuacion'  id='"+value+ "radio1' type='radio' name='valoracion' value='1'>"+
-                                    "<label for='"+value + "radio1'  class='estrella'>★</label>"+
-                                "</span>"+
-                                '<div class="row"><div class="col-3"> <button type="submit" class="btn btn-sm btn-warning">Valorar</button></div>'+
-                            "</form>"+
-                "<div class='col-6'> <a href='/foros/libro?id="+value+"' class='btn btn-sm btn-secondary'>Ir a foro</a></div></div>";
-    
+function btnValoracion(value, row) {
+    return "<form action='/libros/addValoracionLibro' method='post'>" +
+            "<input type='hidden' name='id'  value='" + value + "' />" +
+            "<span class='clasificacion'>" +
+            "<input class='puntuacion' id='" + value + "radio5' type='radio' name='valoracion' value='5'>" +
+            "<label for='" + value + "radio5' class='estrella'>★</label>" +
+            "<input class='puntuacion' id='" + value + "radio4' type='radio' name='valoracion' value='4'>" +
+            "<label for='" + value + "radio4' class='estrella'>★</label>" +
+            "<input class='puntuacion' id='" + value + "radio3' type='radio' name='valoracion' value='3'>" +
+            "<label for='" + value + "radio3'  class='estrella'>★</label>" +
+            "<input class='puntuacion' id='" + value + "radio2' type='radio' name='valoracion' value='2'>" +
+            "<label for='" + value + "radio2' class='estrella'>★</label>" +
+            "<input class='puntuacion'  id='" + value + "radio1' type='radio' name='valoracion' value='1'>" +
+            "<label for='" + value + "radio1'  class='estrella'>★</label>" +
+            "</span>" +
+            '<div class="row"><div class="col-3"> <button type="submit" class="btn btn-sm btn-warning">Valorar</button></div>' +
+            "</form>" +
+            "<div class='col-6'> <a href='/foros/libro' class='btn btn-sm btn-secondary'>Ir a foro</a></div></div>";
+
+}
+
+function formForo() {
+    bootbox.dialog({
+        title: 'Añadir autor',
+        size: 'large',
+        message: "<div id='foroForm'>" + $("#formularioForo").html() + "</div>"
+    }
+    );
+
+}
+
+function image(value,row) {
+	return "<img src='"+value+"' style='width:100px; height:120px;'>";
+}
+
+function previsualizar() {
+    var text =  document.getElementById("urlportada").value;
+	$("#previsualizacion").attr("src", text);
+	$("#mostrarImagen").show();
 }
 
 

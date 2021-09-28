@@ -27,7 +27,9 @@ public class ComentarioForo{
     
     private String  comentarioForo;
     
-    private Integer idUsuarioApertura;
+    @ManyToOne
+    @JoinColumn(name="id_usuario")
+    private Usuario usuarioComentario;
 
     @ManyToOne()
     @JoinColumn(name = "id_foro_libro")

@@ -30,18 +30,19 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public String guardarUsuarioYSeguridad(Usuario u, String password) {
         String resultado = guardarUsuario(u);
-        Optional<Usuario> usu = urService.findByMail(u.getMail());
-        if (usu.isPresent()) {
+        //Optional<Usuario> usu = urService.findByMail(u.getMail());
+        if (resultado.equals("Usuario registrado con éxito")) {
             serviceUsuarioSeguridad.altaUsuarioSeguridad(u.getMail(), u.getId(), password, "Usuario");
         }
 
         return resultado;
     }
-
+    
+    @Override
     public String guardarUsuarioYSeguridadAdmin(Usuario u, String password) {
-        String resultado = guardarUsuario(u);
-        Optional<Usuario> usu = urService.findByMail(u.getMail());
-        if (usu.isPresent()) {
+        String resultado = guardarUsuario(u);        
+        //Optional<Usuario> usu = urService.findByMail(u.getMail());
+        if (resultado.equals("Usuario registrado con éxito")) {
             serviceUsuarioSeguridad.altaUsuarioSeguridad(u.getMail(), u.getId(), password, "Administrador");
         }
 
@@ -63,7 +64,7 @@ public class UsuarioService implements IUsuarioService {
                 uAux.setDesactivado(Boolean.FALSE);
                 urService.save(uAux);
                 resultado = "Usuario registrado con éxito";
-            } else {
+            } else if(!uAux.getDesactivado()) {
                 resultado = "Error: Ya existe un usuario registrado con ese e-mail";
             }
         } else {

@@ -1,5 +1,6 @@
 package com.hiberlibros.HiberLibros.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,9 +16,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity 
+@Entity
 @Table(name = "libros")
 public class Libro {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -28,19 +30,18 @@ public class Libro {
     private String uriPortada;
     private Double valoracionLibro;
     private Integer numeroValoraciones;
-    
-     @ManyToOne(fetch = FetchType.EAGER) 
-    
+    private Boolean desactivado;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_autor")
-    private Autor  autor;
-     
-    @ManyToOne             
+    private Autor autor;
+
+    @ManyToOne
     @JoinColumn(name = "id_editorial")
-    private Editorial  editorial;
-    
-    @ManyToOne             
+    private Editorial editorial;
+
+    @ManyToOne
     @JoinColumn(name = "id_genero")
-    private Genero  genero; 
-    
-  
+    private Genero genero;
+
 }

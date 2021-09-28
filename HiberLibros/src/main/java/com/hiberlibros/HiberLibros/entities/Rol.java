@@ -1,5 +1,6 @@
 package com.hiberlibros.HiberLibros.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +25,7 @@ public class Rol {
 
     private String nombre_rol;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_usuario_seguridad")
     private UsuarioSeguridad idUsuario;
 }

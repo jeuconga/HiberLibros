@@ -62,7 +62,7 @@ public class AutorController {
     @PostMapping("/saveAutor")
     public String insertarAutor(Autor autor) {
         autorService.guardarAutor(autor);
-        return "redirect:autorLista";
+        return "redirect:hiberlibros/paneladmin";
     }
 
     @GetMapping("/deleteAutor/{id}")

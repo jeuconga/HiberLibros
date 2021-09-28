@@ -25,6 +25,7 @@ public class Editorial {
     private Integer id;
     
     private String nombreEditorial;
+    private Boolean desactivado;
     
 //    @OneToMany
 //    @JoinColumn(name = "idEditorial")

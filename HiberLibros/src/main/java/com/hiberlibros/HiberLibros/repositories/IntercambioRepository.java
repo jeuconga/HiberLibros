@@ -2,8 +2,8 @@ package com.hiberlibros.HiberLibros.repositories;
 
 import com.hiberlibros.HiberLibros.entities.Intercambio;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -15,4 +15,10 @@ public interface IntercambioRepository extends JpaRepository<Intercambio, Intege
     public List<Intercambio> findByUsuarioPrestador(UsuarioLibro ul);
 
     public List<Intercambio> findByUsuarioPrestatario(UsuarioLibro ul);
+    
+    public List<Intercambio> findByUsuarioPrestadorAndFechaDevolucion(UsuarioLibro ul, Date fechaDevolucion);
+    
+    public List<Intercambio> findByUsuarioPrestatarioAndFechaDevolucion(UsuarioLibro ul, Date fechaDevolucion);
+    
+    public void deleteByUsuarioPrestadorOrUsuarioPrestatario(UsuarioLibro ul, UsuarioLibro ul2);
 }

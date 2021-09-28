@@ -19,7 +19,6 @@ import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
 import com.hiberlibros.HiberLibros.services.EditorialService;
-import com.hiberlibros.HiberLibros.services.PeticionService;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -40,6 +39,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.hiberlibros.HiberLibros.interfaces.ILibroService;
+import com.hiberlibros.HiberLibros.interfaces.IPeticionService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 import java.util.UUID;
@@ -67,13 +67,16 @@ public class InicioController {
     @Autowired
     private IUsuarioLibroService ulService;
     @Autowired
-    private PeticionService petiService;
+    private IPeticionService petiService;
 
     @Autowired
     private AuthenticationManager manager;
 
     @Autowired
     private IIntercambioService serviceInter;
+
+    @Autowired
+    private ISeguridadService serviceSeguridad;
 
     private final String RUTA_BASE = "c:\\zzzzSubirFicheros\\";
 
@@ -86,9 +89,6 @@ public class InicioController {
         return "/principal/login";
     }
 
-    @Autowired
-    private ISeguridadService serviceSeguridad;
-
     @GetMapping("/pruebaContexto")
     @ResponseBody
     public String pruebaContexto() {
@@ -100,7 +100,7 @@ public class InicioController {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
         Authentication auth = manager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
-        List<String> roles = auth.getAuthorities().stream().map(x -> x.getAuthority()).collect(Collectors.toList()); 
+        List<String> roles = auth.getAuthorities().stream().map(x -> x.getAuthority()).collect(Collectors.toList());
         for (String rol : roles) {
             if ("ROLE_Administrador".equals(rol)) {
                 //return "redirect:/hiberlibros/panelAdministrador?mail=" + username;
@@ -131,7 +131,7 @@ public class InicioController {
         m.addAttribute("usuario", u);
         m.addAttribute("libros", ulService.buscarUsuariotiene(u));
         m.addAttribute("misPeticiones", petiService.consutarPeticionesUsuarioPendientes(u));
-//        m.addAttribute("petiRecibidas", petiService.consultarPeticonesRecibidas(u));
+        m.addAttribute("petiRecibidas", petiService.consultarPeticonesRecibidas(u));
         m.addAttribute("intercambiosPropios", serviceInter.encontrarULPrestador(ul));
         m.addAttribute("intercambiosPeticiones", serviceInter.encontrarULPrestatario(ul));
         return "principal/usuarioPanel";
@@ -178,7 +178,7 @@ public class InicioController {
     }
 
     @PostMapping("/saveAutor")//Guarda un autor y vuelve a la página de registrar libro
-    public String insertarAutor(Autor autor) {   
+    public String insertarAutor(Autor autor) {
         autorRepo.save(autor);
         return "redirect:/hiberlibros/guardarLibro?buscador=XXX";
     }
@@ -262,10 +262,6 @@ public class InicioController {
         Peticion p = petiService.consultarPeticionId(id_peticion);
         UsuarioLibro ulPrestatario = ulService.encontrarId(usuarioPrestatario);
         UsuarioLibro ulPrestador = p.getIdUsuarioLibro();
-        ulPrestatario.setEstadoPrestamo("ocupado");
-        ulService.editar(ulPrestatario);
-        ulPrestador.setEstadoPrestamo("ocupado");
-        ulService.editar(ulPrestador);
         serviceInter.guardarIntercambio(ulPrestatario, ulPrestador);
         petiService.aceptarPeticion(p);
 
@@ -289,25 +285,26 @@ public class InicioController {
     public Usuario editar() {
         return usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
     }
-    
+
     @GetMapping("/tablaBuscarLibro")
     @ResponseBody
-    public List<TablaLibrosDto> tablaBuscarLibro(){
+    public List<TablaLibrosDto> tablaBuscarLibro() {
         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
-        List<UsuarioLibro> ul=ulService.buscarDisponibles(u);
-        List<TablaLibrosDto> tld=ul.stream().map(x->new TablaLibrosDto(
-                                        x.getId(),
-                                        x.getLibro().getId(),
-                                        x.getLibro().getIsbn(),
-                                        x.getLibro().getTitulo(),
-                                        x.getLibro().getAutor().getNombre()+" "+ x.getLibro().getAutor().getApellidos(),
-                                        x.getLibro().getIdioma(),
-                                        x.getLibro().getEditorial().getNombreEditorial(),
-                                        x.getLibro().getValoracionLibro(),
-                                        x.getEstadoConservacion(),
-                                        x.getUsuario().getNombre()))
-                                    .collect(Collectors.toList());
-        
+        List<UsuarioLibro> ul = ulService.buscarDisponibles(u);
+        List<TablaLibrosDto> tld = ul.stream().map(x -> new TablaLibrosDto(
+                x.getId(),
+                x.getLibro().getId(),
+                x.getLibro().getUriPortada(),
+                x.getLibro().getIsbn(),
+                x.getLibro().getTitulo(),
+                x.getLibro().getAutor().getNombre() + " " + x.getLibro().getAutor().getApellidos(),
+                x.getLibro().getIdioma(),
+                x.getLibro().getEditorial().getNombreEditorial(),
+                x.getLibro().getValoracionLibro(),
+                x.getEstadoConservacion(),
+                x.getUsuario().getNombre()))
+                .collect(Collectors.toList());
+
         return tld;
     }
 
