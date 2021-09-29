@@ -135,7 +135,8 @@ function image(value,row) {
 function previsualizar() {
     var text =  document.getElementById("urlportada").value;
 	$("#previsualizacion").attr("src", text);
-	$("#mostrarImagen").show();
+	$("#mostrarImagen").hide();
+	$("#mostrarImagen").fadeIn(1000);
 }
 
 
