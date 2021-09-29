@@ -109,12 +109,12 @@ public class AutorController {
     @PostMapping("/guardarAutor")
     public String guardarAutor(Model m, Autor autor) {
         autorRepo.save(autor);
-        return "administrador/vistaAdministrador";
+        return "redirect:autores/listarAdmin";
     }
 
     @GetMapping("/eliminarAutor")
     public String eliminarAutorAdmin(Integer id) {
         autorRepo.deleteById(id);
-        return "administrador/vistaAdministrador";
+        return "redirect:autores/listarAdmin";
     }
 }

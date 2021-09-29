@@ -1,4 +1,4 @@
-    package com.hiberlibros.HiberLibros.controllers;
+package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
@@ -8,8 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/usuarios")
@@ -70,7 +74,39 @@ public class UsuarioController {
     @PostMapping("/altaAdmin")
     public String altaAdmin(Usuario u, String password) {
         String resultado = serviceUsuario.guardarUsuarioYSeguridadAdmin(u, password);
-        return "/administrador/vistaAdministrador";
+        return "redirect:listarAdmin";
     }
 
+
+//    
+//    public final String RUTA_IMAGEN = "../../../../resources/static/imagenesPerfil/";
+//    private final String RUTA_IMAGEN = "c:\\zzzzImagenPerfiles\\";
+//
+//    @PostMapping("/imagenPerfil")
+//    public String imagenPerfil(Model m, Integer id, MultipartFile ficheroImagen) {
+//        String nombre = UUID.randomUUID().toString();
+//        String nombreFichero = ficheroImagen.getOriginalFilename().toLowerCase();
+//        String extension = nombreFichero.substring(nombreFichero.lastIndexOf("."));
+//        String subir = RUTA_IMAGEN + nombre + extension;
+//        File f = new File(subir);
+//        f.getParentFile().mkdirs();
+//
+//        try {
+//            Files.copy(ficheroImagen.getInputStream(), f.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//            Usuario user = serviceUsuario.usuarioId(id);
+//            user.setUriFoto(subir);
+//            System.out.println("aaa : " + user.getUriFoto());
+//            serviceUsuario.editarUsuario(user);
+//           
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//
+//        }
+//
+//        return "redirect:/hiberlibros/panelUsuario";
+//    }
+    
+    
+    
 }

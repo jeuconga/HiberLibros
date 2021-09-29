@@ -7,7 +7,7 @@ function modificarLibros(pId) {
         },
         success: function (pHtml) {
             bootbox.dialog({
-                title: "Modificar",
+                title: "Modificar libro",
                 size: "large",
                 message: pHtml
             })
@@ -26,7 +26,7 @@ function modificarRelato(pId) {
         },
         success: function (pHtml) {
             bootbox.dialog({
-                title: "Modificar",
+                title: "Modificar relato",
                 size: "large",
                 message: pHtml
             })
@@ -46,7 +46,7 @@ function mostrarLibros(pId) {
         },
         success: function (pHtml) {
             bootbox.dialog({
-
+				animate :true,
                 size: "large",
                 message: pHtml
             })
@@ -158,35 +158,29 @@ function editarGenero(pID) {
 
 }
 
+function mostrarContactos(){
+    $.ajax({
+        url: '/hiberlibros/paneladmin/contacto',
+        success: function (pHtml) {
+            bootbox.dialog({
+                size: "small",
+                message: pHtml
+            })
+        },
+        error: function (err) {
+            alert('Error 404, page not found')
+        }
+    });
+}
+function previsualizar() {
+    var text =  document.getElementById("urlPortada").value;
+	$("#previsualizacion").attr("src", text);
+	$("#previsualizacion").hide();
+	$("#previsualizacion").fadeIn(1000);
+}
+
 ///////////////////////////////////////////////////////////////////
-$(document).ready(function () {
-    $("#capa").load("/vistaAdministrador #inicio");
-});
-$(document).ready(function () {
-    $("#boton").click(function (event) {
-        $("#capa").load("/usuarios/listarAdmin");
-    });
-});
-$(document).ready(function () {
-    $("#boton2").click(function (event) {
-        $("#capa").load("/libros/listarAdmin");
-    });
-});
-$(document).ready(function () {
-    $("#boton3").click(function (event) {
-        $("#capa").load("/relato/listarAdmin");
-    });
-});
-$(document).ready(function () {
-    $("#boton4").click(function (event) {
-        $("#capa").load("/autores/listarAdmin");
-    });
-});
-$(document).ready(function () {
-    $("#boton5").click(function (event) {
-        $("#capa").load("/genero/listarAdmin");
-    });
-});
+
 $(function () {
     $("#container").simpleCalendar();
 });

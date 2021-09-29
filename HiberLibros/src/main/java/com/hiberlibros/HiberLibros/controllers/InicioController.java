@@ -42,6 +42,8 @@ import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 import com.hiberlibros.HiberLibros.interfaces.IPeticionService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
+import com.hiberlibros.HiberLibros.repositories.IntercambioRepository;
+import com.hiberlibros.HiberLibros.repositories.UsuarioLibroRepository;
 import java.util.UUID;
 
 /**
@@ -77,6 +79,12 @@ public class InicioController {
 
     @Autowired
     private ISeguridadService serviceSeguridad;
+
+    @Autowired
+    private UsuarioLibroRepository usuarioLibroRepo;
+
+    @Autowired
+    private IntercambioRepository intercambioRepo;
 
     private final String RUTA_BASE = "c:\\zzzzSubirFicheros\\";
 
@@ -134,6 +142,9 @@ public class InicioController {
         m.addAttribute("petiRecibidas", petiService.consultarPeticonesRecibidas(u));
         m.addAttribute("intercambiosPropios", serviceInter.encontrarULPrestador(ul));
         m.addAttribute("intercambiosPeticiones", serviceInter.encontrarULPrestatario(ul));
+        m.addAttribute("librosUsuario", usuarioLibroRepo.countByUsuario(u)); 
+        m.addAttribute("numIntercambioPendiente", intercambioRepo.countByFechaDevolucion(null));
+        
         return "principal/usuarioPanel";
     }
 
