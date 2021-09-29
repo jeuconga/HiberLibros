@@ -71,11 +71,14 @@ public class LibroController {
     }
 
     @GetMapping("/listarAdmin")
-    private String listarTodo(Model m) {
+    private String listarTodo(Model m, String borrado) {
         m.addAttribute("libros", libroService.encontrarDisponible());
         m.addAttribute("generos", serviceGen.getGeneros());
         m.addAttribute("editoriales", serviceEdit.consultaTodas());
         m.addAttribute("autores", serviceAutor.consultarAutores());
+        if(borrado!=null){
+            m.addAttribute("borrado",borrado);
+        }
 
         return "/administrador/libros";
     }
@@ -91,13 +94,14 @@ public class LibroController {
     }
 
     @GetMapping("/eliminarAdmin")
-    public String eliminarAdmin(Model m, Integer id) {
+    public String eliminarAdmin(Integer id) {
+        String borrado="";
         if (libroService.bajaLibroId(id)) {
-            m.addAttribute("borrado", "Borrado con éxito");
+            borrado="Borrado con éxito";
         } else {
-            m.addAttribute("borrado", "Error, no es posible borrar este autor");
+           borrado= "Error, no es posible borrar este autor";
         }
-        return "redirect:listarAdmin";
+        return "redirect:listarAdmin?borrado="+borrado;
     }
 
     @PostMapping("/addValoracionLibro")

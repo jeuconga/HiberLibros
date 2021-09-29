@@ -58,6 +58,7 @@ public class UsuarioLibroService implements IUsuarioLibroService {
     public void guardar(UsuarioLibro ul, Libro l, Usuario u) {//guarda el registro
         ul.setLibro(l);
         ul.setUsuario(u);
+        ul.setDesactivado(Boolean.FALSE);
         ulRepo.save(ul);
 
     }
@@ -86,7 +87,7 @@ public class UsuarioLibroService implements IUsuarioLibroService {
 
     @Override
     public List<UsuarioLibro> buscarUsuariotiene(Usuario u) {
-        return ulRepo.findByUsuarioAndDesactivadoNotOrderByQuieroTengoAsc(u, Boolean.FALSE);
+        return ulRepo.findByUsuarioAndDesactivadoOrderByQuieroTengoAsc(u, Boolean.FALSE);
     }
 
     @Override
@@ -112,7 +113,7 @@ public class UsuarioLibroService implements IUsuarioLibroService {
     @Override
     public Boolean libroBorrado(Libro l) {
         List<UsuarioLibro> ul = ulRepo.findByLibroAndDesactivadoAndEstadoPrestamo(l, Boolean.FALSE, "ocupado");
-        if (!ul.isEmpty() || ul != null) {
+        if (!ul.isEmpty()) {
             return false;
         } else {
             ul = ulRepo.findByLibroAndDesactivado(l, Boolean.FALSE);
