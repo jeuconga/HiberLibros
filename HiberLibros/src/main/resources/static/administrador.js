@@ -195,27 +195,8 @@ $("#container").simpleCalendar({
 // displays events
     displayEvent: true,
     // event dates
-    events: [
+    events: calendarData,
 
-        //genera nuevo evento para el dia siguiente de 1 hora de duracion
-        {
-            startDate: new Date(new Date().setHours(new Date().getHours() + 24)).toDateString(),
-            endDate: new Date(new Date().setHours(new Date().getHours() + 25)).toISOString(),
-            summary: 'Crea un recordatorio'
-        },
-        // genera evento para ayer por la tarde
-        {
-            startDate: new Date(new Date().setHours(new Date().getHours() - new Date().getHours() - 12, 0)).toISOString(),
-            endDate: new Date(new Date().setHours(new Date().getHours() - new Date().getHours() - 11)).getTime(),
-            summary: 'Crea un recordatorio 2'
-        },
-        //genera nuevo evento para los ultimos dos dias
-        {
-            startDate: new Date(new Date().setHours(new Date().getHours() - 48)).toISOString(),
-            endDate: new Date(new Date().setHours(new Date().getHours() - 24)).getTime(),
-            summary: 'Crea un recordatorio 3'
-        }
-    ],
     //Dishabilitar descripcion de evento
     disableEventDetails: false,
     disableEmptyDetails: false
