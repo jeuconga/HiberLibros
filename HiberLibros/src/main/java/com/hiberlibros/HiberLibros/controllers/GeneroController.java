@@ -35,7 +35,7 @@ public class GeneroController {
     public String formulario(Genero genero) {
         generoRepository.save(genero);
 
-        return "redirect:/hiberlibros/paneladmin";
+        return "redirect:listarAdmin";
     }
 
     @GetMapping("/borrar/{id}")

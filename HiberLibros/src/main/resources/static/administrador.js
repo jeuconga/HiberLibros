@@ -173,6 +173,13 @@ function mostrarContactos(){
     });
 }
 
+function previsualizar() {
+    var text =  document.getElementById("urlportada").value;
+	$("#previsualizacion").attr("src", text);
+	$("#previsualizacion").hide();
+	$("#previsualizacion").fadeIn(1000);
+}
+
 ///////////////////////////////////////////////////////////////////
 
 $(function () {
