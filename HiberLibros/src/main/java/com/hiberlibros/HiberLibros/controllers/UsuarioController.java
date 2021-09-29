@@ -48,7 +48,7 @@ public class UsuarioController {
 
     @PostMapping("/guardarUsuario")//guarda un usuario devuelve un mensaje de error concreto
     public String usuarioRegistrar(Usuario u, String password) {
-        //String resultado = service.guardarUsuario(u);
+        //String resultado = service.guardarUsuario(u);     
         String resultado = serviceUsuario.guardarUsuarioYSeguridad(u, password);
         if (resultado.contains("Error")) {
             return "redirect:/hiberlibros?error=" + resultado;//mail existente, mail no válido
