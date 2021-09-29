@@ -66,7 +66,7 @@ public class LibroController {
         m.addAttribute("generos", genRepo.findAll());
         m.addAttribute("editoriales", editRepo.findAll());
         m.addAttribute("autores", AutRepo.findAll());
-
+        m.addAttribute("imagen", librepo.findById(id).get().getUriPortada());
         return "libros/modificar";
     }
 

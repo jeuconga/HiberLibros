@@ -5,12 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div class="card">
-            <div class=" m-2">
-              <img id="previsualizacion" class="card-img-top" alt="Imagen no encontrada">
-                <div class="card-body" >             
+        <div>
+            <div class="m-2 row">
+            	<div class="col-4">
+              		<img id="previsualizacion" th:src="${imagen}" alt="Imagen no encontrada.Prueba otra URL" style="width:240px;height:320px">
+              	</div>
+              	<div class="col-6">       
                     <form action="/libros/guardarAdmin" method="post" th:object="${libro}" >
                         <input class="m-1"  type="hidden" th:field="*{id}"/>
+                        <div></div>
                         <span class="m-1">ISBN</span><input class="m-1"  th:field="*{isbn}" placeholder="Descripcion" required /><br/>
                         <span class="m-1">Titulo</span> <input  class="m-1"   th:field="*{titulo}" /><br/>
                         <span class="m-1">Idioma</span> <input  class="m-1"    th:field="*{idioma}"/><br/>
@@ -30,7 +33,7 @@
                         </select>
                         <button type="submit" class="btn btn-dark" ><i class="fas fa-arrow-circle-up"><span style="margin-left: 5px">Guardar</span></i> </button>
                     </form>
-                </div>
+                 </div>   
             </div>
         </div>
     </body>

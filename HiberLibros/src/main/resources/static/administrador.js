@@ -7,7 +7,7 @@ function modificarLibros(pId) {
         },
         success: function (pHtml) {
             bootbox.dialog({
-                title: "Modificar",
+                title: "Modificar libro",
                 size: "large",
                 message: pHtml
             })
@@ -26,7 +26,7 @@ function modificarRelato(pId) {
         },
         success: function (pHtml) {
             bootbox.dialog({
-                title: "Modificar",
+                title: "Modificar relato",
                 size: "large",
                 message: pHtml
             })
@@ -172,9 +172,8 @@ function mostrarContactos(){
         }
     });
 }
-
 function previsualizar() {
-    var text =  document.getElementById("urlportada").value;
+    var text =  document.getElementById("urlPortada").value;
 	$("#previsualizacion").attr("src", text);
 	$("#previsualizacion").hide();
 	$("#previsualizacion").fadeIn(1000);
