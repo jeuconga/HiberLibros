@@ -8,8 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hiberlibros.HiberLibros.repositories.UsuarioRepository;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Optional;
 import javax.transaction.Transactional;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 /**
  *
@@ -37,10 +45,10 @@ public class UsuarioService implements IUsuarioService {
 
         return resultado;
     }
-    
+
     @Override
     public String guardarUsuarioYSeguridadAdmin(Usuario u, String password) {
-        String resultado = guardarUsuario(u);        
+        String resultado = guardarUsuario(u);
         //Optional<Usuario> usu = urService.findByMail(u.getMail());
         if (resultado.equals("Usuario registrado con éxito")) {
             serviceUsuarioSeguridad.altaUsuarioSeguridad(u.getMail(), u.getId(), password, "Administrador");
@@ -64,7 +72,7 @@ public class UsuarioService implements IUsuarioService {
                 uAux.setDesactivado(Boolean.FALSE);
                 urService.save(uAux);
                 resultado = "Usuario registrado con éxito";
-            } else if(!uAux.getDesactivado()) {
+            } else if (!uAux.getDesactivado()) {
                 resultado = "Error: Ya existe un usuario registrado con ese e-mail";
             }
         } else {
@@ -122,6 +130,29 @@ public class UsuarioService implements IUsuarioService {
         long numUsuario = urService.findByDesactivado(Boolean.FALSE).stream()
                 .count();
         return (int) (numUsuario);
+    }
+
+    @Override
+    public ResponseEntity<Resource> visualizarImagen(String imagen){
+        File file = new File(imagen);
+        HttpHeaders header = new HttpHeaders();
+        header.add("Content-Disposition", "attachment;");
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+        try {
+            
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(imagen));
+            return ResponseEntity.ok()
+                    .headers(header)
+                    .contentLength(file.length())
+                    .contentType(MediaType.parseMediaType("application/octet-stream"))
+                    .body(resource);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
