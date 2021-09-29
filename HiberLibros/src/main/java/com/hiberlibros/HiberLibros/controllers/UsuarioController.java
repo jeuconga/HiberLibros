@@ -87,7 +87,7 @@ public class UsuarioController {
     @PostMapping("/altaAdmin")
     public String altaAdmin(Usuario u, String password) {
         String resultado = serviceUsuario.guardarUsuarioYSeguridadAdmin(u, password);
-        return "/administrador/vistaAdministrador";
+        return "redirect:listarAdmin";
     }
 
     @PostMapping("/imagenPerfil")

@@ -55,4 +55,9 @@ public class LibroService implements ILibroService {
         return libroRep.findByAutor(a);
     }
 
+    @Override
+    public List<Libro> recuperarTodosLibros() {
+        return libroRep.findAll();
+    }
+
 }

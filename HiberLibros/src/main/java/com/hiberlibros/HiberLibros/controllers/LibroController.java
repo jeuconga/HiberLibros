@@ -66,7 +66,7 @@ public class LibroController {
         m.addAttribute("generos", genRepo.findAll());
         m.addAttribute("editoriales", editRepo.findAll());
         m.addAttribute("autores", AutRepo.findAll());
-
+        m.addAttribute("imagen", librepo.findById(id).get().getUriPortada());
         return "libros/modificar";
     }
 
@@ -87,7 +87,7 @@ public class LibroController {
         libro.setAutor(AutRepo.getById(id_autor));
         librepo.save(libro);
         
-        return "/administrador/vistaAdministrador";
+        return "redirect:listarAdmin";
     }
 
     @GetMapping("/eliminarAdmin")
@@ -96,7 +96,7 @@ public class LibroController {
         if (l.isPresent()) {
             librepo.deleteById(id);
         }
-        return "/administrador/vistaAdministrador";
+        return "redirect:listarAdmin";
     }
 
     @PostMapping("/addValoracionLibro")

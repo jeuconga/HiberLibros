@@ -97,6 +97,11 @@ function valoracion(value, row) {
 function btnReservar(value, row) {
     return "<a href='/peticion/alta?id_ul=" + value + "' class='btn btn-secondary'>Pedir</a>";
 }
+
+function btnForo(value, row) {
+    return "<a href='/foros/libro?id=" + value + "' class='btn btn-secondary'>Foro</a>";
+}
+
 function btnValoracion(value, row) {
     return "<form action='/libros/addValoracionLibro' method='post'>" +
             "<input type='hidden' name='id'  value='" + value + "' />" +
@@ -120,7 +125,7 @@ function btnValoracion(value, row) {
 
 function formForo() {
     bootbox.dialog({
-        title: 'Añadir autor',
+        title: 'Añadir Foro',
         size: 'large',
         message: "<div id='foroForm'>" + $("#formularioForo").html() + "</div>"
     }
@@ -135,7 +140,8 @@ function image(value,row) {
 function previsualizar() {
     var text =  document.getElementById("urlportada").value;
 	$("#previsualizacion").attr("src", text);
-	$("#mostrarImagen").show();
+	$("#mostrarImagen").hide();
+	$("#mostrarImagen").fadeIn(1000);
 }
 
 
