@@ -43,10 +43,10 @@ public class GeneroService implements IGeneroService {
         Genero g=encontrarPorId(id);
         List<Libro> l=serviceLS.encontrarPorGenero(g);
         List<Preferencia> p=servicePrefe.encontrarPorGenero(g);
-        if((l.size()==0 || l==null)&&(p.size()==0 || p==null)){
+        if((l.isEmpty() || l==null)&&(p.isEmpty() || p==null)){
             repoGenero.deleteById(id);
             return true;
-        }else if (p.size()==0 || p==null){
+        }else if (p.isEmpty() || p==null){
             Boolean result=serviceLS.bajaLibrosList(l);
             if(result){
                 g.setDesactivado(Boolean.TRUE);

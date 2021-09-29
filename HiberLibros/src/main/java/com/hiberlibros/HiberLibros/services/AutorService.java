@@ -37,7 +37,7 @@ public class AutorService implements IAutorService {
 
     @Override
     public List<Autor> buscarAutores(String buscar) {
-        return autorRepo.findByNombreContainsIgnoreCaseAndApellidosContainsIgnoreCase(buscar, buscar);
+        return autorRepo.findByNombreContainsIgnoreCaseOrApellidosContainsIgnoreCase(buscar, buscar);
 //        return autorRepo.findAll().stream()
 //                .filter(
 //                        x -> x.getNombre().concat(x.getApellidos()).toLowerCase()//paso nombre completo a minusuclas para comparar

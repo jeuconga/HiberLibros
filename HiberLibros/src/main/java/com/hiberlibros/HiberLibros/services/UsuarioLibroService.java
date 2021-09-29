@@ -63,8 +63,15 @@ public class UsuarioLibroService implements IUsuarioLibroService {
     }
 
     @Override
-    public void borrar(Integer id) {
-        ulRepo.deleteById(id);
+    public Boolean borrar(Integer id) {
+        UsuarioLibro ul = encontrarId(id);
+        if(ul.getEstadoPrestamo().equals("ocupado")){
+            return false;
+        }else{
+            ul.setDesactivado(Boolean.TRUE);
+            editar(ul);
+            return true;
+        }
     }
 
     @Override
@@ -79,7 +86,7 @@ public class UsuarioLibroService implements IUsuarioLibroService {
 
     @Override
     public List<UsuarioLibro> buscarUsuariotiene(Usuario u) {
-        return ulRepo.findByUsuarioAndQuieroTengoNotOrderByQuieroTengoAsc(u, "no");
+        return ulRepo.findByUsuarioAndDesactivadoNotOrderByQuieroTengoAsc(u, Boolean.FALSE);
     }
 
     @Override
@@ -90,7 +97,7 @@ public class UsuarioLibroService implements IUsuarioLibroService {
     @Override
     public Boolean usuarioBorrado(Usuario u) {
         List<UsuarioLibro> ul = ulRepo.findByUsuarioAndDesactivadoAndEstadoPrestamo(u, Boolean.FALSE, "ocupado");
-        if (ul.size() != 0 || ul == null) {
+        if (!ul.isEmpty() || ul != null) {
             return false;
         } else {
             ul = ulRepo.findByUsuarioAndDesactivado(u, Boolean.FALSE);
@@ -105,7 +112,7 @@ public class UsuarioLibroService implements IUsuarioLibroService {
     @Override
     public Boolean libroBorrado(Libro l) {
         List<UsuarioLibro> ul = ulRepo.findByLibroAndDesactivadoAndEstadoPrestamo(l, Boolean.FALSE, "ocupado");
-        if (ul.size() != 0 || ul == null) {
+        if (!ul.isEmpty() || ul != null) {
             return false;
         } else {
             ul = ulRepo.findByLibroAndDesactivado(l, Boolean.FALSE);
@@ -119,24 +126,25 @@ public class UsuarioLibroService implements IUsuarioLibroService {
 
     @Override
     public List<UsuarioLibro> buscarLibro(Libro l) {
-       return ulRepo.findByLibroAndDesactivadoAndEstadoPrestamo(l, Boolean.FALSE, "ocupado");
+        return ulRepo.findByLibroAndDesactivadoAndEstadoPrestamo(l, Boolean.FALSE, "ocupado");
     }
 
     @Override
     public Boolean librosOcupado(List<Libro> l) {
-        List<UsuarioLibro> ul=new ArrayList<>();
-        l.forEach(x->{
-            List<UsuarioLibro> ulAux=buscarLibro(x);
-            ulAux.forEach(y->{
+        List<UsuarioLibro> ul = new ArrayList<>();
+        l.forEach(x -> {
+            List<UsuarioLibro> ulAux = buscarLibro(x);
+            ulAux.forEach(y -> {
                 ul.add(y);
-            });                
+            });
         });
-        if(ul.size()==0 || ul==null){//si no hay ningún libro ocupado devuelve verdadero por lo que podría hacer la desactivación de autor o el de libro
-            return true;
-        }
-        else{
-            return false;//si hay algún libro ocupado no se puede borrar porque están en medio de un intercambio
-        }       
+        return (ul.isEmpty() || ul == null); //si no hay ningún libro ocupado devuelve verdadero por lo que podría hacer la desactivación de autor o el de libro
+        //si hay algún libro ocupado no se puede borrar porque están en medio de un intercambio
+    }
+
+    @Override
+    public Integer contarLibrosPorUsuario(Usuario u) {
+        return ulRepo.countByUsuarioAndDesactivado(u, Boolean.FALSE);
     }
 
 }

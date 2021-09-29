@@ -1,6 +1,7 @@
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Autor;
+import com.hiberlibros.HiberLibros.entities.Editorial;
 import com.hiberlibros.HiberLibros.entities.ForoLibro;
 import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Libro;
@@ -40,6 +41,7 @@ public class LibroService implements ILibroService {
 
     @Override
     public void guardarLibro(Libro l) {
+        l.setDesactivado(Boolean.FALSE);
         libroRep.save(l);
     }
 
@@ -98,7 +100,17 @@ public class LibroService implements ILibroService {
 
     @Override
     public List<Libro> encontrarPorGenero(Genero g) {
-        return libroRep.findByGeneroAndDesactivado(g, Boolean.FALSE);
+        return libroRep.findByGenero(g);
+    }
+
+    @Override
+    public List<Libro> encontrarPorEditorial(Editorial e) { 
+        return libroRep.findByEditorial(e);
+    }
+
+    @Override
+    public List<Libro> encontrarPorAutorActivos(Autor a) {
+        return libroRep.findByAutorAndDesactivado(a, Boolean.FALSE);
     }
 
 }

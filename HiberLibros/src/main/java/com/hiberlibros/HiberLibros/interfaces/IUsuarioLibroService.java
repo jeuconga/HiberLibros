@@ -25,7 +25,7 @@ public interface IUsuarioLibroService {
 
     public void guardar(UsuarioLibro ul, Libro l, Usuario u);
 
-    public void borrar(Integer id);
+    public Boolean borrar(Integer id);
 
     public void editar(UsuarioLibro ul);
 
@@ -38,4 +38,6 @@ public interface IUsuarioLibroService {
     public Boolean libroBorrado(Libro l);
     
     public Boolean librosOcupado(List<Libro> l);
+    
+    public Integer contarLibrosPorUsuario(Usuario u);
 }

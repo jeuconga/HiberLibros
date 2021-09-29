@@ -18,7 +18,7 @@ public interface UsuarioLibroRepository extends JpaRepository<UsuarioLibro, Inte
 
     public List<UsuarioLibro> findByLibroAndQuieroTengoAndEstadoPrestamo(Libro l, String quieroTengo, String estadoPrestamo);
 
-    public List<UsuarioLibro> findByUsuarioAndQuieroTengoNotOrderByQuieroTengoAsc(Usuario u, String quieroTengo);
+    public List<UsuarioLibro> findByUsuarioAndDesactivadoNotOrderByQuieroTengoAsc(Usuario u, Boolean b);
 
     public List<UsuarioLibro> findByUsuarioNotAndQuieroTengoAndEstadoPrestamo(Usuario u, String quieroTengo, String estadoPrestamo);
     
@@ -32,5 +32,6 @@ public interface UsuarioLibroRepository extends JpaRepository<UsuarioLibro, Inte
     
     public List<UsuarioLibro> findByUsuarioNotAndQuieroTengoAndEstadoPrestamoAndDesactivado(Usuario u, String quieroTengo, String estadoPrestamo, Boolean b);
     
+    public Integer countByUsuarioAndDesactivado(Usuario usuario, Boolean b);
 
 }

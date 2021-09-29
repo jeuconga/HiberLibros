@@ -1,6 +1,7 @@
 package com.hiberlibros.HiberLibros.repositories;
 
 import com.hiberlibros.HiberLibros.entities.Autor;
+import com.hiberlibros.HiberLibros.entities.Editorial;
 import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Libro;
 import java.util.List;
@@ -18,5 +19,9 @@ public interface LibroRepository extends JpaRepository<Libro, Integer> {
 
     public List<Libro> findByAutor(Autor autor);
     
-    public List<Libro> findByGeneroAndDesactivado(Genero g, Boolean b);
+    public List<Libro> findByAutorAndDesactivado(Autor autor, Boolean b);
+    
+    public List<Libro> findByGenero(Genero g);
+    
+    public List<Libro> findByEditorial(Editorial e);
 }

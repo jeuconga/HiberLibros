@@ -26,6 +26,8 @@ public interface IUsuarioService {
     public String guardarUsuarioYSeguridad(Usuario u, String password);
 
     public String guardarUsuarioYSeguridadAdmin(Usuario u, String password);
+    
+    public Integer contarUsuarios();
 
 
 }

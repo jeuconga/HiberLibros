@@ -120,13 +120,12 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     public Usuario usuarioId(Integer id) {
-        return urService.findById(id).get();
+        return urService.findByIdAndDesactivado(id, Boolean.FALSE).get();
     }
 
+    @Override
     public Integer contarUsuarios() {
-        long numUsuario = urService.findByDesactivado(Boolean.FALSE).stream()
-                .count();
-        return (int) (numUsuario);
+        return urService.countByDesactivado(Boolean.FALSE);
     }
 
 }
