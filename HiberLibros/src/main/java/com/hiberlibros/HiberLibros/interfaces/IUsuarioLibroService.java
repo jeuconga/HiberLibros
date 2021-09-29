@@ -16,6 +16,8 @@ public interface IUsuarioLibroService {
     public List<UsuarioLibro> buscarContiene(String buscador, Integer id);
 
     public List<UsuarioLibro> buscarUsuario(Usuario u);
+    
+    public List<UsuarioLibro> buscarLibro(Libro l);
 
     public List<UsuarioLibro> buscarUsuarioDisponibilidad(Usuario u, String tengo, String disponibilidad);
 
@@ -34,4 +36,6 @@ public interface IUsuarioLibroService {
     public Boolean usuarioBorrado(Usuario u);
     
     public Boolean libroBorrado(Libro l);
+    
+    public Boolean librosOcupado(List<Libro> l);
 }

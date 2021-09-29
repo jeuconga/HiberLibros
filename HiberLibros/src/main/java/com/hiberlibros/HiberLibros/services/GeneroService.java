@@ -1,10 +1,15 @@
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Genero;
-import java.util.ArrayList;
+import com.hiberlibros.HiberLibros.entities.Libro;
+import com.hiberlibros.HiberLibros.entities.Preferencia;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.hiberlibros.HiberLibros.interfaces.IGeneroService;
+import com.hiberlibros.HiberLibros.interfaces.ILibroService;
+import com.hiberlibros.HiberLibros.interfaces.IPreferenciaService;
+import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -12,21 +17,51 @@ import com.hiberlibros.HiberLibros.interfaces.IGeneroService;
  */
 @Service
 public class GeneroService implements IGeneroService {
-
-    private List<Genero> listaGeneros = new ArrayList<>();
-
+    
+    @Autowired
+    private GeneroRepository repoGenero;
+    
+    @Autowired
+    private ILibroService serviceLS;
+    
+    @Autowired
+    private IPreferenciaService servicePrefe;
+    
     @Override
-    public void guardarGenero(Genero genero) {
-        listaGeneros.add(genero);
+    public Genero encontrarPorId(Integer id) {
+        return repoGenero.findById(id).get();
     }
 
     @Override
-    public void borrarGenero(Integer id) {
+    public void guardarGenero(Genero genero) {
+        genero.setDesactivado(Boolean.FALSE);
+        repoGenero.save(genero);
+    }
 
+    @Override
+    public Boolean borrarGenero(Integer id) {
+        Genero g=encontrarPorId(id);
+        List<Libro> l=serviceLS.encontrarPorGenero(g);
+        List<Preferencia> p=servicePrefe.encontrarPorGenero(g);
+        if((l.size()==0 || l==null)&&(p.size()==0 || p==null)){
+            repoGenero.deleteById(id);
+            return true;
+        }else if (p.size()==0 || p==null){
+            Boolean result=serviceLS.bajaLibrosList(l);
+            if(result){
+                g.setDesactivado(Boolean.TRUE);
+                repoGenero.save(g);
+            }
+            return result;        
+        }else{
+            return false;
+        }        
     }
 
     @Override
     public List<Genero> getGeneros() {
-        return listaGeneros;
+        return repoGenero.findByDesactivado(Boolean.FALSE);
     }
+
+    
 }

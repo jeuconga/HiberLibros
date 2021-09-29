@@ -104,7 +104,39 @@ public class UsuarioLibroService implements IUsuarioLibroService {
 
     @Override
     public Boolean libroBorrado(Libro l) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<UsuarioLibro> ul = ulRepo.findByLibroAndDesactivadoAndEstadoPrestamo(l, Boolean.FALSE, "ocupado");
+        if (ul.size() != 0 || ul == null) {
+            return false;
+        } else {
+            ul = ulRepo.findByLibroAndDesactivado(l, Boolean.FALSE);
+            ul.forEach(x -> {
+                x.setDesactivado(Boolean.TRUE);
+                ulRepo.save(x);
+            });
+            return true;
+        }
+    }
+
+    @Override
+    public List<UsuarioLibro> buscarLibro(Libro l) {
+       return ulRepo.findByLibroAndDesactivadoAndEstadoPrestamo(l, Boolean.FALSE, "ocupado");
+    }
+
+    @Override
+    public Boolean librosOcupado(List<Libro> l) {
+        List<UsuarioLibro> ul=new ArrayList<>();
+        l.forEach(x->{
+            List<UsuarioLibro> ulAux=buscarLibro(x);
+            ulAux.forEach(y->{
+                ul.add(y);
+            });                
+        });
+        if(ul.size()==0 || ul==null){//si no hay ningún libro ocupado devuelve verdadero por lo que podría hacer la desactivación de autor o el de libro
+            return true;
+        }
+        else{
+            return false;//si hay algún libro ocupado no se puede borrar porque están en medio de un intercambio
+        }       
     }
 
 }

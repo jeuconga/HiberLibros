@@ -24,6 +24,8 @@ public interface UsuarioLibroRepository extends JpaRepository<UsuarioLibro, Inte
     
     public List<UsuarioLibro> findByLibroAndDesactivadoAndEstadoPrestamo(Libro l, Boolean desactivado, String estadoPrestamo);
     
+    public List<UsuarioLibro> findByLibroAndDesactivado(Libro l, Boolean desactivado);
+    
     public List<UsuarioLibro> findByUsuarioAndDesactivado(Usuario u, Boolean desactivado);
     
     public List<UsuarioLibro> findByUsuarioAndDesactivadoAndEstadoPrestamo(Usuario u, Boolean desactivado, String estadoPrestamo);

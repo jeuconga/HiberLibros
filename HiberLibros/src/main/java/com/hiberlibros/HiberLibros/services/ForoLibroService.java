@@ -33,6 +33,7 @@ public class ForoLibroService implements IForoLibroService {
 
     @Override
     public void altaForoLibro(ForoLibro l) {
+        l.setDesactivado(Boolean.FALSE);
         repoForoLibro.save(l);
     }
 

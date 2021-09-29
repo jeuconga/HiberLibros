@@ -22,6 +22,7 @@ public class EditorialService {
     }
 
     public void altaModificacionEditorial(Editorial editorial) {
+        editorial.setDesactivado(Boolean.FALSE);
         repoEditorial.save(editorial);
     }
 

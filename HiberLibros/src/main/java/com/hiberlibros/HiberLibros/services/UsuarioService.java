@@ -37,10 +37,10 @@ public class UsuarioService implements IUsuarioService {
 
         return resultado;
     }
-    
+
     @Override
     public String guardarUsuarioYSeguridadAdmin(Usuario u, String password) {
-        String resultado = guardarUsuario(u);        
+        String resultado = guardarUsuario(u);
         //Optional<Usuario> usu = urService.findByMail(u.getMail());
         if (resultado.equals("Usuario registrado con éxito")) {
             serviceUsuarioSeguridad.altaUsuarioSeguridad(u.getMail(), u.getId(), password, "Administrador");
@@ -64,7 +64,7 @@ public class UsuarioService implements IUsuarioService {
                 uAux.setDesactivado(Boolean.FALSE);
                 urService.save(uAux);
                 resultado = "Usuario registrado con éxito";
-            } else if(!uAux.getDesactivado()) {
+            } else if (!uAux.getDesactivado()) {
                 resultado = "Error: Ya existe un usuario registrado con ese e-mail";
             }
         } else {
@@ -78,13 +78,18 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     @Transactional
-    public void borrarUsuario(Integer id) {
+    public Boolean borrarUsuario(Integer id) {
         Optional<Usuario> usuario = urService.findById(id);
         if (usuario.isPresent()) {
-            usuario.get().setDesactivado(Boolean.TRUE);
-            urService.save(usuario.get());
-            serviceUsuLi.usuarioBorrado(usuario.get());
-            serviceUsuarioSeguridad.bajaUsuarioSeguridadPorMail(usuario.get().getMail());
+            Boolean result = serviceUsuLi.usuarioBorrado(usuario.get());
+            if (result) {
+                usuario.get().setDesactivado(Boolean.TRUE);
+                urService.save(usuario.get());
+                serviceUsuarioSeguridad.bajaUsuarioSeguridadPorMail(usuario.get().getMail());
+            }
+            return result;
+        } else {
+            return false;
         }
     }
 

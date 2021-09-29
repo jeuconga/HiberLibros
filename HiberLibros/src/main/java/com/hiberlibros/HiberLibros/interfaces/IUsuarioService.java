@@ -13,7 +13,7 @@ public interface IUsuarioService {
 
     public String editarUsuario(Usuario u);
 
-    public void borrarUsuario(Integer id);
+    public Boolean borrarUsuario(Integer id);
 
     public List<Usuario> usuariosList();
 

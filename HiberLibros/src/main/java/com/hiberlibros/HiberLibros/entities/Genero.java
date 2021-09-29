@@ -22,21 +22,21 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "generos")
 public class Genero {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String nombre;
     private Boolean desactivado;
-    
-   @OneToMany(mappedBy = "id")
-   private List<Relato> listaRelatos;
-    
-   @OneToMany(mappedBy = "id")
+
+    @OneToMany(mappedBy = "id")
+    private List<Relato> listaRelatos;
+
+    @OneToMany(mappedBy = "id")
     private List<Libro> listaLibros;
-   
-   @OneToMany(mappedBy = "id")
-   private List<Preferencia> listaPreferencias;
-    
-    
+
+    @OneToMany(mappedBy = "id")
+    private List<Preferencia> listaPreferencias;
+
 }
