@@ -69,7 +69,7 @@ public class UsuarioController {
     @GetMapping("/borrar")
     public String borrar(Integer id) {//borra usuario por ID en administrador
         serviceUsuario.borrarUsuario(id);
-        return "redirect:/hiberlibros/paneladmin";
+        return "redirect:listarAdmin";
     }
 
     @GetMapping("/borrarUsuario")//borra usuario por ID en HIBERLIBRO
