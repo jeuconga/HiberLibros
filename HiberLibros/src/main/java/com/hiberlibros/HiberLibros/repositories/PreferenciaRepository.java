@@ -1,5 +1,6 @@
 package com.hiberlibros.HiberLibros.repositories;
 
+import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Preferencia;
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import java.util.List;
@@ -14,9 +15,15 @@ import org.springframework.stereotype.Repository;
 public interface PreferenciaRepository extends JpaRepository<Preferencia, Integer> {
 
     //Todo el listado de Preferencias
-    List<Preferencia> findAll();
+    public List<Preferencia> findAll();
 
     //Listado de preferencias por usuario
-    List<Preferencia> findByUsuario(Usuario idUsuario);
+    public List<Preferencia> findByUsuario(Usuario idUsuario);
+    
+    public List<Preferencia> findByGenero(Genero g);
+    
+    public void deleteByGenero(Genero g);
+    
+    
 
 }

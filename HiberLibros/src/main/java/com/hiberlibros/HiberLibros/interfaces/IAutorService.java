@@ -12,7 +12,7 @@ public interface IAutorService {
 
     public Optional<Autor> encontrarAutor(Integer id);
 
-    public void borrarAutor(Integer id);
+    public Boolean borrarAutor(Integer id);
 
     public List<Autor> buscarAutores(String buscar);
 

@@ -8,14 +8,13 @@ import java.util.List;
  * @author Isabel
  */
 public interface IGeneroService {
+    
+    public Genero encontrarPorId(Integer id);
 
-    //Añadir género
     public void guardarGenero(Genero genero);
 
-    //Borrar género
-    public void borrarGenero(Integer id);
+    public Boolean borrarGenero(Integer id);
 
-    //Listar géneros
     public List<Genero> getGeneros();
 
 }

@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" 
-      th:replace="libros/layoutUsuario::layout(~{::body})">
+      th:replace="principal/layoutUsuario::layout(~{::body})">
     <body>
         <div class="container">
-
+            <h2>Mis libros</h2>
             <table class="table table-striped mt-5">
                 <tr>
                     <th>ISBN</th>
@@ -12,7 +13,6 @@
                     <th>Editorial</th>
                     <th>Genero</th>
                     <th>Valoracion</th>
-
                 </tr>
                 <tr th:each="libro:${libros}">
                     <td th:text="${libro.isbn}"></td>
@@ -23,7 +23,6 @@
                     <td th:text="${libro.editorial.nombreEditorial}"></td>
                     <td th:text="${libro.genero.nombre}"></td>
                     <td th:text="${libro.valoracionLibro}"></td>
-
                     <td>                   
                         <a type="button" class="btn btn-dark btn-sm" th:href="${'/eliminar?id='+ libro.id}"><i class="far fa-trash-alt" ><span style="margin-left:5px">Borrar</span></i></a>
                     </td>
@@ -31,8 +30,10 @@
                         <a type="button" class="btn btn-dark btn-sm" th:href="${'/modificar?id='+ libro.id}"><i class="far fa-trash-alt" ><span style="margin-left:5px">Modificar</span></i></a>
                     </td>
                 </tr>
-
             </table>
+            
+            </br><hr>
+            <h3>Añadir nuevo libro</h3>
             <div class=" m-2">                           
                 <form action="/libros/guardar" method="post"  >
                     <div class="row" > 

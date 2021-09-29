@@ -153,5 +153,7 @@
 }
 
 .fondo{
-    background-color: #Ecf2f5;
+    background-image: url(https://www.65ymas.com/uploads/s1/29/71/42/5-libros-imprescindibles-con-barcelona-como-telo-n-de-fondo.jpeg);
+    background-attachment: fixed;
+    background-size: cover;
 }

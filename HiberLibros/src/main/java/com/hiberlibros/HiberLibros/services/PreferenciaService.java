@@ -1,5 +1,6 @@
 package com.hiberlibros.HiberLibros.services;
 
+import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Preferencia;
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.repositories.PreferenciaRepository;
@@ -39,5 +40,15 @@ public class PreferenciaService implements IPreferenciaService {
     @Override
     public void borrarPreferencia(Integer id) {
         prefRepo.deleteById(id);
+    }
+
+    @Override
+    public void borrarPorGenero(Genero g) {
+        prefRepo.deleteByGenero(g);
+    }
+
+    @Override
+    public List<Preferencia> encontrarPorGenero(Genero g) {
+        return prefRepo.findByGenero(g);
     }
 }

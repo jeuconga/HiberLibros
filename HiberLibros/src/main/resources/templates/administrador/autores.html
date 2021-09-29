@@ -1,13 +1,16 @@
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" 
+      th:replace="administrador/vistaAdministrador::layout(~{::body})">
 
     <body>
+        <div class="fondo col-sm p-3 min-vh-100">
         <div class="container">
-            <table class="table table-striped mt-5">
+            <table class="table table-light mt-5">
             <thead class="text-white bg-primary">
                 <tr>
                     <th>Nombre</th>
                     <th>Biografia</th>
                     <th>Libros</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
                 <tr th:each="autor:${autores}">
@@ -19,6 +22,7 @@
                 </tr>
 
             </table>		 			
+        </div>
         </div>
     </body>
 </html>

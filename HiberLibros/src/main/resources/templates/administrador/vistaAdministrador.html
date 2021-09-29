@@ -1,5 +1,4 @@
-<html xmlns:th="https://www.thymeleaf.org">
-
+<html th:fragment="layout(htmlcuerpo)" lang='es'>
 
     <head>
         <title>HiberLibros</title>
@@ -29,7 +28,7 @@
                     </li>
 
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="#" class="btn btn-primary"><i class="bi bi-chat-left"><span class="ml-1">Contacto</span></a></i>
+                        <a onclick="mostrarContactos()" class="btn btn-primary"><i class="bi bi-chat-left"><span class="ml-1">Contacto</span></a></i>
                     </li>
 
                  <!--   </ul> -->
@@ -54,29 +53,29 @@
                         </a>
                         <ul class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center">
                             <li class="nav-item">
-                                <a  id="boton" href="#" class="btn btn-primary nav-link py-3 px-2 " title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                                <a  id="boton" href="/usuarios/listarAdmin" class="btn btn-primary nav-link py-3 px-2 " title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                                     <i class="bi bi-people fs-1 "><span class="ml-1">Gestion de Usuarios </span></i>
                                 </a>
                             </li>
                             <li>
-                                <a id="boton2" href="#" class="btn btn-primary py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
+                                <a id="boton2" href="/libros/listarAdmin" class="btn btn-primary py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
                                     <i class="bi bi-book fs-1"><span class="ml-1">Gestion de Libros</span></i>
                                 </a>
                             </li>
                             <li>
-                                <a  id="boton3" href="#" class="btn btn-primary py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                                <a  id="boton3" href="/relato/listarAdmin" class="btn btn-primary py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                                     <i class="bi bi-file-text"><span class="ml-1">Gestion de Relatos</span></i>
                                 </a>
                             </li>
 
                             <li>
-                                <a  id="boton4" href="#" class="btn btn-primary  py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                                <a  id="boton4" href="/autores/listarAdmin" class="btn btn-primary  py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                                     <i class="bi bi-pen"><span class="ml-1">Gestion de Autores</span></i>
                                 </a>
                             </li>
 
                             <li>
-                                <a  id="boton5" href="#" class="btn btn-primary py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                                <a  id="boton5" href="/genero/listarAdmin" class="btn btn-primary py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                                     <i class="bi bi-pen"><span class="ml-1">Gestion de Generos</span></i>
                                 </a>
                             </li>
@@ -90,18 +89,10 @@
                             <input id="valor" ddl-url="/hiberlibros/paneladmin/buscarEvento" ddl-text="Buscar evento" class="form-control"/> 
                             <button type="submit" onclick="myFunction()" >Borrar Evento</button> 
                         </div>
-                        <div  class="col card inline card text-white bg-dark mb-3">
-                            <h4 class="display-4 text-center mt-5" >Usuarios Actuales</h4>
-                            <h2 class="display-4 text-center" th:text=${#numbers.formatInteger(numUsuarios,3,'POINT')}></h2> 
-
-                            <h4 class="display-4 text-center" >Libros Actuales</h4>
-                            <h2 class="display-4 text-center" th:text=${#numbers.formatInteger(numLibros,3,'POINT')}></h2>
-
-                        </div>
-                        <!--<img src="../fondoAdmin.png" alt="fondo" width="50%" height="50%"/>-->
                     </div>
 
                 </div>
+            		<th:block th:include="${htmlcuerpo}"/>
             </div>
             <script th:inline="javascript">
                 var calendarData= [  

@@ -20,5 +20,7 @@ public interface IIntercambioService {
     
     public Boolean intercambioPendienteFinalizar(UsuarioLibro ul);
     
+    public Integer contarIntercambiosPendientes(List<UsuarioLibro> ul);
+    
 
 }
