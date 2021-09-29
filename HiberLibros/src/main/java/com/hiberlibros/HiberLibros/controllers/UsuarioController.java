@@ -10,9 +10,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -25,6 +35,9 @@ public class UsuarioController {
 //    @Autowired
 //    private UsuarioSeguridad serviceUsuarioSeguridad;
     private ISeguridadService serviceUsuarioSeguridad;
+
+    @Value("${carpetas.recursos.hiberlibros}")
+    private String rutaBase;
 
     @GetMapping
     public String usuarioFormulario(Model m, String registro) { //devuelve una lista con todos los usuarios, parte administrador
@@ -77,36 +90,33 @@ public class UsuarioController {
         return "redirect:listarAdmin";
     }
 
+    @PostMapping("/imagenPerfil")
+    public String imagenPerfil(Model m, Integer id, MultipartFile ficheroImagen) {
+        String nombre = UUID.randomUUID().toString();
+        String nombreFichero = ficheroImagen.getOriginalFilename().toLowerCase();
+        String extension = nombreFichero.substring(nombreFichero.lastIndexOf("."));
+        String subir = rutaBase + nombre + extension;
+        File f = new File(subir);
+        f.getParentFile().mkdirs();
 
-//    
-//    public final String RUTA_IMAGEN = "../../../../resources/static/imagenesPerfil/";
-//    private final String RUTA_IMAGEN = "c:\\zzzzImagenPerfiles\\";
-//
-//    @PostMapping("/imagenPerfil")
-//    public String imagenPerfil(Model m, Integer id, MultipartFile ficheroImagen) {
-//        String nombre = UUID.randomUUID().toString();
-//        String nombreFichero = ficheroImagen.getOriginalFilename().toLowerCase();
-//        String extension = nombreFichero.substring(nombreFichero.lastIndexOf("."));
-//        String subir = RUTA_IMAGEN + nombre + extension;
-//        File f = new File(subir);
-//        f.getParentFile().mkdirs();
-//
-//        try {
-//            Files.copy(ficheroImagen.getInputStream(), f.toPath(), StandardCopyOption.REPLACE_EXISTING);
-//            Usuario user = serviceUsuario.usuarioId(id);
-//            user.setUriFoto(subir);
-//            System.out.println("aaa : " + user.getUriFoto());
-//            serviceUsuario.editarUsuario(user);
-//           
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//
-//        }
-//
-//        return "redirect:/hiberlibros/panelUsuario";
-//    }
-    
-    
-    
+        try {
+            Files.copy(ficheroImagen.getInputStream(), f.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Usuario user = serviceUsuario.usuarioId(id);
+            user.setUriFoto(subir);
+            serviceUsuario.editarUsuario(user);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/hiberlibros/panelUsuario";
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<Resource> mostrarImagen(String imagen) {
+
+        return serviceUsuario.visualizarImagen(imagen);
+
+    }
+
 }

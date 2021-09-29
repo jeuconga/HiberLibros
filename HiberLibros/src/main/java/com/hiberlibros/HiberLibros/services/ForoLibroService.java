@@ -5,6 +5,7 @@ import com.hiberlibros.HiberLibros.entities.Libro;
 import com.hiberlibros.HiberLibros.interfaces.IForoLibroService;
 import com.hiberlibros.HiberLibros.repositories.ForoLibroRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,17 @@ public class ForoLibroService implements IForoLibroService {
         ForoLibro fl=repoForoLibro.findById(id).get();
         fl.setDesactivado(Boolean.TRUE);
         repoForoLibro.save(fl);
+    }
+
+    @Override
+    public ForoLibro consultarForo(Integer idForo) {
+        Optional<ForoLibro> foroLibro =  repoForoLibro.findById(idForo);
+        if (foroLibro.isPresent()){
+            return foroLibro.get();  
+        }else {
+            return new ForoLibro();
+        }
+        
     }
     
     
