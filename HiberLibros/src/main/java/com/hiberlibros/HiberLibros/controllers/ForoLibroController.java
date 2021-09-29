@@ -39,16 +39,22 @@ public class ForoLibroController {
     
     @GetMapping()
     public String recuperarForos(Model m) {
+        m.addAttribute("foro", new ForoLibro());
+        m.addAttribute("libros", serviceLibro.recuperarTodosLibros());
         m.addAttribute("foros", serviceForoLibro.recuperarTodosLosForos());
         return "/principal/foro";
     }
     
     @GetMapping("/alta")
-    public String altaForo (ForoLibro l){
+    public String altaForo (Model m, ForoLibro l){
         l.setDesactivado(Boolean.FALSE);
         l.setUsuarioCreador(usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext()));
         serviceForoLibro.altaForoLibro(l);
-        return "/principal/altaForo";
+        m.addAttribute("foro", new ForoLibro());
+        m.addAttribute("libros", serviceLibro.recuperarTodosLibros());
+        m.addAttribute("foros", serviceForoLibro.recuperarTodosLosForos());
+
+        return "/principal/foro";
     }
     
     
