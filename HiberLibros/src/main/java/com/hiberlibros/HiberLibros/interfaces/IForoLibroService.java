@@ -17,4 +17,5 @@ public interface IForoLibroService {
     public void altaForoLibro(ForoLibro l);
     public void eliminarForoLibro (Integer id);
     public void bajaForoLibro(Integer id);
+    public ForoLibro consultarForo(Integer idForo);
 }

@@ -103,7 +103,7 @@ public class AutorController {
     @PostMapping("/guardarAutor")
     public String guardarAutor(Model m, Autor autor) {
         autorService.guardarAutor(autor);
-        return "administrador/vistaAdministrador";
+        return "redirect:autores/listarAdmin";
     }
 
     @GetMapping("/eliminarAutor")
@@ -113,6 +113,7 @@ public class AutorController {
         } else {
             m.addAttribute("borrado", "Error, no es posible borrar este autor");
         }
-        return "administrador/vistaAdministrador";
+        return "redirect:autores/listarAdmin";
+
     }
 }

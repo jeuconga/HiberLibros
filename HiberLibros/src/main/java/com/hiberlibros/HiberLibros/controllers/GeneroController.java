@@ -36,7 +36,7 @@ public class GeneroController {
     public String formulario(Genero genero) {
         serviceGen.guardarGenero(genero);
 
-        return "redirect:/hiberlibros/paneladmin";
+        return "redirect:listarAdmin";
     }
 
     @GetMapping("/borrar/{id}")

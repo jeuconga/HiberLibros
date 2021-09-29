@@ -28,9 +28,9 @@ public class ForoLibro {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id; // id propio
     
-    private Boolean desactivado;
+    private Boolean desactivado; //desactivado / activado
     
     private String  tituloForo; // titulo del foro
     

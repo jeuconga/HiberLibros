@@ -60,6 +60,8 @@ public class LibroController {
 
     @GetMapping("/modificar")
     public String modificarLibro(Model m, Integer id) {
+
+        m.addAttribute("imagen", libroService.libroId(id));
         m.addAttribute("libro", libroService.libroId(id));
         m.addAttribute("generos", serviceGen.getGeneros());
         m.addAttribute("editoriales", serviceEdit.consultaTodas());
@@ -84,8 +86,8 @@ public class LibroController {
         libro.setEditorial(serviceEdit.encontrarPorId(id_editorial));
         libro.setAutor(serviceAutor.encontrarAutor(id_autor).get());
         libroService.guardarLibro(libro);
-
-        return "/administrador/vistaAdministrador";
+        
+        return "redirect:listarAdmin";
     }
 
     @GetMapping("/eliminarAdmin")
@@ -95,7 +97,7 @@ public class LibroController {
         } else {
             m.addAttribute("borrado", "Error, no es posible borrar este autor");
         }
-        return "/administrador/vistaAdministrador";
+        return "redirect:listarAdmin";
     }
 
     @PostMapping("/addValoracionLibro")

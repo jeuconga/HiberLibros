@@ -1,0 +1,49 @@
+<html xmlns:th="https://www.thymeleaf.org" 
+      th:replace="principal/layoutUsuario::layout(~{::body})">
+
+    <body>
+
+        <div class="container">
+            <!-- <button onclick="formForo()" class="btn btn-secondary">Añadir Foro</button> 
+            -->
+            <div class="row">
+                <div class="col-6">
+                    <h2>Libro : <span th:text="${foro.idLibro.titulo}"></span></h2>
+                    <h3>Foro : <span th:text="${foro.tituloForo}"></span></h3>
+                </div>
+                <div class="col-6">
+                    <h5><span th:text="${foro.usuarioCreador.nombre}"></span></h5>
+                    <img th:src="${foro.usuarioCreador.uriFoto}"/>
+                </div>
+            </div>
+            
+           <!-- <div th:each='comen:${comentarios}'>
+                <span "${comen.usuarioComentario.nombre}"> </span>
+            </div> -->
+           <table class="testbox table">
+
+                <tbody>
+                    <tr th:each='comen:${comentarios}'>
+                        <td th:text="${comen.foroLibro.id}"></td>
+                        <td th:utext="${comen.comentarioForo}"></td>                                  
+                        <td th:text="${comen.usuarioComentario.nombre}"></td><img th:src="${comen.usuarioComentario.uriFoto}"/>
+                    </tr>
+                </tbody>
+            </table> 
+            <form action="/hilos/alta" method="post" >
+                <input type="hidden" name="idForoLibro" th:value="${foro.id}"/>
+                Mensaje
+                <textarea class="form-control" id="comentario" name="comentario">
+                </textarea>
+                </br>
+                <button type="submit" class="btn btn-secondary">Alta comentario</button>
+            </form>
+            <a th:href="|/foros/libro?id=${foro.id}|" class="btn btn-secondary">Volver a foros del libro</a>
+
+
+        </div>
+        <!--        <div id="formularioForo" style="display:none">
+                </div>
+        -->
+    </body>
+</html>

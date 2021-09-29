@@ -8,8 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hiberlibros.HiberLibros.repositories.UsuarioRepository;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Optional;
 import javax.transaction.Transactional;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 /**
  *
@@ -126,6 +134,29 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public Integer contarUsuarios() {
         return urService.countByDesactivado(Boolean.FALSE);
+    }
+
+    @Override
+    public ResponseEntity<Resource> visualizarImagen(String imagen){
+        File file = new File(imagen);
+        HttpHeaders header = new HttpHeaders();
+        header.add("Content-Disposition", "attachment;");
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+        try {
+            
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(imagen));
+            return ResponseEntity.ok()
+                    .headers(header)
+                    .contentLength(file.length())
+                    .contentType(MediaType.parseMediaType("application/octet-stream"))
+                    .body(resource);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

@@ -148,7 +148,7 @@ public class RelatoController {
 
         repoRelato.save(relato);
 
-        return "redirect:/relato";
+        return "redirect:listarAdmin";
     }
 
     @GetMapping("/listarAdmin")
@@ -193,7 +193,7 @@ public class RelatoController {
         if (rel.isPresent()) {
             repoRelato.deleteById(id);
         }
-        return "/administrador/vistaAdministrador";
+        return "redirect:listarAdmin";
     }
 
     @GetMapping("/download")
