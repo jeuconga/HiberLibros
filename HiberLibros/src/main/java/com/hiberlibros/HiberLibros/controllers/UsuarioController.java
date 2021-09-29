@@ -97,12 +97,13 @@ public class UsuarioController {
         String extension = nombreFichero.substring(nombreFichero.lastIndexOf("."));
         String subir = rutaBase + nombre + extension;
         File f = new File(subir);
-        f.getParentFile().mkdirs();
-
+        f.getParentFile().mkdirs(); 
+        System.out.println("error" + subir);  
         try {
             Files.copy(ficheroImagen.getInputStream(), f.toPath(), StandardCopyOption.REPLACE_EXISTING);
             Usuario user = serviceUsuario.usuarioId(id);
             user.setUriFoto(subir);
+
             serviceUsuario.editarUsuario(user);
 
         } catch (Exception e) {

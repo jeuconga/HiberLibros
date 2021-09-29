@@ -61,9 +61,14 @@
 
                         <div class="px-4 pt-0 pb-4 cover bannerPerfil">
                             <div class="media align-items-end profile-head">
-                                <div class="profile mr-3 mt-2">                             
-                                    <img th:src="@{/usuarios/download(imagen=${usuario.uriFoto})}" class="imgRedonda" /> <br>
+                                <div class="profile mr-3 mt-2">   
 
+                                    <p th:if="${usuario.uriFoto!=null}">                     
+                                    <img th:src="@{/usuarios/download(imagen=${usuario.uriFoto})}" class="imgRedonda" /> <br>
+                                    </p>
+                                    <p th:if="${usuario.uriFoto==null}">
+                                        <img src="../perfil.png" class="imgRedonda" /> <br>
+                                    </p>
 
 
                                     <a onclick="editarUsuario()" class=" btn btn-outline-dark btn-sm btn-block mt-4 col-6">Editar perfil</a></br>
