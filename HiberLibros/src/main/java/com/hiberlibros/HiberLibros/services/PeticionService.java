@@ -96,7 +96,7 @@ public class PeticionService implements IPeticionService {
         
         String destinatario  = p.getIdUsuarioSolicitante().getMail();
         String asunto = "peticion de libro rechazada ";
-        String cuerpo = " su peticion de intercambio del libro " + p.getIdUsuarioLibro().getLibro().getTitulo();
+        String cuerpo = " su peticion de intercambio del libro " + p.getIdUsuarioLibro().getLibro().getTitulo() + " ha sido rechazadas";
         serviceCorreo.enviarCorreo(destinatario, asunto, cuerpo);
         
         
