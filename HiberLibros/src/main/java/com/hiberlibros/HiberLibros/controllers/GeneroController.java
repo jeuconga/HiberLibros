@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/genero")
 public class GeneroController {
-    
+
     @Autowired
     private IGeneroService serviceGen;
 
@@ -40,28 +40,32 @@ public class GeneroController {
     }
 
     @GetMapping("/borrar/{id}")
-    public String borrarGenero(Model m,@PathVariable Integer id) {
+    public String borrarGenero(Model m, @PathVariable Integer id) {
+        String borrado = "";
         if (serviceGen.borrarGenero(id)) {
-            m.addAttribute("borrado", "Borrado con éxito");
+            borrado = "Borrado con éxito";
         } else {
-            m.addAttribute("borrado", "Error, no es posible borrar este autor");
+            borrado = "Error, no es posible borrar este autor";
         }
 
-        return "redirect:/hiberlibros/paneladmin";
+        return "redirect:/genero/listarAdmin?borrado=" + borrado;
     }
 
     @GetMapping("/editar")
     @ResponseBody
     public GeneroDto editarGenero(Integer id) {
         Genero editGenero = serviceGen.encontrarPorId(id);
-        GeneroDto genDto = new GeneroDto(editGenero.getId(), editGenero.getNombre());   
+        GeneroDto genDto = new GeneroDto(editGenero.getId(), editGenero.getNombre());
         return genDto;
     }
 
     @GetMapping("/listarAdmin")
-    private String listarTodo(Model m) {
+    private String listarTodo(Model m, String borrado) {
         m.addAttribute("generos", serviceGen.getGeneros());
         m.addAttribute("generoForm", new Genero());
+        if (borrado != null) {
+            m.addAttribute("borrado", borrado);
+        }
         return "/administrador/generos";
     }
 }

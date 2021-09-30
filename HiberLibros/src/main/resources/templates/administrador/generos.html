@@ -2,6 +2,7 @@
       th:replace="administrador/vistaAdministrador::layout(~{::body})">
 
     <body>
+        <p th:if="${borrado!=null}"><span th:text=${borrado}></span></p>
         <div class="fondo col-sm p-3 min-vh-100"> 
 		<div class="container">
             <form action="/genero/guardar" th:object="${generoForm}" method="post">
@@ -27,8 +28,8 @@
                             <td th:text='${genero.id}' type="hidden"></td>
                             <td th:text='${genero.nombre}'></td>
                             <td>
-                                <!--                            <a class="btn btn-outline-danger" th:href="@{/genero/borrar/{id} (id=${genero.id})}">Eliminar</a>-->
-                                <a class="btn btn-outline-primary" th:onclick="|editarGenero(${genero.id})|">Editar</a>
+                                <a class="btn btn-dark btn-sm" th:href="@{/genero/borrar/{id} (id=${genero.id})}">Eliminar</a>
+                                <a class="btn btn-dark btn-sm" th:onclick="|editarGenero(${genero.id})|">Editar</a>
                             </td>
                         </tr>
                     </tbody>
@@ -41,7 +42,7 @@
                 <label>Añadir género</label>
                 <input type="hidden" name="id"/>
                 <input type="text" name="nombre"/>
-                <input type="submit" value="Añadir" class="btn btn-outline-dark"/>   
+                <input type="submit" value="Añadir" class="btn btn-primary"/>   
             </form>
         </div>
         </div>
