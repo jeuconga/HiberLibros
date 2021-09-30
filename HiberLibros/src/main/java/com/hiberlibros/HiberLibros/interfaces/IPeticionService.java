@@ -40,10 +40,14 @@ public interface IPeticionService {
 
     public List<Peticion> consutarPeticionesUsuarioPendientes(Usuario u);
 
+    public Integer contarMisPeticiones(Usuario u);
+    
+     public Integer contarNuevasPeticiones(UsuarioLibro u);
+
     public List<Peticion> consultarPeticonesRecibidas(Usuario u);
-    
+
     public void borrarPorUsuarioSolicitante(Usuario u);
-    
+
     public void borrarPorUsuarioLibro(UsuarioLibro ul);
 
 }

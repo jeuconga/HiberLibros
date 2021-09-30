@@ -122,12 +122,13 @@ public class InicioController {
     public String logout() {
         SecurityContextHolder.clearContext();
         return "/principal/logout";
-    }
+    } 
 
     @GetMapping("/panelUsuario") //entrada al panel principal de usuario, se pasan todos los elementos que se han de mostrar
     public String panelUsuario(Model m, String mail) {
         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         List<UsuarioLibro> ul = ulService.buscarUsuario(u);
+        UsuarioLibro usuarioLibro = ulService.encontrarId(u.getId());
         m.addAttribute("relatos", serviceRelato.encontrarPorAutor(u));
         m.addAttribute("usuario", u);
         m.addAttribute("libros", ulService.buscarUsuariotiene(u));
@@ -137,7 +138,8 @@ public class InicioController {
         m.addAttribute("intercambiosPeticiones", serviceInter.encontrarULPrestatario(ul));
         m.addAttribute("librosUsuario", ulService.contarLibrosPorUsuario(u));
         m.addAttribute("numIntercambioPendiente", serviceInter.contarIntercambiosPendientes(ul));
-         m.addAttribute("numPeticionPendiente", serviceInter.contarIntercambiosPendientes(ul));
+        m.addAttribute("numPeticionesPendientes", petiService.contarMisPeticiones(u));
+        m.addAttribute("numNuevasPeticiones", petiService.contarNuevasPeticiones(usuarioLibro));
 
         return "principal/usuarioPanel";
     }
@@ -227,7 +229,7 @@ public class InicioController {
     }
 
     @GetMapping("/borrarUL")//borra un libro de UsuarioLibro sin eliminarlo de la tabla de Libros
-    public String borrarUsuLibro(Model m,Integer id) {
+    public String borrarUsuLibro(Model m, Integer id) {
         if (ulService.borrar(id)) {
             m.addAttribute("borrado", "Borrado con éxito");
         } else {

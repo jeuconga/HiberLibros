@@ -15,10 +15,13 @@ public interface PeticionRepository extends JpaRepository<Peticion, Integer> {
     public List<Peticion> findByPendienteTratarAndIdUsuarioSolicitante(Boolean b, Usuario u); //busca por el usuario y si esta sin tratar
 
     public List<Peticion> findByIdUsuarioLibroAndPendienteTratar(UsuarioLibro ul, Boolean b); //busca por usuario libro y que no este tratado
-
-    public void deleteByIdUsuarioSolicitante(Usuario u);
-
+    
+    public void deleteByIdUsuarioSolicitante(Usuario u); 
+    
     public void deleteByIdUsuarioLibro(UsuarioLibro ul);
-
+    
     public Integer countByPendienteTratarAndIdUsuarioLibro(Boolean bol, UsuarioLibro ul);
+    
+    public Integer countByPendienteTratarAndIdUsuarioSolicitante(Boolean bol, Usuario ul);
+
 }

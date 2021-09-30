@@ -23,6 +23,6 @@ public interface IIntercambioService {
 
     public Integer contarIntercambiosPendientes(List<UsuarioLibro> ul);
 
-    public Integer contarPeticionesPendientes   (List<Peticion> ul);
+    
 
 }
