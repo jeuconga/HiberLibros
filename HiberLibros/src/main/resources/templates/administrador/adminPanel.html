@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org" 
       th:replace="administrador/vistaAdministrador::layout(~{::body})">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Panel de administrador</title>
 </head>
 <body>
@@ -11,13 +11,10 @@
 		<div id="inicio" class="row">
 			<div id="container"
 				class="col card inline-block card text-white bg-light mb-3">
-				<a href="/hiberlibros/paneladmin/addEvent">Añadir Evento</a>
+				<a href="/hiberlibros/paneladmin/addEvent">AÃ±adir Evento</a>
                             <input id="valor" ddl-url="/hiberlibros/paneladmin/buscarEvento" ddl-text="Buscar evento" class="form-control"/> 
                             <button type="submit" onclick="myFunction()" >Borrar Evento</button> 
                         </div>
-                    </div>
-
-                </div>
 
 			<div class="col card inline card text-white bg-dark mb-3">
 				<h4 class="display-4 text-center mt-5">Usuarios Actuales</h4>
@@ -30,6 +27,8 @@
 
 			</div>
 			<!--<img src="../fondoAdmin.png" alt="fondo" width="50%" height="50%"/>-->
+          </div>
 
+     </div>
 </body>
 </html>

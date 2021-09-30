@@ -52,7 +52,7 @@ public class AdministradorControlller {
         e.setStartDate(startDate);
         e.setEndDate(endDate);
         evrepo.save(e);
-        return "redirect:hiberlibros/paneladmin";
+        return "redirect:/hiberlibros/paneladmin";
     }
      @GetMapping("/deleteEvento")
     @ResponseBody
