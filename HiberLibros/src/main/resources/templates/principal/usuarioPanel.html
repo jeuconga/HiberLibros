@@ -91,14 +91,18 @@
                         </div>
                         <div class="bg-light p-4 d-flex justify-content-end text-center">
                             <ul class="list-inline mb-0">
-                                <li class="list-inline-item"> 
-                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${librosUsuario}"></h5><i class="fas fa-book text-success "> </i>   Mis libros
+                                <li class="ml-4 mr-4  list-inline-item"> 
+                                    <h5 class="ml-4 mr-4 font-weight-bold mb-0 d-block" th:text="${librosUsuario}"></h5><i class="fas fa-book text-success "> </i>   Mis libros
                                 </li>
-                                <li class="list-inline-item">
-                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${numIntercambioPendiente}"></h5><i class="far fa-handshake" style="color:black"></i>     Intercambios pendientes
+                                <li class="ml-4 mr-4  list-inline-item">
+                                    <h5 class="ml-4 mr-4 font-weight-bold mb-0 d-block " th:text="${numIntercambioPendiente}"></h5><i class="far fa-handshake" style="color:black"></i>     Intercambios pendientes
                                 </li>
-                                <li class="list-inline-item"> 
-                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${usuario.valoracionUsuario}"></h5> <i class="fas fa-star" style="color:orange"> </i>    Mi valoración
+                                <li class="ml-4 mr-4 list-inline-item"> 
+                                    <h5 class="ml-4 mr-4 font-weight-bold mb-0 d-block" th:text="${usuario.valoracionUsuario}"></h5> <i class="fas fa-star" style="color:orange"> </i>    Mi valoración
+                                </li>
+                                
+                                  <li class="ml-4 mr-4 list-inline-item"> 
+                                    <h5 class="ml-4 mr-4 font-weight-bold mb-0 d-block" th:text="${usuario.valoracionUsuario}"></h5><i class="fas fa-bell" style="color:black"></i>     Peticiones pendientes
                                 </li>
                             </ul>
                         </div>
@@ -123,7 +127,7 @@
                                             <p class="font mb-0 font-weight-bold">Valoración : <td th:text="${l.libro.valoracionLibro}"></td>  <i class="fas fa-star" style="color:orange"> </i> 
                                             <p class="font mb-0 font-weight-bold">Estado :   <td th:text="${l.estadoConservacion}"></td>
 
-                                            
+
                                             <p class="card-text"></p>
                                             <td><a th:href="@{/hiberlibros/borrarUL(id=${l.id})}" class="btn btn-outline-danger btn-sm">&nbsp;Borrar <i class="fas fa-trash-alt"></i></a></td>
 
@@ -397,6 +401,13 @@
                             </div>
                         </div>
                         <a th:onclick="|eliminarU(${usuario.id})|" class="btn btn-outline-danger" title='Borrar usuario'>Borrar</a>
+
+                        <a class="ir-arriba"  javascript:void(0) title="Volver arriba">
+                            <span class="fa-stack">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-arrow-up fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
                         </body>
 
                         <div class="row">

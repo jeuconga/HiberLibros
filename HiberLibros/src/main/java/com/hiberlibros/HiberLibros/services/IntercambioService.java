@@ -1,6 +1,7 @@
 package com.hiberlibros.HiberLibros.services;
 
 import com.hiberlibros.HiberLibros.entities.Intercambio;
+import com.hiberlibros.HiberLibros.entities.Peticion;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
 import com.hiberlibros.HiberLibros.interfaces.IIntercambioService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
@@ -102,5 +103,12 @@ public class IntercambioService implements IIntercambioService {
         result+=ul.stream().map(x->repoInter.countByFechaDevolucionAndUsuarioPrestatario(null, x)).collect(Collectors.summingInt(Integer::intValue));
         return result;
     }
+
+    @Override
+    public Integer contarPeticionesPendientes(List<Peticion> ul) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+  
 
 }

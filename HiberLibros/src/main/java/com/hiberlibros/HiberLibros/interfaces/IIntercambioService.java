@@ -1,6 +1,7 @@
 package com.hiberlibros.HiberLibros.interfaces;
 
 import com.hiberlibros.HiberLibros.entities.Intercambio;
+import com.hiberlibros.HiberLibros.entities.Peticion;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
 import java.util.List;
 
@@ -17,10 +18,11 @@ public interface IIntercambioService {
     public List<Intercambio> encontrarULPrestatario(List<UsuarioLibro> ul);
 
     public void finIntercambio(Integer id);
-    
+
     public Boolean intercambioPendienteFinalizar(UsuarioLibro ul);
-    
+
     public Integer contarIntercambiosPendientes(List<UsuarioLibro> ul);
-    
+
+    public Integer contarPeticionesPendientes   (List<Peticion> ul);
 
 }

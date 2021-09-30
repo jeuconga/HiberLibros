@@ -137,6 +137,7 @@ public class InicioController {
         m.addAttribute("intercambiosPeticiones", serviceInter.encontrarULPrestatario(ul));
         m.addAttribute("librosUsuario", ulService.contarLibrosPorUsuario(u));
         m.addAttribute("numIntercambioPendiente", serviceInter.contarIntercambiosPendientes(ul));
+         m.addAttribute("numPeticionPendiente", serviceInter.contarIntercambiosPendientes(ul));
 
         return "principal/usuarioPanel";
     }

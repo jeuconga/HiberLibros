@@ -133,15 +133,34 @@ function formForo() {
 
 }
 
-function image(value,row) {
-	return "<img src='"+value+"' style='width:100px; height:120px;'>";
+function image(value, row) {
+    return "<img src='" + value + "' style='width:100px; height:120px;'>";
 }
 
 function previsualizar() {
-    var text =  document.getElementById("urlportada").value;
-	$("#previsualizacion").attr("src", text);
-	$("#mostrarImagen").hide();
-	$("#mostrarImagen").fadeIn(1000);
+    var text = document.getElementById("urlportada").value;
+    $("#previsualizacion").attr("src", text);
+    $("#mostrarImagen").hide();
+    $("#mostrarImagen").fadeIn(1000);
 }
 
 
+$(document).ready(function () {
+    irArriba();
+}); //Hacia arriba
+
+function irArriba() {
+    $('.ir-arriba').click(function () {
+        $('body,html').animate({scrollTop: '0px'}, 1000);
+    });
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 0) {
+            $('.ir-arriba').slideDown(600);
+        } else {
+            $('.ir-arriba').slideUp(600);
+        }
+    });
+    $('.ir-abajo').click(function () {
+        $('body,html').animate({scrollTop: '1000px'}, 1000);
+    });
+}
