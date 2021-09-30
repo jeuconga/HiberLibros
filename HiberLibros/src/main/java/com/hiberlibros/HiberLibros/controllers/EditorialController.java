@@ -1,7 +1,7 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Editorial;
-import com.hiberlibros.HiberLibros.services.EditorialService;
+import com.hiberlibros.HiberLibros.interfaces.IEditorialService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class EditorialController {
 
     @Autowired
-    private EditorialService serviceEditorial;
+    private IEditorialService serviceEditorial;
 
     @RequestMapping(value = "/editoriales", method = {RequestMethod.POST, RequestMethod.GET})
     public String editoriales(Model m, Editorial editorial) {
@@ -48,8 +48,13 @@ public class EditorialController {
     }
 
     @PostMapping("baja")
-    public String editorialesBaja(Model m, int id) {
-        serviceEditorial.bajaEditorial(id);
+    public String editorialesBaja(Model m, Integer id) {
+        if (serviceEditorial.bajaEditorial(id)) {
+            m.addAttribute("borrado", "Borrado con éxito");
+        } else {
+            m.addAttribute("borrado", "Error, no es posible borrar este autor");
+        }
+        
         return "redirect:/editoriales/editoriales";
     }
 

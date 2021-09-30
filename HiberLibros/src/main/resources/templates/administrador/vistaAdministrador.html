@@ -82,15 +82,44 @@
 
                     </div>
                 </div>
-            		<th:block th:include="${htmlcuerpo}"/>
-            </div>
-        </div>   
+                
+                            <th:block th:include="${htmlcuerpo}"/>
+        
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="../jquery.simple-calendar.js"></script>  
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.js"></script>         
         <script src="https://cdn.jsdelivr.net/npm/jquery-deserialize@2.0.0-rc1/src/jquery.deserialize.min.js"></script> 
+                    <script th:inline="javascript">
+                var calendarData= [  
+                    /*[# th:each="evt : ${eventos}"]*/    
+                    {
+                        startDate: [[${#dates.format(evt.startDate, 'yyyy-MM-dd hh:mm')}]] ,
+                        endDate: [[${#dates.format(evt.endDate, 'yyyy-MM-dd hh:mm')}]],
+                        summary: [[${evt.summary}]]
+                    },
+                    /*[/]*/
+                    
+                   ];
+            </script>
+            <script>
+               
+                callback:function myFunction() {
+                        $.ajax({
+                            url: "/hiberlibros/paneladmin/deleteEvento",
+                            data:{
+                                id: document.getElementById("valor").value
+                            },
+                            success:function(evt){
+                                alert("Evento borrado")
+                                location.reload();
+                                
+                            }
+                        })
+                     };
+            </script>
         <script src="../administrador.js"></script>
+        <script src="http://www.jorgerubira.com/cdn/AbleDropDownList.js" ></script>
     </body>
 
 </html>

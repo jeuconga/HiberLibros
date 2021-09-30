@@ -2,6 +2,7 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.dtos.GeneroDto;
 import com.hiberlibros.HiberLibros.entities.Genero;
+import com.hiberlibros.HiberLibros.interfaces.IGeneroService;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,11 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GeneroController {
 
     @Autowired
-    private GeneroRepository generoRepository;
+    private IGeneroService serviceGen;
 
     @GetMapping
     public String verGeneros(Model model) {
-        model.addAttribute("generos", generoRepository.findAll());
+        model.addAttribute("generos", serviceGen.getGeneros());
         model.addAttribute("generoForm", new Genero());
 
         return "/generos/genero";
@@ -33,33 +34,38 @@ public class GeneroController {
 
     @PostMapping("/guardar")
     public String formulario(Genero genero) {
-        generoRepository.save(genero);
+        serviceGen.guardarGenero(genero);
 
         return "redirect:listarAdmin";
     }
 
     @GetMapping("/borrar/{id}")
-    public String borrarGenero(@PathVariable Integer id) {
-        generoRepository.deleteById(id);
+    public String borrarGenero(Model m, @PathVariable Integer id) {
+        String borrado = "";
+        if (serviceGen.borrarGenero(id)) {
+            borrado = "Borrado con éxito";
+        } else {
+            borrado = "Error, no es posible borrar este autor";
+        }
 
-        return "redirect:/hiberlibros/paneladmin";
+        return "redirect:/genero/listarAdmin?borrado=" + borrado;
     }
 
     @GetMapping("/editar")
     @ResponseBody
     public GeneroDto editarGenero(Integer id) {
-        Genero editGenero = generoRepository.getById(id);
+        Genero editGenero = serviceGen.encontrarPorId(id);
         GeneroDto genDto = new GeneroDto(editGenero.getId(), editGenero.getNombre());
-   
-//        model.addAttribute("genero", editGenero);
-
         return genDto;
     }
 
     @GetMapping("/listarAdmin")
-    private String listarTodo(Model m) {
-        m.addAttribute("generos", generoRepository.findAll());
+    private String listarTodo(Model m, String borrado) {
+        m.addAttribute("generos", serviceGen.getGeneros());
         m.addAttribute("generoForm", new Genero());
+        if (borrado != null) {
+            m.addAttribute("borrado", borrado);
+        }
         return "/administrador/generos";
     }
 }

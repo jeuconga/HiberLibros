@@ -3,17 +3,16 @@ package com.hiberlibros.HiberLibros.controllers;
 import com.hiberlibros.HiberLibros.entities.Genero;
 import com.hiberlibros.HiberLibros.entities.Preferencia;
 import com.hiberlibros.HiberLibros.entities.Usuario;
+import com.hiberlibros.HiberLibros.interfaces.IGeneroService;
+import com.hiberlibros.HiberLibros.interfaces.IPreferenciaService;
 import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
-import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
-import com.hiberlibros.HiberLibros.repositories.PreferenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.hiberlibros.HiberLibros.services.PreferenciaService;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /**
@@ -25,11 +24,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class PreferenciaController {
 
     @Autowired
-    private PreferenciaService prefService;
+    private IPreferenciaService prefService;
     @Autowired
-    private PreferenciaRepository prefRepo;
-    @Autowired
-    private GeneroRepository genRepo;
+    private IGeneroService serviceGenero;
     @Autowired
     private IUsuarioService usuServ;
     @Autowired
@@ -39,7 +36,7 @@ public class PreferenciaController {
     public String verPreferencias(Model model) {
         Usuario u = usuServ.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         model.addAttribute("preferencias", prefService.findByUsuario(u));
-        model.addAttribute("generos", genRepo.findAll());;
+        model.addAttribute("generos", serviceGenero.getGeneros());;
         model.addAttribute("formulario", new Preferencia());
 
         return "/preferencias/preferencia";
@@ -49,7 +46,7 @@ public class PreferenciaController {
     public String anadirPreferencia(Integer id_genero) {
         
         Usuario u = usuServ.usuarioRegistrado(serviceSeguridad.getMailFromContext());
-        Genero gen = genRepo.findById(id_genero).get();
+        Genero gen = serviceGenero.encontrarPorId(id_genero);
         Preferencia pref = new Preferencia();
         pref.setGenero(gen);
         pref.setUsuario(u);

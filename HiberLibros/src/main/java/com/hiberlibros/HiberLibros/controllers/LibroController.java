@@ -1,6 +1,9 @@
 package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Libro;
+import com.hiberlibros.HiberLibros.interfaces.IAutorService;
+import com.hiberlibros.HiberLibros.interfaces.IEditorialService;
+import com.hiberlibros.HiberLibros.interfaces.IGeneroService;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import com.hiberlibros.HiberLibros.repositories.EditorialRepository;
 import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
@@ -19,92 +22,92 @@ import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 public class LibroController {
 
     @Autowired
-    private LibroRepository librepo;
-    @Autowired
-    private GeneroRepository genRepo;
-    @Autowired
-    private EditorialRepository editRepo;
-    @Autowired
-    private AutorRepository AutRepo;
-    @Autowired
     private ILibroService libroService;
+    @Autowired
+    private IGeneroService serviceGen;
+    @Autowired
+    private IEditorialService serviceEdit;
+    @Autowired
+    private IAutorService serviceAutor;
 
     @GetMapping("/libros")
     public String mostrarFormulario(Model m) {
-        m.addAttribute("libros", librepo.findAll());
-        m.addAttribute("generos", genRepo.findAll());
-        m.addAttribute("editoriales", editRepo.findAll());
-        m.addAttribute("autores", AutRepo.findAll());
-
-        System.out.println("autor " + AutRepo.findAll());
-
+        m.addAttribute("libros", libroService.encontrarDisponible());
+        m.addAttribute("generos", serviceGen.getGeneros());
+        m.addAttribute("editoriales", serviceEdit.consultaTodas());
+        m.addAttribute("autores", serviceAutor.consultarAutores());
         return "libros/VistaLibro";
     }
 
     @PostMapping("/guardar")
     public String guardarLIbro(Model m, Libro libro, Integer id_genero, Integer id_editorial, Integer id_autor) {
-        libro.setGenero(genRepo.getById(id_genero));
-        libro.setEditorial(editRepo.getById(id_genero));
-        libro.setAutor(AutRepo.getById(id_autor));
-        librepo.save(libro);
-
+        libro.setGenero(serviceGen.encontrarPorId(id_genero));
+        libro.setEditorial(serviceEdit.encontrarPorId(id_editorial));
+        libro.setAutor(serviceAutor.encontrarAutor(id_autor).get());
+        libroService.guardarLibro(libro);
         return "redirect:/libros";
     }
 
     @GetMapping("/eliminar")
     public String eliminarLibro(Model m, Integer id) {
-        Optional<Libro> l = librepo.findById(id);
-        if (l.isPresent()) {
-            librepo.deleteById(id);
+        if (libroService.bajaLibroId(id)) {
+            m.addAttribute("borrado", "Borrado con éxito");
+        } else {
+            m.addAttribute("borrado", "Error, no es posible borrar este autor");
         }
         return "redirect:libros";
     }
 
     @GetMapping("/modificar")
     public String modificarLibro(Model m, Integer id) {
-        m.addAttribute("libro", librepo.findById(id));
-        m.addAttribute("generos", genRepo.findAll());
-        m.addAttribute("editoriales", editRepo.findAll());
-        m.addAttribute("autores", AutRepo.findAll());
-        m.addAttribute("imagen", librepo.findById(id).get().getUriPortada());
-        return "libros/modificar";
+
+        m.addAttribute("imagen", libroService.libroId(id).getUriPortada());
+        m.addAttribute("libro", libroService.libroId(id));
+        m.addAttribute("generos", serviceGen.getGeneros());
+        m.addAttribute("editoriales", serviceEdit.consultaTodas());
+        m.addAttribute("autores", serviceAutor.consultarAutores());
+
+        return "/libros/modificar";
     }
 
     @GetMapping("/listarAdmin")
-    private String listarTodo(Model m) {
-        m.addAttribute("libros", librepo.findAll());
-        m.addAttribute("generos", genRepo.findAll());
-        m.addAttribute("editoriales", editRepo.findAll());
-        m.addAttribute("autores", AutRepo.findAll());
-        
+    private String listarTodo(Model m, String borrado) {
+        m.addAttribute("libros", libroService.encontrarDisponible());
+        m.addAttribute("generos", serviceGen.getGeneros());
+        m.addAttribute("editoriales", serviceEdit.consultaTodas());
+        m.addAttribute("autores", serviceAutor.consultarAutores());
+        if(borrado!=null){
+            m.addAttribute("borrado",borrado);
+        }
+
         return "/administrador/libros";
     }
 
     @PostMapping("/guardarAdmin")
     public String guardarAdmin(Model m, Libro libro, Integer id_genero, Integer id_editorial, Integer id_autor) {
-        libro.setGenero(genRepo.getById(id_genero));
-        libro.setEditorial(editRepo.getById(id_genero));
-        libro.setAutor(AutRepo.getById(id_autor));
-        librepo.save(libro);
+        libro.setGenero(serviceGen.encontrarPorId(id_genero));
+        libro.setEditorial(serviceEdit.encontrarPorId(id_editorial));
+        libro.setAutor(serviceAutor.encontrarAutor(id_autor).get());
+        libroService.guardarLibro(libro);
         
         return "redirect:listarAdmin";
     }
 
     @GetMapping("/eliminarAdmin")
-    public String eliminarAdmin(Model m, Integer id) {
-        Optional<Libro> l = librepo.findById(id);
-        if (l.isPresent()) {
-            librepo.deleteById(id);
+    public String eliminarAdmin(Integer id) {
+        String borrado="";
+        if (libroService.bajaLibroId(id)) {
+            borrado="Borrado con éxito";
+        } else {
+           borrado= "Error, no es posible borrar este autor";
         }
-        return "redirect:listarAdmin";
+        return "redirect:listarAdmin?borrado="+borrado;
     }
 
     @PostMapping("/addValoracionLibro")
     public String addValoracionLibro(Model m, Integer id, Integer valoracion) {
-        Optional<Libro> l = librepo.findById(id);
-        if (l.isPresent()) {
-            libroService.valorarLibro(l.get(), valoracion);
-        }
+        libroService.valorarLibro(libroService.libroId(id), valoracion);
+
         return "redirect:/hiberlibros/buscarLibro";
     }
 }

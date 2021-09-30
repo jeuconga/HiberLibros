@@ -1,4 +1,7 @@
-
+$(document).ready(function () {
+    bootbox.alert(
+            $("#mensajeBorrado").html());
+});
 function modificarLibros(pId) {
     $.ajax({
         url: '/libros/modificar',
@@ -46,7 +49,7 @@ function mostrarLibros(pId) {
         },
         success: function (pHtml) {
             bootbox.dialog({
-				animate :true,
+                animate: true,
                 size: "large",
                 message: pHtml
             })
@@ -158,7 +161,7 @@ function editarGenero(pID) {
 
 }
 
-function mostrarContactos(){
+function mostrarContactos() {
     $.ajax({
         url: '/hiberlibros/paneladmin/contacto',
         success: function (pHtml) {
@@ -173,10 +176,10 @@ function mostrarContactos(){
     });
 }
 function previsualizar() {
-    var text =  document.getElementById("urlPortada").value;
-	$("#previsualizacion").attr("src", text);
-	$("#previsualizacion").hide();
-	$("#previsualizacion").fadeIn(1000);
+    var text = document.getElementById("urlPortada").value;
+    $("#previsualizacion").attr("src", text);
+    $("#previsualizacion").hide();
+    $("#previsualizacion").fadeIn(1000);
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -189,27 +192,8 @@ $("#container").simpleCalendar({
 // displays events
     displayEvent: true,
     // event dates
-    events: [
+    events: calendarData,
 
-        //genera nuevo evento para el dia siguiente de 1 hora de duracion
-        {
-            startDate: new Date(new Date().setHours(new Date().getHours() + 24)).toDateString(),
-            endDate: new Date(new Date().setHours(new Date().getHours() + 25)).toISOString(),
-            summary: 'Crea un recordatorio'
-        },
-        // genera evento para ayer por la tarde
-        {
-            startDate: new Date(new Date().setHours(new Date().getHours() - new Date().getHours() - 12, 0)).toISOString(),
-            endDate: new Date(new Date().setHours(new Date().getHours() - new Date().getHours() - 11)).getTime(),
-            summary: 'Crea un recordatorio 2'
-        },
-        //genera nuevo evento para los ultimos dos dias
-        {
-            startDate: new Date(new Date().setHours(new Date().getHours() - 48)).toISOString(),
-            endDate: new Date(new Date().setHours(new Date().getHours() - 24)).getTime(),
-            summary: 'Crea un recordatorio 3'
-        }
-    ],
     //Dishabilitar descripcion de evento
     disableEventDetails: false,
     disableEmptyDetails: false

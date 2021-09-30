@@ -40,7 +40,7 @@ public class ForoLibroController {
     @GetMapping()
     public String recuperarForos(Model m) {
         m.addAttribute("foro", new ForoLibro());
-        m.addAttribute("libros", serviceLibro.recuperarTodosLibros());
+        m.addAttribute("libros", serviceLibro.encontrarDisponible());
         m.addAttribute("foros", serviceForoLibro.recuperarTodosLosForos());
         return "/principal/foro";
     }
@@ -51,7 +51,7 @@ public class ForoLibroController {
         l.setUsuarioCreador(usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext()));
         serviceForoLibro.altaForoLibro(l);
         m.addAttribute("foro", new ForoLibro());
-        m.addAttribute("libros", serviceLibro.recuperarTodosLibros());
+        m.addAttribute("libros", serviceLibro.encontrarDisponible());
         m.addAttribute("foros", serviceForoLibro.recuperarTodosLosForos());
 
         return "/principal/foro";

@@ -48,7 +48,7 @@ public class UsuarioController {
 
     @PostMapping("/guardarUsuario")//guarda un usuario devuelve un mensaje de error concreto
     public String usuarioRegistrar(Usuario u, String password) {
-        //String resultado = service.guardarUsuario(u);
+        //String resultado = service.guardarUsuario(u);     
         String resultado = serviceUsuario.guardarUsuarioYSeguridad(u, password);
         if (resultado.contains("Error")) {
             return "redirect:/hiberlibros?error=" + resultado;//mail existente, mail no válido
@@ -68,8 +68,13 @@ public class UsuarioController {
 
     @GetMapping("/borrar")
     public String borrar(Integer id) {//borra usuario por ID en administrador
-        serviceUsuario.borrarUsuario(id);
-        return "redirect:/hiberlibros/paneladmin";
+        String borrado="";
+        if (serviceUsuario.borrarUsuario(id)) {
+            borrado = "Borrado con éxito";
+        } else {
+            borrado = "Error, no es posible borrar este autor";
+        }
+        return "redirect:listarAdmin?borrado="+borrado;
     }
 
     @GetMapping("/borrarUsuario")//borra usuario por ID en HIBERLIBRO
@@ -79,8 +84,11 @@ public class UsuarioController {
     }
 
     @GetMapping("/listarAdmin")
-    private String listarTodo(Model m) {
+    private String listarTodo(Model m, String borrado) {
         m.addAttribute("usuarios", serviceUsuario.usuariosList());
+        if (borrado != null) {
+            m.addAttribute("borrado", borrado);
+        }
         return "/administrador/usuarios";
     }
 
@@ -98,11 +106,12 @@ public class UsuarioController {
         String subir = rutaBase + nombre + extension;
         File f = new File(subir);
         f.getParentFile().mkdirs();
-
+        System.out.println("error" + subir);
         try {
             Files.copy(ficheroImagen.getInputStream(), f.toPath(), StandardCopyOption.REPLACE_EXISTING);
             Usuario user = serviceUsuario.usuarioId(id);
             user.setUriFoto(subir);
+
             serviceUsuario.editarUsuario(user);
 
         } catch (Exception e) {
