@@ -61,13 +61,13 @@ public class LibroController {
     @GetMapping("/modificar")
     public String modificarLibro(Model m, Integer id) {
 
-        m.addAttribute("imagen", libroService.libroId(id));
+        m.addAttribute("imagen", libroService.libroId(id).getUriPortada());
         m.addAttribute("libro", libroService.libroId(id));
         m.addAttribute("generos", serviceGen.getGeneros());
         m.addAttribute("editoriales", serviceEdit.consultaTodas());
         m.addAttribute("autores", serviceAutor.consultarAutores());
 
-        return "libros/modificar";
+        return "/libros/modificar";
     }
 
     @GetMapping("/listarAdmin")
