@@ -81,8 +81,11 @@ public class AutorController {
     }
 
     @GetMapping("/autores/listarAdmin")
-    public String listaAdmin(Model m) {
+    public String listaAdmin(Model m, String borrado) {
         m.addAttribute("autores", autorService.consultarAutores());
+        if(borrado!=null){
+            m.addAttribute("borrado", borrado);
+        }
         return "administrador/autores";
     }
 
@@ -108,12 +111,13 @@ public class AutorController {
 
     @GetMapping("/eliminarAutor")
     public String eliminarAutorAdmin(Model m, Integer id) {
+        String borrado="";
         if (autorService.borrarAutor(id)) {
-            m.addAttribute("borrado", "Borrado con éxito");
+            borrado="Borrado con éxito";
         } else {
-            m.addAttribute("borrado", "Error, no es posible borrar este autor");
+            borrado="Error, no es posible borrar este autor";
         }
-        return "redirect:autores/listarAdmin";
+        return "redirect:autores/listarAdmin?borrado="+borrado;
 
     }
 }
