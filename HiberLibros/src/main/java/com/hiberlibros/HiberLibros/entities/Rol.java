@@ -25,7 +25,7 @@ public class Rol {
 
     private String nombre_rol;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_usuario_seguridad")
     private UsuarioSeguridad idUsuario;
 }

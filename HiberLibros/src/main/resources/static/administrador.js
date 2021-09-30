@@ -1,4 +1,7 @@
-
+$(document).ready(function () {
+    bootbox.alert(
+            $("#mensajeBorrado").html());
+});
 function modificarLibros(pId) {
     $.ajax({
         url: '/libros/modificar',
@@ -46,7 +49,7 @@ function mostrarLibros(pId) {
         },
         success: function (pHtml) {
             bootbox.dialog({
-				animate :true,
+                animate: true,
                 size: "large",
                 message: pHtml
             })
@@ -158,7 +161,7 @@ function editarGenero(pID) {
 
 }
 
-function mostrarContactos(){
+function mostrarContactos() {
     $.ajax({
         url: '/hiberlibros/paneladmin/contacto',
         success: function (pHtml) {
@@ -173,10 +176,10 @@ function mostrarContactos(){
     });
 }
 function previsualizar() {
-    var text =  document.getElementById("urlPortada").value;
-	$("#previsualizacion").attr("src", text);
-	$("#previsualizacion").hide();
-	$("#previsualizacion").fadeIn(1000);
+    var text = document.getElementById("urlPortada").value;
+    $("#previsualizacion").attr("src", text);
+    $("#previsualizacion").hide();
+    $("#previsualizacion").fadeIn(1000);
 }
 
 ///////////////////////////////////////////////////////////////////
