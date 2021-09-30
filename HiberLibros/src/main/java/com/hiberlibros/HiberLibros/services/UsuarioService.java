@@ -19,10 +19,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-/**
- *
- * @author Usuario
- */
 @Service
 public class UsuarioService implements IUsuarioService {
 
@@ -86,13 +82,18 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     @Transactional
-    public void borrarUsuario(Integer id) {
+    public Boolean borrarUsuario(Integer id) {
         Optional<Usuario> usuario = urService.findById(id);
         if (usuario.isPresent()) {
-            usuario.get().setDesactivado(Boolean.TRUE);
-            urService.save(usuario.get());
-            serviceUsuLi.usuarioBorrado(usuario.get());
-            serviceUsuarioSeguridad.bajaUsuarioSeguridadPorMail(usuario.get().getMail());
+            Boolean result = serviceUsuLi.usuarioBorrado(usuario.get());
+            if (result) {
+                usuario.get().setDesactivado(Boolean.TRUE);
+                urService.save(usuario.get());
+                serviceUsuarioSeguridad.bajaUsuarioSeguridadPorMail(usuario.get().getMail());
+            }
+            return result;
+        } else {
+            return false;
         }
     }
 
@@ -123,13 +124,12 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     public Usuario usuarioId(Integer id) {
-        return urService.findById(id).get();
+        return urService.findByIdAndDesactivado(id, Boolean.FALSE).get();
     }
 
+    @Override
     public Integer contarUsuarios() {
-        long numUsuario = urService.findByDesactivado(Boolean.FALSE).stream()
-                .count();
-        return (int) (numUsuario);
+        return urService.countByDesactivado(Boolean.FALSE);
     }
 
     @Override

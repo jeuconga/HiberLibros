@@ -1,10 +1,11 @@
 <html xmlns:th="https://www.thymeleaf.org" 
       th:replace="administrador/vistaAdministrador::layout(~{::body})">
-
+    
     <body>
+        <p th:if="${borrado!=null}"><span th:text=${borrado}></span></p>
         <div class="fondo col-sm p-3 min-vh-100">
 		<div class="container">
-            <table class="table table-striped mt-5">
+            <table class="table table-light mt-5">
             <thead class="text-white bg-primary">
                     <tr>
                         <th>ISBN</th>
@@ -14,7 +15,7 @@
                         <th>Editorial</th>
                         <th>Genero</th>
                         <th>Valoracion</th>
-
+                    	<th>Acciones</th>
                     </tr>
                 </thead><!-- comment -->
                 <tbody>
@@ -28,9 +29,9 @@
                         <td th:text="${libro.genero.nombre}"></td>
                         <td th:text="${libro.valoracionLibro}"></td>
 
-<!--                        <td>                   
+                        <td>                   
                             <a type="button" class="btn btn-dark btn-sm" th:onclick="|eliminarLibro(${libro.id})|"><i class="far fa-trash-alt" ><span style="margin-left:5px">Borrar</span></i></a>
-                        </td>-->
+                        </td>
                         <td>
                             <a type="button" class="btn btn-dark btn-sm" th:onclick="|modificarLibros(${libro.id})|"><i class="far fa-edit"><span style="margin-left:5px">Modificar</span></i></a>
                         </td>

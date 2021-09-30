@@ -12,14 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.hiberlibros.HiberLibros.dtos.LibroDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.interfaces.IAutorService;
-
 import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 import com.hiberlibros.HiberLibros.repositories.AutorLibroRepository;
-import com.hiberlibros.HiberLibros.repositories.AutorRepository;
 import java.util.stream.Collectors;
 
 @Controller
@@ -27,18 +24,15 @@ import java.util.stream.Collectors;
 public class AutorController {
 
     @Autowired
-    private AutorRepository autorRepo;
-    @Autowired
     private AutorLibroRepository repo;
-    @Autowired
-    private AutorLibroRepository alrepo;
+
     @Autowired
     private ILibroService ilibroservice;
 
     @Autowired
     private ModelMapper obj;
 
-    @Autowired(required = false)
+    @Autowired
     private IAutorService autorService;
 
     @GetMapping("/autorLista")
@@ -88,33 +82,38 @@ public class AutorController {
 
     @GetMapping("/autores/listarAdmin")
     public String listaAdmin(Model m) {
-        m.addAttribute("autores", autorRepo.findAll());
+        m.addAttribute("autores", autorService.consultarAutores());
         return "administrador/autores";
     }
 
     @GetMapping("/librosAutor")
     public String LibrosDeAutor(Model m, Integer id) {
-        Autor a = autorRepo.findById(id).get();
+        Autor a = autorService.encontrarAutor(id).get();
 
-        m.addAttribute("libros", ilibroservice.encontrarPorAutor(a));
+        m.addAttribute("libros", ilibroservice.encontrarPorAutorActivos(a));
         return "administrador/librosAutor";
     }
 
     @GetMapping("/editarAutor")
     public String editarAutor(Model m, Integer id) {
-        m.addAttribute("autor", autorRepo.findById(id));
+        m.addAttribute("autor", autorService.encontrarAutor(id).get());
         return "administrador/editAutor";
     }
 
     @PostMapping("/guardarAutor")
     public String guardarAutor(Model m, Autor autor) {
-        autorRepo.save(autor);
+        autorService.guardarAutor(autor);
         return "redirect:autores/listarAdmin";
     }
 
     @GetMapping("/eliminarAutor")
-    public String eliminarAutorAdmin(Integer id) {
-        autorRepo.deleteById(id);
+    public String eliminarAutorAdmin(Model m, Integer id) {
+        if (autorService.borrarAutor(id)) {
+            m.addAttribute("borrado", "Borrado con éxito");
+        } else {
+            m.addAttribute("borrado", "Error, no es posible borrar este autor");
+        }
         return "redirect:autores/listarAdmin";
+
     }
 }
