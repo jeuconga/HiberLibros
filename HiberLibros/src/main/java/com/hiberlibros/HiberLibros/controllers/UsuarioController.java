@@ -48,7 +48,7 @@ public class UsuarioController {
 
     @PostMapping("/guardarUsuario")//guarda un usuario devuelve un mensaje de error concreto
     public String usuarioRegistrar(Usuario u, String password) {
-        //String resultado = service.guardarUsuario(u);
+        //String resultado = service.guardarUsuario(u);     
         String resultado = serviceUsuario.guardarUsuarioYSeguridad(u, password);
         if (resultado.contains("Error")) {
             return "redirect:/hiberlibros?error=" + resultado;//mail existente, mail no válido
@@ -97,12 +97,13 @@ public class UsuarioController {
         String extension = nombreFichero.substring(nombreFichero.lastIndexOf("."));
         String subir = rutaBase + nombre + extension;
         File f = new File(subir);
-        f.getParentFile().mkdirs();
-
+        f.getParentFile().mkdirs(); 
+        System.out.println("error" + subir);  
         try {
             Files.copy(ficheroImagen.getInputStream(), f.toPath(), StandardCopyOption.REPLACE_EXISTING);
             Usuario user = serviceUsuario.usuarioId(id);
             user.setUriFoto(subir);
+
             serviceUsuario.editarUsuario(user);
 
         } catch (Exception e) {
