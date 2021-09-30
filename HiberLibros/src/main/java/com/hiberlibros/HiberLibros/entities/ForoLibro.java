@@ -41,7 +41,7 @@ public class ForoLibro {
     @ManyToOne
     @JoinColumn(name="id_usuario")
     private Usuario usuarioCreador;  //id Usuario creador del hilo
-    
+
     @OneToMany(mappedBy = "id" ,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ComentarioForo> comentarios; //usuario que genera el foro
     
