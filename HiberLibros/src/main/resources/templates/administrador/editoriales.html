@@ -20,7 +20,6 @@
                     <td><p class="list-group-item-text lead" th:text="${edit.id}"></p></td>
                     <td><p class="list-group-item-text lead" th:text="${edit.nombreEditorial}"></p></td>
 					<td>
-						<a class="btn btn-dark btn-sm" th:href="@{/editoriales/baja/{id} (id=${edit.id})}">Eliminar</a>
                     	<a class="btn btn-dark btn-sm" th:onclick="|editarEditorial(${edit.id})|">Editar</a>
 					</td>
                 </tr>
