@@ -6,16 +6,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
  * @author Usuario
  */
 @Controller
-@RequestMapping("/editoriales")
+@RequestMapping
 public class EditorialController {
 
     @Autowired
@@ -58,10 +60,10 @@ public class EditorialController {
         return "redirect:/editoriales/editoriales";
     }
 
-    @PostMapping("modificacion")
+    @PostMapping("/editoriales/modificacion")
     public String editorialesModificacion(Model m, Editorial ed) {
         serviceEditorial.altaModificacionEditorial(ed);
-        return "redirect:/editoriales/editoriales";
+        return "redirect:/editoriales/listarAdmin";
     }
 
     @PostMapping("consulta")
@@ -69,5 +71,16 @@ public class EditorialController {
         m.addAttribute("editorial", serviceEditorial.consultaPorIdEditorial(Integer.parseInt(id)));
 
         return "forward:/editoriales/editoriales";
+    }
+    @GetMapping("/editoriales/listarAdmin")
+    public String listaAdmin(Model m, String borrado) {
+        m.addAttribute("editoriales", serviceEditorial.consultaTodas());
+        return "administrador/editoriales";
+    }
+    @GetMapping("/editoriales/editar")
+    @ResponseBody
+    public Editorial editarEdit(Integer id) {
+        Editorial edit = serviceEditorial.consultaPorIdEditorial(id);
+        return edit;
     }
 }
