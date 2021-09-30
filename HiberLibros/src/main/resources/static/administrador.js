@@ -163,7 +163,7 @@ function editarGenero(pID) {
 
 function editarEditorial(pID) {
     $.ajax({
-        url: '/editoriales/modificacion',
+        url: '/editoriales/editar',
         data: {id: pID},
         datatype: 'json',
         success: function (pJson) {

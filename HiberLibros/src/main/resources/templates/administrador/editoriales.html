@@ -27,6 +27,15 @@
 
             </table>		 			
         </div>
+        
+            <div style="display:none" id="editarEditorial">
+            <form action="/editoriales/modificacion" method="post">
+                <label>Editorial</label>
+                <input type="hidden" name="id"/>
+                <input type="text" name="nombreEditorial"/>
+                <input type="submit" value="Añadir" class="btn btn-primary"/>   
+            </form>
+        </div>
         </div>
 </body>
 </html>
