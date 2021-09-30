@@ -59,7 +59,7 @@ public class GeneroController {
         return genDto;
     }
 
-    @GetMapping("/listarAdmin")
+        @GetMapping("/listarAdmin")
     private String listarTodo(Model m, String borrado) {
         m.addAttribute("generos", serviceGen.getGeneros());
         m.addAttribute("generoForm", new Genero());
