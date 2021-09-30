@@ -29,7 +29,7 @@ public class UsuarioSeguridad {
     private String mail;
     private String password;
 
-    @OneToMany(mappedBy = "idUsuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "idUsuario", fetch = FetchType.EAGER)
     private List<Rol> roles;
 
 }

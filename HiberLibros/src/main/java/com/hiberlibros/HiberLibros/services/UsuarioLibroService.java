@@ -98,7 +98,7 @@ public class UsuarioLibroService implements IUsuarioLibroService {
     @Override
     public Boolean usuarioBorrado(Usuario u) {
         List<UsuarioLibro> ul = ulRepo.findByUsuarioAndDesactivadoAndEstadoPrestamo(u, Boolean.FALSE, "ocupado");
-        if (!ul.isEmpty() || ul != null) {
+        if (!ul.isEmpty()) {
             return false;
         } else {
             ul = ulRepo.findByUsuarioAndDesactivado(u, Boolean.FALSE);
