@@ -24,4 +24,6 @@ public interface LibroRepository extends JpaRepository<Libro, Integer> {
     public List<Libro> findByGenero(Genero g);
     
     public List<Libro> findByEditorial(Editorial e);
+    
+    public List<Libro> findByTituloContainingIgnoreCase(String search);
 }

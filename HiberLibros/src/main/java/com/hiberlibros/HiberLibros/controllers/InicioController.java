@@ -5,6 +5,7 @@
  */
 package com.hiberlibros.HiberLibros.controllers;
 
+import com.hiberlibros.HiberLibros.dtos.BuscaLibroDto;
 import com.hiberlibros.HiberLibros.dtos.TablaLibrosDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.entities.Libro;
@@ -47,6 +48,7 @@ import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 import com.hiberlibros.HiberLibros.repositories.IntercambioRepository;
 import com.hiberlibros.HiberLibros.repositories.UsuarioLibroRepository;
+import com.hiberlibros.HiberLibros.services.LibroService;
 import java.util.UUID;
 
 /**
@@ -75,6 +77,7 @@ public class InicioController {
     private IPeticionService petiService;
     @Autowired
     private AuthenticationManager manager;
+    
 
     @Autowired
     private IIntercambioService serviceInter;
@@ -201,17 +204,25 @@ public class InicioController {
         return "redirect:/hiberlibros/panelUsuario";//vuelve a la página inicial
     }
 
-    @GetMapping("/buscarLibro")//Muestra la lita de libros, todos o los buscados si está relleno el campo buscador
-    public String buscarLibro(Model m, Integer id, String buscador) {
-        Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
-        m.addAttribute("usuario", u);
-        if (buscador == null) {
-            m.addAttribute("libros", ulService.buscarDisponibles(u));
-        } else {
-            m.addAttribute("libros", ulService.buscarContiene(buscador, u.getId()));
-        }
-
-        return "principal/buscarLibro";
+//    @GetMapping("/buscarLibro")//Muestra la lita de libros, todos o los buscados si está relleno el campo buscador
+//    public String buscarLibro(Model m, Integer id, String buscador) {
+//        Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
+//        m.addAttribute("usuario", u);
+//        if (buscador == null) {
+//            m.addAttribute("libros", ulService.buscarDisponibles(u));
+//        } else {
+//            m.addAttribute("libros", ulService.buscarContiene(buscador, u.getId()));
+//        }
+//
+//        return "principal/buscarLibro";
+//    }
+    
+    @GetMapping("/buscarLibro")
+    @ResponseBody
+    public List<BuscaLibroDto> buscarLibro(String search){
+        return liService.findByTituloContainingIgnoreCase(search).stream()
+                .map(x-> new BuscaLibroDto(x.getId(), x.getTitulo()))
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/guardarRelato")

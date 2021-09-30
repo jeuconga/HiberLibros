@@ -32,4 +32,7 @@ public interface ILibroService {
     public List<Libro> encontrarPorGenero(Genero g);
     
     public List<Libro> encontrarPorEditorial(Editorial e);
+    
+    public List<Libro> findByTituloContainingIgnoreCase(String search);
+
 }

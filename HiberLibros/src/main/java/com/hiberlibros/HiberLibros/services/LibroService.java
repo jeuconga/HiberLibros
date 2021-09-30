@@ -113,4 +113,9 @@ public class LibroService implements ILibroService {
         return libroRep.findByAutorAndDesactivado(a, Boolean.FALSE);
     }
 
+    @Override
+    public List<Libro> findByTituloContainingIgnoreCase(String search) {
+        return libroRep.findByTituloContainingIgnoreCase(search);
+    }
+
 }

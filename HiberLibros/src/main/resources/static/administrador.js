@@ -161,6 +161,25 @@ function editarGenero(pID) {
 
 }
 
+function editarEditorial(pID) {
+    $.ajax({
+        url: '/editoriales/editar',
+        data: {id: pID},
+        datatype: 'json',
+        success: function (pJson) {
+            bootbox.dialog({
+                title: 'Modificar editorial',
+                size: 'large',
+                message: "<div id='editar'>" + $("#editarEditorial").html() + "</div>"
+            });
+            $("#editar form").deserialize(pJson);
+        }
+
+    });
+
+
+}
+
 function mostrarContactos() {
     $.ajax({
         url: '/hiberlibros/paneladmin/contacto',
