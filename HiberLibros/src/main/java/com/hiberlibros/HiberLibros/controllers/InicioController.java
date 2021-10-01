@@ -77,7 +77,6 @@ public class InicioController {
     private IPeticionService petiService;
     @Autowired
     private AuthenticationManager manager;
-    
 
     @Autowired
     private IIntercambioService serviceInter;
@@ -125,7 +124,7 @@ public class InicioController {
     public String logout() {
         SecurityContextHolder.clearContext();
         return "/principal/logout";
-    } 
+    }
 
     @GetMapping("/panelUsuario") //entrada al panel principal de usuario, se pasan todos los elementos que se han de mostrar
     public String panelUsuario(Model m, String mail) {
@@ -216,12 +215,11 @@ public class InicioController {
 //
 //        return "principal/buscarLibro";
 //    }
-    
     @GetMapping("/buscarLibro")
     @ResponseBody
-    public List<BuscaLibroDto> buscarLibro(String search){
+    public List<BuscaLibroDto> buscarLibro(String search) {
         return liService.findByTituloContainingIgnoreCase(search).stream()
-                .map(x-> new BuscaLibroDto(x.getId(), x.getTitulo()))
+                .map(x -> new BuscaLibroDto(x.getId(), x.getTitulo()))
                 .collect(Collectors.toList());
     }
 

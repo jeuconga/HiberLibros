@@ -100,8 +100,8 @@ public class PeticionService implements IPeticionService {
 
     @Override
     public Integer contarNuevasPeticiones(UsuarioLibro ul) {
-            return   repoPeticion.countByPendienteTratarAndIdUsuarioLibro(Boolean.TRUE, ul);
-   
+        return repoPeticion.countByPendienteTratarAndIdUsuarioLibro(Boolean.TRUE, ul);
+
     }
 
     @Override
