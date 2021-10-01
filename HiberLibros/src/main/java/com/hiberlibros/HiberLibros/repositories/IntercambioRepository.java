@@ -22,6 +22,10 @@ public interface IntercambioRepository extends JpaRepository<Intercambio, Intege
     
     public void deleteByUsuarioPrestadorOrUsuarioPrestatario(UsuarioLibro ul, UsuarioLibro ul2);
     
-    public int countByFechaDevolucion(String fecha);
+    public Integer countByFechaDevolucionAndUsuarioPrestador(Date fecha, UsuarioLibro ul);
+    
+    public Integer countByFechaDevolucionAndUsuarioPrestatario(Date fecha, UsuarioLibro ul);
+    
+    
   
 }

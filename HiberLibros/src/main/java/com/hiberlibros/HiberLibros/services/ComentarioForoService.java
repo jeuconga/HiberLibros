@@ -9,6 +9,7 @@ import com.hiberlibros.HiberLibros.entities.ComentarioForo;
 import com.hiberlibros.HiberLibros.entities.ForoLibro;
 import com.hiberlibros.HiberLibros.interfaces.IComentarioForoService;
 import com.hiberlibros.HiberLibros.repositories.ComentarioForoRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,11 @@ public class ComentarioForoService implements IComentarioForoService{
     @Override
     public void eliminarComentariosForo(ForoLibro fl) {
        repoComen.deleteByForoLibro(fl);
+    }
+
+    @Override
+    public List<ComentarioForo> consultarComentariosPorForo(ForoLibro foroLibro) {
+        return repoComen.findByForoLibro(foroLibro);
     }
     
 }

@@ -2,10 +2,10 @@ package com.hiberlibros.HiberLibros.controllers;
 
 import com.hiberlibros.HiberLibros.entities.Relato;
 import com.hiberlibros.HiberLibros.entities.Usuario;
+import com.hiberlibros.HiberLibros.interfaces.IGeneroService;
 
 import com.hiberlibros.HiberLibros.interfaces.IRelatoService;
 import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
-import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
 import java.io.File;
 import java.nio.file.Files;
@@ -29,8 +29,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 @Controller
 @RequestMapping("/relato")
@@ -39,7 +38,7 @@ public class RelatoController {
     @Autowired
     private RelatoRepository repoRelato;
     @Autowired
-    private GeneroRepository repoGenero;
+    private IGeneroService serviceGenero;
     @Autowired
     private IUsuarioService usuService;
     @Autowired
@@ -52,7 +51,7 @@ public class RelatoController {
     @GetMapping
     public String prueba(Model model) {
 
-        model.addAttribute("generos", repoGenero.findAll());
+        model.addAttribute("generos", serviceGenero.getGeneros());
         model.addAttribute("relatos", repoRelato.findAll());
         return "/principal/relato";
     }
@@ -60,7 +59,7 @@ public class RelatoController {
     @GetMapping("/listaRelatos")
     public String mostrarRelatos(Model model) {
         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
-        model.addAttribute("generos", repoGenero.findAll());
+        model.addAttribute("generos", serviceGenero.getGeneros());
         model.addAttribute("relatos", repoRelato.findAll());
         model.addAttribute("usuario", u);
         return "/principal/buscarRelatos";
@@ -140,7 +139,7 @@ public class RelatoController {
     public String modificarRelato(Model m, Integer id) {
 
         m.addAttribute("relato", repoRelato.findById(id));
-        m.addAttribute("generos", repoGenero.findAll());
+        m.addAttribute("generos", serviceGenero.getGeneros());
         return "relato/modificarRelato";
     }
 
@@ -149,7 +148,7 @@ public class RelatoController {
 
         repoRelato.save(relato);
 
-        return "redirect:/relato";
+        return "redirect:listarAdmin";
     }
 
     @GetMapping("/listarAdmin")
@@ -173,7 +172,7 @@ public class RelatoController {
     @GetMapping("/buscarPorValoracionMayor")
     public String mostrarPorValoracionMayor(Model model, Integer id) {
 
-        model.addAttribute("generos", repoGenero.findAll());
+        model.addAttribute("generos", serviceGenero.getGeneros());
         model.addAttribute("relatos", relatoService.buscarPorValoracionMenorAMayor());
         model.addAttribute("usuario", usuService.usuarioId(id));
         return "/principal/buscarRelatos";
@@ -182,7 +181,7 @@ public class RelatoController {
     @GetMapping("/buscarPorValoracionMenor")
     public String mostrarPorValoracionMenor(Model model, Integer id) {
 
-        model.addAttribute("generos", repoGenero.findAll());
+        model.addAttribute("generos", serviceGenero.getGeneros());
         model.addAttribute("relatos", relatoService.buscarPorValoracionMayorAMenor());
         model.addAttribute("usuario", usuService.usuarioId(id));
         return "/principal/buscarRelatos";
@@ -194,7 +193,7 @@ public class RelatoController {
         if (rel.isPresent()) {
             repoRelato.deleteById(id);
         }
-        return "/administrador/vistaAdministrador";
+        return "redirect:listarAdmin";
     }
 
     @GetMapping("/download")

@@ -61,20 +61,32 @@
 
                         <div class="px-4 pt-0 pb-4 cover bannerPerfil">
                             <div class="media align-items-end profile-head">
-                                <div class="profile mr-3 mt-2">
-                                    <img th:src="${usuario.uriFoto}" alt="..." width="130" class="imgRedonda">
-                                    
-<!--                                    <img src="file://C:/zzzzImagenPerfiles\3d06df12-dede-476b-acc5-c6cd5eefe01d.png" alt="alt"/>-->
-                                    
-                                    
+                                <div class="profile mr-3 mt-2">   
+
+                                    <p th:if="${usuario.uriFoto!=null}">                     
+                                    <img th:src="@{/usuarios/download(imagen=${usuario.uriFoto})}" class="imgRedonda" /> <br>
+                                    </p>
+                                    <p th:if="${usuario.uriFoto==null}">
+                                        <img src="../perfil.png" class="imgRedonda" /> <br>
+                                    </p>
+
+
                                     <a onclick="editarUsuario()" class=" btn btn-outline-dark btn-sm btn-block mt-4 col-6">Editar perfil</a></br>
 
                                     <form action="/usuarios/imagenPerfil" method="post" enctype="multipart/form-data" >
-                                        <input  type="hidden" name="id" th:value="${usuario.id}"/>                                        
-                                        <div class="form-group">
-                                            <input class="form-control-file "  type="file" name="ficheroImagen" required/>
-                                            <input type="submit" class="btn btn-dark btn-sm btn-block mt-4 col-6" value="Subir foto de perfil" />
+                                        <input  type="hidden" name="id" th:value="${usuario.id}"/>           
+
+                                        <div class="form-group" id="ocultar">
+
+                                            <label for="file-upload" class="custom-file-upload ">
+                                                <i class="fas fa-file-image"> </i>  Seleccionar imagen
+                                            </label>
+                                            <input id="file-upload" type="file" name="ficheroImagen" required/>
+                                            <input type="submit" class="btn btn-dark btn-sm btn-block col-6" value="Cambiar" />
+
                                         </div>
+
+
                                     </form>  
 
 

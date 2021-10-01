@@ -195,6 +195,14 @@ input[type="radio"]:checked ~ label {
     padding:1px;
 }
 
+.imgRedondaPeque {
+    width:40px;
+    height:40px;
+    border-radius:150px;
+    border:1px solid #666;
+    padding:1px;
+}
+
 .imagenLibros{
     width:300px ;
     height:400px;
@@ -215,3 +223,64 @@ input[type="radio"]:checked ~ label {
 
 }
 
+#ocultar input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    border-radius:25px;
+    display: inline-block;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+.custom-file-upload:hover {
+    color: white;
+    background-color:#318aac ;   
+}
+
+
+.comentario_nombreCompleto{
+    font-size: large;
+    
+}
+.comentario_ciudad{
+    font-size: medium;
+    
+}
+.comentario_valoracion{
+    font-size: small;
+    
+}
+.comentario_titulo-libro{
+    font-weight: 800;
+    font-style: italic;
+    color: #999;
+}
+.comentario_titulo-foro{
+     font-weight: 700;
+      font-style: italic;
+    color: #999;
+}
+
+#ocultar input[type="file"] {
+    display: none;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #505e6c;
+  border-radius: 10px;
+}

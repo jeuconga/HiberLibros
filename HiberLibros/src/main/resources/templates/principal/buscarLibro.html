@@ -3,13 +3,14 @@
 
     <body>
         <div class="container-fluid">
-
-<!--            <form action="/hiberlibros/buscarLibro" method="get">-->
-                <!--                <input type="text" name="buscador" placeholder="Buscar por título o ISBN"/>
-                                <input type="submit" value="Buscar" class="btn btn-primary"/>
-                                <a href="/hiberlibros/buscarLibro" class="btn btn-warning"><i class="far fa-trash-alt"></i>&nbsp;Limpiar filtros</a>-->
-                <input ddl-url="/hiberlibros/buscarLibro" ddl-text="Título del libro" name="enviar" value="1" class="form-control"/>
-<!--            </form>-->
+            
+            <input id="valor" ddl-url="/hiberlibros/buscarLibro" ddl-text="Buscar libro" class="form-control" placeholder="Buscar por título"/>
+            <input type="submit" value="Buscar" class="btn btn-primary"/>
+<!--            <form action="/hiberlibros/buscarLibro" method="get">
+                <input type="text" name="buscador" placeholder="Buscar por título o ISBN"/>
+                <input type="submit" value="Buscar" class="btn btn-primary"/>
+                <a href="/hiberlibros/buscarLibro" class="btn btn-warning"><i class="far fa-trash-alt"></i>&nbsp;Limpiar filtros</a>
+            </form>-->
             <div class="testbox">
                 <table
                     class="table table-light" 
@@ -30,6 +31,7 @@
                             <th data-field="propietario">Propietario</th>
                             <th data-field="id" data-formatter="btnReservar">Reservar</th>
                             <th data-field="id_libro" data-formatter="btnValoracion">Valoración (0-5)</th>
+                            <th data-field="id_foro_libro" data-formatter="btnForo"></th>
                         </tr>
                     </thead>
                     <tbody>

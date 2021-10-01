@@ -9,7 +9,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -93,6 +93,14 @@ public class IntercambioService implements IIntercambioService {
                 return true;
             }
         }
+    }
+
+    @Override
+    public Integer contarIntercambiosPendientes(List<UsuarioLibro> ul) {
+        Integer result=0;
+        result+=ul.stream().map(x->repoInter.countByFechaDevolucionAndUsuarioPrestador(null, x)).collect(Collectors.summingInt(Integer::intValue));
+        result+=ul.stream().map(x->repoInter.countByFechaDevolucionAndUsuarioPrestatario(null, x)).collect(Collectors.summingInt(Integer::intValue));
+        return result;
     }
 
 }

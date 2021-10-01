@@ -16,11 +16,15 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Modifying
     @Query("update Usuario u set u.desactivado = true where u.id = :id")
     public void borradoLogico(Integer id);
+    
+    public Optional<Usuario> findByIdAndDesactivado(Integer id, Boolean b);
 
     public List<Usuario> findByDesactivado(Boolean b);
 
     public Optional<Usuario> findByMailContainsIgnoreCase(String mail);
 
     public Optional<Usuario> findByMail(String mail);
+    
+    public Integer countByDesactivado(Boolean b);
 
 }

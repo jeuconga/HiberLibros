@@ -28,9 +28,9 @@ public class ForoLibro {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id; // id propio
     
-    private Boolean desactivado;
+    private Boolean desactivado; //desactivado / activado
     
     private String  tituloForo; // titulo del foro
     
@@ -41,7 +41,7 @@ public class ForoLibro {
     @ManyToOne
     @JoinColumn(name="id_usuario")
     private Usuario usuarioCreador;  //id Usuario creador del hilo
-    
+
     @OneToMany(mappedBy = "id" ,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ComentarioForo> comentarios; //usuario que genera el foro
     

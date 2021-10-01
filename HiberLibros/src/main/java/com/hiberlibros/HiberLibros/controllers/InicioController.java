@@ -5,8 +5,7 @@
  */
 package com.hiberlibros.HiberLibros.controllers;
 
-import com.hiberlibros.HiberLibros.dtos.LibroBusquedaDto;
-import com.hiberlibros.HiberLibros.dtos.LibroDto;
+import com.hiberlibros.HiberLibros.dtos.BuscaLibroDto;
 import com.hiberlibros.HiberLibros.dtos.TablaLibrosDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.entities.Libro;
@@ -14,11 +13,13 @@ import com.hiberlibros.HiberLibros.entities.Peticion;
 import com.hiberlibros.HiberLibros.entities.Usuario;
 import com.hiberlibros.HiberLibros.entities.UsuarioLibro;
 import com.hiberlibros.HiberLibros.entities.Relato;
+import com.hiberlibros.HiberLibros.interfaces.IAutorService;
+import com.hiberlibros.HiberLibros.interfaces.IEditorialService;
+import com.hiberlibros.HiberLibros.interfaces.IGeneroService;
 import com.hiberlibros.HiberLibros.interfaces.ISeguridadService;
 
 import com.hiberlibros.HiberLibros.interfaces.IIntercambioService;
 import com.hiberlibros.HiberLibros.repositories.AutorRepository;
-import com.hiberlibros.HiberLibros.repositories.GeneroRepository;
 import com.hiberlibros.HiberLibros.repositories.RelatoRepository;
 import com.hiberlibros.HiberLibros.services.EditorialService;
 import java.io.File;
@@ -42,11 +43,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.hiberlibros.HiberLibros.interfaces.ILibroService;
 import com.hiberlibros.HiberLibros.interfaces.IPeticionService;
+import com.hiberlibros.HiberLibros.interfaces.IRelatoService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 import com.hiberlibros.HiberLibros.repositories.IntercambioRepository;
 import com.hiberlibros.HiberLibros.repositories.LibroRepository;
 import com.hiberlibros.HiberLibros.repositories.UsuarioLibroRepository;
+import com.hiberlibros.HiberLibros.services.LibroService;
 import java.util.UUID;
 import java.util.stream.Collector;
 
@@ -61,37 +64,28 @@ public class InicioController {
     @Autowired
     private IUsuarioService usuService;
     @Autowired
-    private GeneroRepository generoRepo;
+    private IGeneroService serviceGen;
     @Autowired
-    private AutorRepository autorRepo;
+    private IAutorService serviceAutor;
     @Autowired
-    private EditorialService editoService;
+    private IEditorialService editoService;
     @Autowired
     private ILibroService liService;
     @Autowired
-    private RelatoRepository repoRelato;
+    private IRelatoService serviceRelato;
     @Autowired
     private IUsuarioLibroService ulService;
     @Autowired
     private IPeticionService petiService;
-
     @Autowired
     private AuthenticationManager manager;
+    
 
     @Autowired
     private IIntercambioService serviceInter;
 
     @Autowired
     private ISeguridadService serviceSeguridad;
-
-    @Autowired
-    private UsuarioLibroRepository usuarioLibroRepo;
-
-    @Autowired
-    private IntercambioRepository intercambioRepo;
-    
-    @Autowired
-    private LibroRepository libroRep;
 
     private final String RUTA_BASE = "c:\\zzzzSubirFicheros\\";
 
@@ -118,16 +112,13 @@ public class InicioController {
         List<String> roles = auth.getAuthorities().stream().map(x -> x.getAuthority()).collect(Collectors.toList());
         for (String rol : roles) {
             if ("ROLE_Administrador".equals(rol)) {
-                //return "redirect:/hiberlibros/panelAdministrador?mail=" + username;
                 return "redirect:/hiberlibros/paneladmin";
             } else {
                 if ("ROLE_Usuario".equals(rol)) {
-                    // return "redirect:/hiberlibros/panelUsuario?mail=" + username;
                     return "redirect:/hiberlibros/panelUsuario";
                 }
             }
         }
-
         String error = "Usuario no registrado";
         return "redirect:/hiberlibros?error=" + error;
     }
@@ -142,16 +133,16 @@ public class InicioController {
     public String panelUsuario(Model m, String mail) {
         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         List<UsuarioLibro> ul = ulService.buscarUsuario(u);
-        m.addAttribute("relatos", repoRelato.findByUsuario(u));
+        m.addAttribute("relatos", serviceRelato.encontrarPorAutor(u));
         m.addAttribute("usuario", u);
         m.addAttribute("libros", ulService.buscarUsuariotiene(u));
         m.addAttribute("misPeticiones", petiService.consutarPeticionesUsuarioPendientes(u));
         m.addAttribute("petiRecibidas", petiService.consultarPeticonesRecibidas(u));
         m.addAttribute("intercambiosPropios", serviceInter.encontrarULPrestador(ul));
         m.addAttribute("intercambiosPeticiones", serviceInter.encontrarULPrestatario(ul));
-        m.addAttribute("librosUsuario", usuarioLibroRepo.countByUsuario(u)); 
-        m.addAttribute("numIntercambioPendiente", intercambioRepo.countByFechaDevolucion(null));
-        
+        m.addAttribute("librosUsuario", ulService.contarLibrosPorUsuario(u));
+        m.addAttribute("numIntercambioPendiente", serviceInter.contarIntercambiosPendientes(ul));
+
         return "principal/usuarioPanel";
     }
 
@@ -161,14 +152,14 @@ public class InicioController {
         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         String noLibros = "";
         m.addAttribute("libro", new Libro());//Para el formulario        
-        m.addAttribute("autores", autorRepo.findAll());//autores para el desplegable
+        m.addAttribute("autores", serviceAutor.consultarAutores());//autores para el desplegable
         m.addAttribute("autor", new Autor());//autores para formulario
-        m.addAttribute("generos", generoRepo.findAll());//géneros formulario
+        m.addAttribute("generos", serviceGen.getGeneros());//géneros formulario
         m.addAttribute("editoriales", editoService.consultaTodas());//editoriales formulario
         m.addAttribute("buscador", buscador);//Elemento de la barra buscador
         if (buscador != null) {//si es distinto de nulo buscara el libro por isbn o título en la base de datos
             libros = liService.buscarLibro(buscador);
-            if (libros.size() == 0) {
+            if (libros.isEmpty()) {
                 noLibros = "Ningun libro encontrado"; //si no existe devuelve un mensaje de error
             } else {
                 noLibros = "encontrado";
@@ -183,7 +174,6 @@ public class InicioController {
     public String guardarLibro(Integer libro, UsuarioLibro ul) {
         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         Libro l = liService.libroId(libro);
-        String mail = u.getMail();
         if (l.getValoracionLibro() == null) {
             l.setValoracionLibro(new Double(0));
             l.setNumeroValoraciones(0);
@@ -197,15 +187,15 @@ public class InicioController {
 
     @PostMapping("/saveAutor")//Guarda un autor y vuelve a la página de registrar libro
     public String insertarAutor(Autor autor) {
-        autorRepo.save(autor);
+        serviceAutor.guardarAutor(autor);
         return "redirect:/hiberlibros/guardarLibro?buscador=XXX";
     }
 
     @PostMapping("/registroLibro")//Guarda un libro nuevo y luego lo guarda en Usuario Libro
     public String registrarLibro(UsuarioLibro ul, Libro l, Integer id_genero, Integer id_editorial, Integer id_autor) {
-        l.setGenero(generoRepo.getById(id_genero));
+        l.setGenero(serviceGen.encontrarPorId(id_genero));
         l.setEditorial(editoService.consultaPorIdEditorial(id_editorial));
-        l.setAutor(autorRepo.findById(id_autor).get());
+        l.setAutor(serviceAutor.encontrarAutor(id_autor).get());
         l.setNumeroValoraciones(1);
         liService.guardarLibro(l);
         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
@@ -217,69 +207,45 @@ public class InicioController {
 //    public String buscarLibro(Model m, Integer id, String buscador) {
 //        Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
 //        m.addAttribute("usuario", u);
-////        if (buscador == null) {
-////            m.addAttribute("libros", ulService.buscarDisponibles(u));
-////        } else {
-////            m.addAttribute("libros", ulService.buscarContiene(buscador, u.getId()));
-////        }
+//        if (buscador == null) {
+//            m.addAttribute("libros", ulService.buscarDisponibles(u));
+//        } else {
+//            m.addAttribute("libros", ulService.buscarContiene(buscador, u.getId()));
+//        }
 //
 //        return "principal/buscarLibro";
 //    }
     
-    @ResponseBody
     @GetMapping("/buscarLibro")
-    public List<LibroBusquedaDto> buscar(String search, Model model){
-         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
-         model.addAttribute("usuario", u);
-        
-         model.addAttribute("libros", ulService.buscarDisponibles(u));
-         model.addAttribute("libros", libroRep.findByTitulo(search));
-    
-    
-        return libroRep.findByTitulo(search).stream()
-                                            .map(x-> new LibroBusquedaDto(x.getId(), x.getTitulo()))
-                                            .collect(Collectors.toList());  
+    @ResponseBody
+    public List<BuscaLibroDto> buscarLibro(String search){
+        return liService.findByTituloContainingIgnoreCase(search).stream()
+                .map(x-> new BuscaLibroDto(x.getId(), x.getTitulo()))
+                .collect(Collectors.toList());
     }
     
     
     @PostMapping("/guardarRelato")
     public String formularioRelato(Model m, Integer id, Relato relato, MultipartFile ficherosubido) {
-        String nombre = UUID.randomUUID().toString();
-        String nombreFichero = ficherosubido.getOriginalFilename().toLowerCase();
-        String extension = nombreFichero.substring(nombreFichero.lastIndexOf("."));
-        System.out.println("Extension : " + extension);
-        String subir = RUTA_BASE + nombre + extension;
-        File f = new File(subir);
-        f.getParentFile().mkdirs();
-        try {
-            Files.copy(ficherosubido.getInputStream(), f.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            relato.setFichero(subir);
-            relato.setValoracionUsuarios(new Double(0));
-            relato.setNumeroValoraciones(0);
-            relato.setUsuario(usuService.usuarioId(id));
-            repoRelato.save(relato);
-            m.addAttribute("usuario", usuService.usuarioId(id));
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-
+        serviceRelato.guardarRelato(RUTA_BASE, relato, ficherosubido, id);
         return "redirect:/hiberlibros/panelUsuario";
     }
 
     @GetMapping("/relato")
     public String prueba(Model model, Integer id) {
-        model.addAttribute("generos", generoRepo.findAll());
-        model.addAttribute("relatos", repoRelato.findAll());
+        model.addAttribute("generos", serviceGen.getGeneros());
+        model.addAttribute("relatos", serviceRelato.todos());
         model.addAttribute("usuario", usuService.usuarioId(id));
         return "principal/relato";
     }
 
     @GetMapping("/borrarUL")//borra un libro de UsuarioLibro sin eliminarlo de la tabla de Libros
-    public String borrarUsuLibro(Integer id) {
-        UsuarioLibro ul = ulService.encontrarId(id);
-        ul.setQuieroTengo("no");
-        ulService.editar(ul);
+    public String borrarUsuLibro(Model m,Integer id) {
+        if (ulService.borrar(id)) {
+            m.addAttribute("borrado", "Borrado con éxito");
+        } else {
+            m.addAttribute("borrado", "Error, no es posible borrar este autor");
+        }
         return "redirect:/hiberlibros/panelUsuario";
     }
 
