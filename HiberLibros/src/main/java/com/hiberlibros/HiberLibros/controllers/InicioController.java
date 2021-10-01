@@ -5,6 +5,8 @@
  */
 package com.hiberlibros.HiberLibros.controllers;
 
+import com.hiberlibros.HiberLibros.dtos.LibroBusquedaDto;
+import com.hiberlibros.HiberLibros.dtos.LibroDto;
 import com.hiberlibros.HiberLibros.dtos.TablaLibrosDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.entities.Libro;
@@ -43,8 +45,10 @@ import com.hiberlibros.HiberLibros.interfaces.IPeticionService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 import com.hiberlibros.HiberLibros.repositories.IntercambioRepository;
+import com.hiberlibros.HiberLibros.repositories.LibroRepository;
 import com.hiberlibros.HiberLibros.repositories.UsuarioLibroRepository;
 import java.util.UUID;
+import java.util.stream.Collector;
 
 /**
  *
@@ -85,6 +89,9 @@ public class InicioController {
 
     @Autowired
     private IntercambioRepository intercambioRepo;
+    
+    @Autowired
+    private LibroRepository libroRep;
 
     private final String RUTA_BASE = "c:\\zzzzSubirFicheros\\";
 
@@ -206,19 +213,35 @@ public class InicioController {
         return "redirect:/hiberlibros/panelUsuario";//vuelve a la página inicial
     }
 
-    @GetMapping("/buscarLibro")//Muestra la lita de libros, todos o los buscados si está relleno el campo buscador
-    public String buscarLibro(Model m, Integer id, String buscador) {
-        Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
-        m.addAttribute("usuario", u);
-        if (buscador == null) {
-            m.addAttribute("libros", ulService.buscarDisponibles(u));
-        } else {
-            m.addAttribute("libros", ulService.buscarContiene(buscador, u.getId()));
-        }
-
-        return "principal/buscarLibro";
+//    @GetMapping("/buscarLibro")//Muestra la lita de libros, todos o los buscados si está relleno el campo buscador
+//    public String buscarLibro(Model m, Integer id, String buscador) {
+//        Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
+//        m.addAttribute("usuario", u);
+////        if (buscador == null) {
+////            m.addAttribute("libros", ulService.buscarDisponibles(u));
+////        } else {
+////            m.addAttribute("libros", ulService.buscarContiene(buscador, u.getId()));
+////        }
+//
+//        return "principal/buscarLibro";
+//    }
+    
+    @ResponseBody
+    @GetMapping("/buscarLibro")
+    public List<LibroBusquedaDto> buscar(String search, Model model){
+         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
+         model.addAttribute("usuario", u);
+        
+         model.addAttribute("libros", ulService.buscarDisponibles(u));
+         model.addAttribute("libros", libroRep.findByTitulo(search));
+    
+    
+        return libroRep.findByTitulo(search).stream()
+                                            .map(x-> new LibroBusquedaDto(x.getId(), x.getTitulo()))
+                                            .collect(Collectors.toList());  
     }
-
+    
+    
     @PostMapping("/guardarRelato")
     public String formularioRelato(Model m, Integer id, Relato relato, MultipartFile ficherosubido) {
         String nombre = UUID.randomUUID().toString();

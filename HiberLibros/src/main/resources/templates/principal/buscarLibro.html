@@ -3,12 +3,13 @@
 
     <body>
         <div class="container-fluid">
-            <!--
-            <form action="/hiberlibros/buscarLibro" method="get">
-                <input type="text" name="buscador" placeholder="Buscar por título o ISBN"/>
-                <input type="submit" value="Buscar" class="btn btn-primary"/>
-                <a href="/hiberlibros/buscarLibro" class="btn btn-warning"><i class="far fa-trash-alt"></i>&nbsp;Limpiar filtros</a>
-            </form>-->
+
+<!--            <form action="/hiberlibros/buscarLibro" method="get">-->
+                <!--                <input type="text" name="buscador" placeholder="Buscar por título o ISBN"/>
+                                <input type="submit" value="Buscar" class="btn btn-primary"/>
+                                <a href="/hiberlibros/buscarLibro" class="btn btn-warning"><i class="far fa-trash-alt"></i>&nbsp;Limpiar filtros</a>-->
+                <input ddl-url="/hiberlibros/buscarLibro" ddl-text="Título del libro" name="enviar" value="1" class="form-control"/>
+<!--            </form>-->
             <div class="testbox">
                 <table
                     class="table table-light" 
@@ -72,5 +73,7 @@
                 </table>
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="http://www.jorgerubira.com/cdn/AbleDropDownList.js" ></script>
     </body>
 </html>
