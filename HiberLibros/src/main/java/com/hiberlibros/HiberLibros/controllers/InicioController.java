@@ -47,9 +47,11 @@ import com.hiberlibros.HiberLibros.interfaces.IRelatoService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 import com.hiberlibros.HiberLibros.repositories.IntercambioRepository;
+import com.hiberlibros.HiberLibros.repositories.LibroRepository;
 import com.hiberlibros.HiberLibros.repositories.UsuarioLibroRepository;
 import com.hiberlibros.HiberLibros.services.LibroService;
 import java.util.UUID;
+import java.util.stream.Collector;
 
 /**
  *
@@ -216,14 +218,7 @@ public class InicioController {
         return "principal/buscarLibro";
     }
     
-//    @GetMapping("/buscarLibro")
-//    @ResponseBody
-//    public List<BuscaLibroDto> buscarLibro(String search) {
-//        return liService.findByTituloContainingIgnoreCase(search).stream()
-//                .map(x -> new BuscaLibroDto(x.getId(), x.getTitulo()))
-//                .collect(Collectors.toList());
-//    }
-
+    
     @PostMapping("/guardarRelato")
     public String formularioRelato(Model m, Integer id, Relato relato, MultipartFile ficherosubido) {
         serviceRelato.guardarRelato(RUTA_BASE, relato, ficherosubido, id);
