@@ -203,25 +203,26 @@ public class InicioController {
         return "redirect:/hiberlibros/panelUsuario";//vuelve a la página inicial
     }
 
-//    @GetMapping("/buscarLibro")//Muestra la lita de libros, todos o los buscados si está relleno el campo buscador
-//    public String buscarLibro(Model m, Integer id, String buscador) {
-//        Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
-//        m.addAttribute("usuario", u);
-//        if (buscador == null) {
-//            m.addAttribute("libros", ulService.buscarDisponibles(u));
-//        } else {
-//            m.addAttribute("libros", ulService.buscarContiene(buscador, u.getId()));
-//        }
-//
-//        return "principal/buscarLibro";
-//    }
-    @GetMapping("/buscarLibro")
-    @ResponseBody
-    public List<BuscaLibroDto> buscarLibro(String search) {
-        return liService.findByTituloContainingIgnoreCase(search).stream()
-                .map(x -> new BuscaLibroDto(x.getId(), x.getTitulo()))
-                .collect(Collectors.toList());
+    @GetMapping("/buscarLibro")//Muestra la lita de libros, todos o los buscados si está relleno el campo buscador
+    public String buscarLibro(Model m, Integer id, String buscador) {
+        Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
+        m.addAttribute("usuario", u);
+        if (buscador == null) {
+            m.addAttribute("libros", ulService.buscarDisponibles(u));
+        } else {
+            m.addAttribute("libros", ulService.buscarContiene(buscador, u.getId()));
+        }
+
+        return "principal/buscarLibro";
     }
+    
+//    @GetMapping("/buscarLibro")
+//    @ResponseBody
+//    public List<BuscaLibroDto> buscarLibro(String search) {
+//        return liService.findByTituloContainingIgnoreCase(search).stream()
+//                .map(x -> new BuscaLibroDto(x.getId(), x.getTitulo()))
+//                .collect(Collectors.toList());
+//    }
 
     @PostMapping("/guardarRelato")
     public String formularioRelato(Model m, Integer id, Relato relato, MultipartFile ficherosubido) {
