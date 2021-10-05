@@ -1,5 +1,6 @@
 package com.hiberlibros.HiberLibros.repositories;
 
+import com.hiberlibros.HiberLibros.dtos.LibroBusquedaDto;
 import com.hiberlibros.HiberLibros.entities.Autor;
 import com.hiberlibros.HiberLibros.entities.Editorial;
 import com.hiberlibros.HiberLibros.entities.Genero;

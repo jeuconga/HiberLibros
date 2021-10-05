@@ -47,9 +47,11 @@ import com.hiberlibros.HiberLibros.interfaces.IRelatoService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioLibroService;
 import com.hiberlibros.HiberLibros.interfaces.IUsuarioService;
 import com.hiberlibros.HiberLibros.repositories.IntercambioRepository;
+import com.hiberlibros.HiberLibros.repositories.LibroRepository;
 import com.hiberlibros.HiberLibros.repositories.UsuarioLibroRepository;
 import com.hiberlibros.HiberLibros.services.LibroService;
 import java.util.UUID;
+import java.util.stream.Collector;
 
 /**
  *
@@ -77,7 +79,6 @@ public class InicioController {
     private IPeticionService petiService;
     @Autowired
     private AuthenticationManager manager;
-    
 
     @Autowired
     private IIntercambioService serviceInter;
@@ -131,6 +132,7 @@ public class InicioController {
     public String panelUsuario(Model m, String mail) {
         Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
         List<UsuarioLibro> ul = ulService.buscarUsuario(u);
+        UsuarioLibro usuarioLibro = ulService.encontrarId(u.getId());
         m.addAttribute("relatos", serviceRelato.encontrarPorAutor(u));
         m.addAttribute("usuario", u);
         m.addAttribute("libros", ulService.buscarUsuariotiene(u));
@@ -140,6 +142,8 @@ public class InicioController {
         m.addAttribute("intercambiosPeticiones", serviceInter.encontrarULPrestatario(ul));
         m.addAttribute("librosUsuario", ulService.contarLibrosPorUsuario(u));
         m.addAttribute("numIntercambioPendiente", serviceInter.contarIntercambiosPendientes(ul));
+        m.addAttribute("numPeticionesPendientes", petiService.contarMisPeticiones(u));
+        m.addAttribute("numNuevasPeticiones", petiService.contarNuevasPeticiones(usuarioLibro));
 
         return "principal/usuarioPanel";
     }
@@ -201,27 +205,20 @@ public class InicioController {
         return "redirect:/hiberlibros/panelUsuario";//vuelve a la página inicial
     }
 
-//    @GetMapping("/buscarLibro")//Muestra la lita de libros, todos o los buscados si está relleno el campo buscador
-//    public String buscarLibro(Model m, Integer id, String buscador) {
-//        Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
-//        m.addAttribute("usuario", u);
-//        if (buscador == null) {
-//            m.addAttribute("libros", ulService.buscarDisponibles(u));
-//        } else {
-//            m.addAttribute("libros", ulService.buscarContiene(buscador, u.getId()));
-//        }
-//
-//        return "principal/buscarLibro";
-//    }
-    
-    @GetMapping("/buscarLibro")
-    @ResponseBody
-    public List<BuscaLibroDto> buscarLibro(String search){
-        return liService.findByTituloContainingIgnoreCase(search).stream()
-                .map(x-> new BuscaLibroDto(x.getId(), x.getTitulo()))
-                .collect(Collectors.toList());
-    }
+    @GetMapping("/buscarLibro")//Muestra la lita de libros, todos o los buscados si está relleno el campo buscador
+    public String buscarLibro(Model m, Integer id, String buscador) {
+        Usuario u = usuService.usuarioRegistrado(serviceSeguridad.getMailFromContext());
+        m.addAttribute("usuario", u);
+        if (buscador == null) {
+            m.addAttribute("libros", ulService.buscarDisponibles(u));
+        } else {
+            m.addAttribute("libros", ulService.buscarContiene(buscador, u.getId()));
+        }
 
+        return "principal/buscarLibro";
+    }
+    
+    
     @PostMapping("/guardarRelato")
     public String formularioRelato(Model m, Integer id, Relato relato, MultipartFile ficherosubido) {
         serviceRelato.guardarRelato(RUTA_BASE, relato, ficherosubido, id);
@@ -237,7 +234,7 @@ public class InicioController {
     }
 
     @GetMapping("/borrarUL")//borra un libro de UsuarioLibro sin eliminarlo de la tabla de Libros
-    public String borrarUsuLibro(Model m,Integer id) {
+    public String borrarUsuLibro(Model m, Integer id) {
         if (ulService.borrar(id)) {
             m.addAttribute("borrado", "Borrado con éxito");
         } else {

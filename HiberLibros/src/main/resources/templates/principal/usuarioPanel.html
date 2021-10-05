@@ -13,7 +13,7 @@
 
 
                     </ul>
-                </div> 
+                </div>  
             </div>
 
         </nav>
@@ -24,7 +24,7 @@
                     <!-- Profile widget -->
                     <div class="bg-white shadow rounded overflow-hidden  ">
 
-                        <div class="px-4  float-right ">
+                        <div class="px-4  float-right " >
 
                             <div class="p-4 rounded shadow-sm bg-light mt-2 ">      
                                 <h3 class="">Datos Personales</h3>
@@ -64,11 +64,12 @@
                                 <div class="profile mr-3 mt-2">   
 
                                     <p th:if="${usuario.uriFoto!=null}">                     
-                                    <img th:src="@{/usuarios/download(imagen=${usuario.uriFoto})}" class="imgRedonda" /> <br>
+                                        <img th:src="@{/usuarios/download(imagen=${usuario.uriFoto})}" class="imgRedonda" /> <br>
                                     </p>
                                     <p th:if="${usuario.uriFoto==null}">
                                         <img src="../perfil.png" class="imgRedonda" /> <br>
                                     </p>
+
 
 
                                     <a onclick="editarUsuario()" class=" btn btn-outline-dark btn-sm btn-block mt-4 col-6">Editar perfil</a></br>
@@ -82,44 +83,38 @@
                                                 <i class="fas fa-file-image"> </i>  Seleccionar imagen
                                             </label>
                                             <input id="file-upload" type="file" name="ficheroImagen" required/>
-                                            <input type="submit" class="btn btn-dark btn-sm btn-block col-6" value="Cambiar" />
-
+                                            <input type="submit" class="btn btn-primary btn-sm btn-block col-6" value="Cambiar" />
                                         </div>
-
-
                                     </form>  
-
-
                                 </div>
-
                             </div>
                         </div>
                         <div class="bg-light p-4 d-flex justify-content-end text-center">
                             <ul class="list-inline mb-0">
-                                <li class="list-inline-item"> 
-                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${librosUsuario}"></h5><i class="fas fa-book " style="color:black"> </i>   Mis libros
+                                <li class="ml-4 mr-4  list-inline-item"> 
+                                    <h5 class="ml-4 mr-4 font-weight-bold mb-0 d-block" th:text="${librosUsuario}"></h5><i class="fas fa-book text-success "> </i>   Mis libros
                                 </li>
-                                <li class="list-inline-item">
-                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${numIntercambioPendiente}"></h5><i class="far fa-handshake" style="color:black"></i>     Intercambios pendientes
+                                <li class="ml-4 mr-4  list-inline-item">
+                                    <h5 class="ml-4 mr-4 font-weight-bold mb-0 d-block " th:text="${numIntercambioPendiente}"></h5><i class="far fa-handshake" style="color:black"></i>     Intercambios pendientes
                                 </li>
-                                <li class="list-inline-item"> 
-                                    <h5 class="font-weight-bold mb-0 d-block" th:text="${usuario.valoracionUsuario}"></h5> <i class="fas fa-star" style="color:orange"> </i>    Mi valoración
+                                <li class="ml-4 mr-4 list-inline-item"> 
+                                    <h5 class="ml-4 mr-4 font-weight-bold mb-0 d-block" th:text="${usuario.valoracionUsuario}"></h5> <i class="fas fa-star" style="color:orange"> </i>    Mi valoración
+                                </li>
 
+                                <li class="ml-4 mr-4 list-inline-item"> 
+                                    <h5 class="ml-4 mr-4 font-weight-bold mb-0 d-block" th:text="${numPeticionesPendientes}"></h5><i class="fas fa-bell" style="color:black"></i>       Mis peticiones
+                                </li> 
 
+                                <li class="ml-4 mr-4 list-inline-item"> 
+                                    <h5 class="ml-4 mr-4 font-weight-bold mb-0 d-block" th:text="${numNuevasPeticiones}"></h5><i class="far fa-bell" style="color:black"></i>   Peticiones pendientes
                                 </li>
                             </ul>
                         </div>
-
-
-
-
                         <div class="py-4 px-4">
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <h3 class="mb-0">Mis libros</h3>
                                 <a href="/hiberlibros/guardarLibro" class="btn btn-primary"><i class="fas fa-plus-square"></i>&nbsp;Añadir libro</a>
                             </div>
-
-
 
                             <div class="row">
                                 <div class="col-lg-4 mb-4 " th:each='l:${libros}'>
@@ -138,7 +133,7 @@
 
 
                                             <p class="card-text"></p>
-                                            <td><a th:href="@{/hiberlibros/borrarUL(id=${l.id})}" class="btn btn-outline-danger btn-sm">Borrar <i class="fas fa-trash-alt"></i></a></td>
+                                            <td><a th:href="@{/hiberlibros/borrarUL(id=${l.id})}" class="btn btn-outline-danger btn-sm">&nbsp;Borrar <i class="fas fa-trash-alt"></i></a></td>
 
 
                                         </div>                                    
@@ -152,14 +147,14 @@
                                     <h2>Tus relatos</h2>
                                     <table class="testbox table"  >
                                         <tr>
-                                            <th>id</th>
+                                            <!--                                            <th>id</th>-->
                                             <th>titulo</th>
                                             <th>Género</th>
                                             <th>Valoraciones</th>
                                             <th>NºValoraciones</th>
                                         </tr>
                                         <tr th:each="rel:${relatos}">    
-                                            <td th:text="${rel.id}"></td>  
+                                            <!--                                            <td th:text="${rel.id}"></td>  -->
                                             <td th:text="${rel.titulo}"></td>
                                             <td th:text="${rel.genero.nombre}"></td>   
                                             <td class="text-center"> 
@@ -410,6 +405,13 @@
                             </div>
                         </div>
                         <a th:onclick="|eliminarU(${usuario.id})|" class="btn btn-outline-danger" title='Borrar usuario'>Borrar</a>
+
+                        <a class="ir-arriba"  javascript:void(0) title="Volver arriba">
+                            <span class="fa-stack">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-arrow-up fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
                         </body>
 
                         <div class="row">

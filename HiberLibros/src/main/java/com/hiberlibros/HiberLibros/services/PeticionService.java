@@ -29,7 +29,7 @@ public class PeticionService implements IPeticionService {
     public List<Peticion> consultaTodasPeticiones() {
         return repoPeticion.findAll();
     }
-    
+
     @Override
     public Peticion consultarPeticionId(Integer id) {
         return repoPeticion.findById(id).get();
@@ -125,6 +125,17 @@ public class PeticionService implements IPeticionService {
     }
 
     @Override
+    public Integer contarMisPeticiones(Usuario u) {
+        return repoPeticion.countByPendienteTratarAndIdUsuarioSolicitante(Boolean.TRUE, u);
+    }
+
+    @Override
+    public Integer contarNuevasPeticiones(UsuarioLibro ul) {
+        return repoPeticion.countByPendienteTratarAndIdUsuarioLibro(Boolean.TRUE, ul);
+
+    }
+
+    @Override
     public List<Peticion> consultarPeticonesRecibidas(Usuario u) { //Jesús
         List<Peticion> p = new ArrayList<>();
         List<UsuarioLibro> ul = ulService.buscarUsuario(u);//busca la lista de libros de un usuario
@@ -139,7 +150,7 @@ public class PeticionService implements IPeticionService {
 
     @Override
     public void borrarPorUsuarioSolicitante(Usuario u) {
-        repoPeticion.deleteByIdUsuarioSolicitante(u);        
+        repoPeticion.deleteByIdUsuarioSolicitante(u);
     }
 
     @Override

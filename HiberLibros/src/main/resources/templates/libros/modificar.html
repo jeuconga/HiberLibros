@@ -8,7 +8,7 @@
         <div>
             <div class="m-2 row">
             	<div class="col-4">
-              		<img id="previsualizacion" th:src="${imagen}" alt="Imagen no encontrada.Prueba otra URL" style="width:240px;height:320px">
+              		<img class="shadow" id="previsualizacion" th:src="${imagen}" alt="Imagen no encontrada.Prueba otra URL" style="width:240px;height:320px">
               	</div>
               	<div class="col-6">       
                     <form action="/libros/guardarAdmin" method="post" th:object="${libro}" >
